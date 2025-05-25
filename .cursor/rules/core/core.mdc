@@ -1,0 +1,61 @@
+---
+description: "Core Development Rules - Always Applied"
+globs: 
+alwaysApply: false
+---
+
+# Core Development Rules
+
+## Core Communication Style
+- Be concise, direct, and proactive. Avoid repetition, filler language, and unnecessary pleasantries.
+- Do not mention that you are an AI.
+- Challenge and override me when logic or evidence suggests I am wrong.
+- Provide direct answers first, followed by explanations if needed. Maintain a casual, terse tone.
+- Treat me as an expert; avoid over-explaining basic concepts.
+- Suggest innovative solutions, including new technologies and contrarian ideas.
+
+## Baseline Engineering Standards
+- Always provide complete, working code. No placeholders unless explicitly requested.
+- Write production-ready code, prioritizing system-level quality, security, and polish.
+- Use UTF-8 encoding for all file operations.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names, including auxiliary verbs (e.g., `isLoading`, `hasError`).
+- Require type hints for all functions and use strict type checking configurations.
+- Use docstrings for all public functions and maintain up-to-date README files.
+- Generate at least one meaningful test file unless the file clearly lives in a `/scripts` directory, is tagged `prototype`, or is a one-off utility.
+
+## Development Workflow & Architecture
+- **Git Strategy:** Assume feature-branch workflow with squash-merged branches.
+- **Pre-commit Compliance:** Generate code compliant with pre-commit hooks and established project formatting standards.
+- **Dependency Injection:** Structure code to use dependency injection for improved testability.
+- **Configuration Management:** Implement feature flags for gradual rollouts and environment-specific settings.
+- **Structured Logging:** Generate structured logging with correlation IDs and appropriate log levels for different environments.
+
+## Universal Security Mandates
+- **Credentials:** Never hardcode secrets. Use environment variables (`.env` for local) or dedicated secrets management.
+- **Input:** Validate and sanitize all user input.
+- **Database:** Always use parameterized queries or an ORM to prevent SQL injection.
+- **Authentication:** Use secure, established frameworks. Never generate custom auth logic.
+- **Logging:** Never log sensitive data, secrets, or session tokens.
+- **Output:** Always escape output to prevent XSS (e.g., in HTML, JS).
+- **Dependencies:** Assume regular security audits are in place.
+- **IAM/Permissions:** Generate roles and policies with least privilege necessary.
+
+## Open Source & Licensing
+- Prefer open-source software when no other specific technology is mentioned or required.
+- When reusing open-source code snippets, add the appropriate SPDX license header and attribution comment.
+
+## Cursor UX Integration
+- When proposing multi-file changes, use `// Diff Start/End` markers so Cursor's Patch Preview can apply them correctly.
+- Structure code suggestions to work well with Cursor's inline diff mode and snippet insertion.
+- For complex refactors, break changes into logical, reviewable chunks.
+
+## Meta: Rule Generation & Collaboration
+- **Proactive Rule Creation:** If you notice me repeating instructions or making many project-specific decisions in our conversation, you should suggest formalizing them into a new Project Rule.
+- **Conflict Resolution:** When directives clash, Project Rules take precedence over User Rules.
+- **Use the Generate Command:** When proposing a new rule, state that you can create it using the `/Generate Cursor Rules` command.
+- **Focused & Actionable:** Generated rules must be focused on a single responsibility, be actionable, and have a clear scope.
+- **Conciseness:** Ensure the generated rule file is concise, targeting under 500 lines.
+- **Composability:** For complex topics, propose splitting the rules into multiple, composable files that can be attached based on different triggers.
+- **Provide Concrete Examples:** Include specific, correct code examples or `@` mentions of relevant files within the generated rule to avoid ambiguity.
+- **Clear & Unambiguous:** Write the rule's content using clear, unambiguous directives, as if you were writing a high-quality internal technical document.

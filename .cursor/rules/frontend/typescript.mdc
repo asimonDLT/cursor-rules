@@ -1,0 +1,23 @@
+---
+rule_type: Auto Attached
+globs:
+  - "package.json"
+  - "*.ts"
+  - "*.tsx"
+description: "TypeScript/Web Development Standards"
+---
+
+# TypeScript/Web Development Standards
+
+- **Package Management:** Always use **pnpm** for Node.js projects.
+- **Linting & Formatting:** Always use **Biome** for both linting and code formatting. `Prettier` is a fallback.
+- **Build Tool:** Default new web projects to **Vite** for fast development and builds.
+- **ORM:** Use **Prisma** for type-safe database access and schema management.
+- **Testing Framework:** Use **Vitest** for unit and integration tests.
+- **E2E Testing:** Use **Playwright** for end-to-end browser testing.
+- **Test Organization:** Co-locate tests with source code using `*.test.ts` or `*.spec.ts` extensions.
+- **Runtime:** Target **Node.js 20.***
+- **Naming Conventions:** 
+  - Variables/Functions: `camelCase`
+  - Components/Classes: `PascalCase`
+  - Files/CSS: `kebab-case`

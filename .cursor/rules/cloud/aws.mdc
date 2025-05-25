@@ -1,0 +1,20 @@
+---
+rule_type: Auto Attached
+globs:
+  - "aws/**"
+  - "*.cfn.yml"
+  - "cloudformation.yml"
+description: "AWS-Focused Infrastructure Standards"
+---
+
+# AWS-Focused Infrastructure Standards
+
+- **Cloud Provider:** Prioritize **AWS** for all cloud-based services and infrastructure.
+- **Infrastructure as Code:** Use **AWS CloudFormation** templates in **YAML** format.
+- **CLI Tools:** Use **AWS CLI** for deployment and infrastructure management scripts.
+- **SDK Usage:** Use **boto3** for Python projects, appropriate AWS SDKs for other languages when there's clear advantage.
+- **Security:** Generate IAM roles and policies with least privilege. Assume **CloudTrail** and **GuardDuty** are enabled.
+- **Secrets Management:** Use **AWS Secrets Manager** or **Parameter Store** for production secrets.
+- **Monitoring:** Generate code that includes health check endpoints. Assume **AWS CloudWatch** for monitoring and alerting.
+- **Deployment Strategy:** Prefer serverless (**AWS Lambda**) or managed containers (**AWS ECS/Fargate**).
+- **Naming Convention:** Use `PascalCase` for CloudFormation resources.

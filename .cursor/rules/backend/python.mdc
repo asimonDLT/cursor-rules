@@ -1,0 +1,23 @@
+---
+rule_type: Auto Attached
+globs:
+  - "*.py"
+  - "pyproject.toml"
+  - "poetry.lock"
+description: "Python-First Development Standards"
+---
+
+# Python-First Development Standards
+
+- **Package Management:** Always use **uv** for managing packages and virtual environments.
+- **Linting & Formatting:** Always use **Ruff** for both linting and code formatting.
+- **Terminal UI & Logging:** Use the **rich** library for all terminal output, including logging and CLI interfaces.
+- **DataFrames:** Use **Polars** for high-performance data operations.
+- **Rust Interoperability:** Use **Maturin** and **PyO3** for performance-critical extensions.
+- **ORM:** Use **SQLAlchemy** with async support. For simple, performance-critical reads, prefer raw, parameterized SQL.
+- **Testing Framework:** Use **pytest** with **pytest-asyncio** for async code and **pytest-cov** for coverage reporting.
+- **Test Structure:** Write tests using Arrange-Act-Assert (AAA) pattern with descriptive names. Use pytest fixtures for setup.
+- **Fixtures & State:** Use pytest fixtures for setup and teardown. For database tests, ensure fixtures clean the database state after each test.
+- **Test Data:** Generate test data using factory functions (e.g., `factory-boy`) instead of static, hardcoded values.
+- **Runtime:** Target **Python 3.12.***
+- **Naming Convention:** Use `snake_case` for all Python identifiers.

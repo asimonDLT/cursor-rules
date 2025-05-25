@@ -1,0 +1,83 @@
+---
+rule_type: Auto Attached
+globs:
+  - "*mcp*"
+  - "mcp-server*"
+  - "src/mcp/**"
+  - "mcp/**"
+  - "*.mcp.py"
+  - "*.mcp.ts"
+  - "mcp-config.json"
+  - "claude_desktop_config.json"
+description: "MCP Server Development Standards"
+---
+
+# MCP Server Development Standards
+
+## Core Architecture
+- **Protocol Compliance:** Always implement the full MCP specification with proper request/response handling.
+- **Error Handling:** Implement comprehensive error handling with descriptive error messages and proper HTTP status codes.
+- **Async Operations:** Use async/await patterns for all I/O operations to prevent blocking.
+- **Resource Management:** Implement proper connection pooling and resource cleanup.
+- **Stateless Design:** Design servers to be stateless when possible for better scalability.
+- **Language Standards:** When generating code, adhere to the language-specific standards defined for Python and TypeScript below.
+
+## Security & Authentication
+- **Input Validation:** Validate and sanitize all inputs from MCP clients rigorously.
+- **Permission Boundaries:** Implement clear permission boundaries and never exceed intended scope.
+- **Secrets Management:** Never hardcode API keys or sensitive data; use environment variables or secure vaults.
+- **Rate Limiting:** Implement rate limiting to prevent abuse and resource exhaustion.
+- **Audit Logging:** Log all significant operations with sufficient detail for security auditing.
+
+## Tool Implementation
+- **Tool Schema:** When creating a new tool, pro-actively generate a complete and descriptive JSON schema for its parameters.
+- **Parameter Validation:** Validate tool parameters against schemas before execution.
+- **Descriptive Metadata:** Provide clear, actionable descriptions for tools and their parameters.
+- **Error Recovery:** Implement graceful error recovery and meaningful error messages.
+- **Idempotency:** Design tools to be idempotent when possible.
+
+## Resource Management
+- **Resource Schema:** Define clear schemas for all exposed resources.
+- **Access Control:** Implement appropriate access controls for sensitive resources.
+- **Pagination:** Implement pagination for large resource collections.
+- **Caching Strategy:** Use appropriate caching strategies for frequently accessed resources.
+- **Resource Lifecycle:** Properly manage resource lifecycle and cleanup.
+
+## Development Workflow
+- **Testing Strategy:** Write comprehensive tests including unit tests, integration tests, and MCP protocol compliance tests.
+- **Configuration Management:** Use configuration files for server settings and tool definitions.
+- **Development Server:** Implement a development mode with enhanced logging and debugging.
+- **Documentation:** Maintain clear documentation for server capabilities, tool usage, and configuration.
+- **Version Management:** Implement proper versioning for server APIs and tool schemas.
+
+## Performance & Monitoring
+- **Request Tracing:** Implement request tracing with correlation IDs for debugging.
+- **Performance Metrics:** Collect and expose performance metrics (response times, error rates, etc.).
+- **Health Checks:** Implement health check endpoints for monitoring and load balancing.
+- **Graceful Shutdown:** Implement graceful shutdown handling for clean server restarts.
+- **Resource Monitoring:** Monitor resource usage (memory, CPU, file handles, etc.).
+
+## Client Integration
+- **Claude Desktop Config:** Provide clear configuration examples for Claude Desktop integration.
+- **Development Setup:** Include clear setup instructions for development and testing.
+- **Client Libraries:** When applicable, provide or recommend client libraries for common languages.
+- **Protocol Debugging:** Include tools or guidance for debugging MCP protocol communications.
+
+## Python-Specific Standards
+- **MCP Framework:** Use the official `mcp` Python package for server implementation.
+- **Type Hints:** Use comprehensive type hints, especially for MCP protocol types.
+- **Async Context Managers:** Use async context managers for resource management.
+- **Pydantic Models:** Use Pydantic models for request/response validation.
+
+## TypeScript-Specific Standards
+- **MCP SDK:** Use the official MCP SDK for TypeScript implementations.
+- **Type Safety:** Leverage TypeScript's type system for compile-time safety.
+- **Schema Validation:** Use libraries like Zod for runtime schema validation.
+- **Error Types:** Define custom error types for different failure modes.
+
+## Deployment Considerations
+- **Container Ready:** Design servers to run efficiently in containers.
+- **Environment Configuration:** Support configuration via environment variables.
+- **Logging Format:** Use structured logging (JSON) for production deployments.
+- **Process Management:** Implement proper signal handling for process management.
+- **Scaling Strategy:** Design with horizontal scaling considerations in mind.

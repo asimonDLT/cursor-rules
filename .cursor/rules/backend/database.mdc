@@ -1,0 +1,18 @@
+---
+rule_type: Auto Attached
+globs:
+  - "*.sql"
+  - "alembic/**"
+  - "prisma/schema.prisma"
+description: "Database & SQL Standards"
+---
+
+# Database & SQL Standards
+
+- **SQL Formatting:** Use **sqlfluff** for SQL linting and formatting.
+- **Analysis Tool:** For standalone scripts, notebooks, or local data exploration, use **DuckDB**.
+- **Migrations:** Use ORM built-in tools (**Alembic** for SQLAlchemy, **Prisma Migrate** for Prisma).
+- **Query Optimization:** Design queries to actively use indexes and avoid N+1 patterns.
+- **Connection Management:** Implement connection pooling in application setup.
+- **Testing:** Generate tests that use separate test databases with state cleanup between runs.
+- **Naming Convention:** Use `snake_case` for tables and columns.

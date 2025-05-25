@@ -1,0 +1,22 @@
+# Cursor Rules Repository
+# All .cursor/rules/ directories should be version controlled
+# Do not ignore any .cursor/rules/ files
+
+# Common development files to ignore
+.env
+.env.local
+.env.*.local
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE files (but keep .cursor/ directories)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

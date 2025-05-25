@@ -1,0 +1,109 @@
+---
+rule_type: Auto Attached
+globs:
+  - "*.md"
+  - "*.markdown"
+  - "README.md"
+  - "docs/**/*"
+  - "documentation/**/*"
+  - "spec/**/*"
+  - "requirements/**/*"
+description: "Markdown Documentation Standards"
+---
+
+# Markdown Documentation Standards
+
+## General Formatting Rules
+- **Line Length:** Target 80-120 characters per line for readability, but prioritize natural breaks over strict limits.
+- **Headers:** Use ATX-style headers (`#`) with a single space after the hash. Always include a blank line before and after headers.
+- **Emphasis:** Use `**bold**` for strong emphasis and `*italic*` for regular emphasis. Avoid using `_` for emphasis.
+- **Lists:** Use `-` for unordered lists and `1.` for ordered lists. Maintain consistent indentation (2 spaces per level).
+- **Spacing:** Use single blank lines to separate sections. Use double blank lines only before major section breaks.
+
+## Advanced Markdown Features
+- **Code Fences:** Always specify the language for syntax highlighting (e.g., ```python, ```typescript, ```bash).
+- **Tables:** Use pipe tables with proper alignment. Include header separators with appropriate alignment indicators (`---`, `:---`, `---:`, `:---:`).
+- **Links:** Prefer reference-style links for better readability in long documents. Place references at the end of sections or documents.
+- **Images:** Always include alt text. Use relative paths for project assets, absolute URLs for external images.
+- **Blockquotes:** Use for important notes, warnings, or citations. Combine with emoji for visual distinction.
+
+## Mermaid Diagrams
+- **Proactive Generation:** When asked to illustrate a process, architecture, or workflow, pro-actively generate a Mermaid diagram of the appropriate type (flowchart, sequence, class, etc.).
+- **Diagram Types:** Use appropriate diagram types - flowcharts for processes, sequence diagrams for interactions, class diagrams for architecture.
+- **Naming:** Use descriptive, consistent naming for nodes and relationships.
+- **Styling:** Apply consistent color schemes and themes across diagrams in the same document.
+- **Complexity:** Keep diagrams focused and readable. Split complex diagrams into multiple simpler ones.
+
+## Document Type-Specific Guidelines
+
+### Requirements Documents
+- **Structure:** Use a hierarchical structure with numbered requirements (REQ-001, REQ-002, etc.).
+- **Traceability:** Include traceability matrices linking requirements to features and tests.
+- **Priority:** Clearly mark priority levels (Critical, High, Medium, Low) using badges or tables.
+- **Acceptance Criteria:** Define clear, testable acceptance criteria for each requirement.
+
+### Design Specifications
+- **Architecture Diagrams:** Include system architecture, component diagrams, and data flow diagrams using Mermaid.
+- **API Documentation:** Use code fences with proper language tags for API examples.
+- **Decision Records:** Include architectural decision records (ADRs) with context, decision, and consequences.
+- **Interface Specifications:** Document all interfaces with clear input/output specifications.
+
+### Project Documentation
+- **README Structure:** Follow the pattern - Project Description, Installation, Usage, Contributing, License.
+- **Code Examples:** Provide complete, runnable examples with expected outputs.
+- **Troubleshooting:** Include common issues and solutions in a FAQ format.
+- **Changelog:** Maintain a structured changelog following semantic versioning principles.
+
+### Technical Documentation
+- **Code Documentation:** Embed code examples with explanations. Use collapsible sections for lengthy code blocks.
+- **API References:** Use consistent formatting for endpoints, parameters, and responses.
+- **Tutorials:** Structure as step-by-step guides with clear progression and checkpoints.
+- **Reference Materials:** Use tables and lists for quick lookup information.
+
+## Code Fence Language Standards
+- **Language Tags:** Always use specific language tags (python, typescript, bash, yaml, json, sql, etc.).
+- **Shell Commands:** Use `bash` or `powershell` tags for command-line examples. Prefix with `$` for Unix or `PS>` for PowerShell.
+- **Configuration Files:** Use appropriate tags (yaml, json, toml, ini) for configuration examples.
+- **Output Examples:** Use `text` or `console` for command output or log examples.
+
+## Front Matter Usage
+- **YAML Front Matter:** Use YAML front matter for metadata in documentation files.
+- **Required Fields:** Include title, description, author, and date at minimum.
+- **Optional Fields:** Add tags, category, version, and status as needed.
+- **Consistency:** Maintain consistent front matter structure across related documents.
+
+## Link Management
+- **Internal Links:** Use relative paths for internal project links to maintain portability.
+- **External Links:** Validate external links and consider using archived versions for important references.
+- **Reference Style:** Use reference-style links for frequently referenced URLs or long URLs. Use concise, lowercase reference labels (e.g., `[docs]: url`).
+- **Anchor Links:** Create meaningful anchor links for navigation within long documents.
+
+## Table Formatting
+- **Alignment:** Use appropriate column alignment based on content type (left for text, right for numbers, center for status).
+- **Headers:** Always include descriptive headers with proper capitalization.
+- **Consistency:** Maintain consistent formatting and terminology across tables.
+- **Readability:** Use adequate spacing and consider breaking large tables into smaller, focused ones.
+
+## Visual Elements
+- **Emoji Usage:** Use emoji sparingly for visual distinction in headers or callouts (⚠️ for warnings, ✅ for success, 📝 for notes).
+- **Badges:** Include relevant badges for build status, version, license, etc., at the top of README files.
+- **Callouts:** Use blockquotes with emoji for important information, warnings, or tips.
+- **Horizontal Rules:** Use `---` for section breaks, but sparingly to avoid visual clutter.
+
+## Documentation Structure Patterns
+- **Hierarchical:** Use consistent header levels to create a logical document hierarchy.
+- **Table of Contents:** For any generated document with more than three top-level headers, automatically generate and include a Table of Contents at the beginning.
+- **Cross-References:** Link related sections and documents to improve navigation.
+- **Modular Approach:** Break large documents into smaller, focused files with clear relationships.
+
+## Quality Standards
+- **Grammar and Style:** Use clear, concise language. Prefer active voice and present tense.
+- **Consistency:** Maintain consistent terminology, formatting, and style throughout documents.
+- **Accuracy:** Verify all code examples, commands, and technical details for accuracy.
+- **Currency:** Include dates and version information. Regularly review and update documentation.
+
+## Integration with Development Workflow
+- **Version Control:** Document version control workflows and branching strategies clearly.
+- **Review Process:** Include documentation review as part of the code review process.
+- **Automation:** Use automated tools for link checking, spell checking, and formatting validation.
+- **Templates:** Create and maintain templates for common document types to ensure consistency.

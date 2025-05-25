@@ -1,0 +1,10 @@
+---
+description: "Container & Deployment Standards"
+globs: 
+alwaysApply: false
+---
+# Container & Deployment Standards
+
+- **Container Images:** Generate multi-stage Dockerfiles with slim base images (e.g., `python:3.12-slim`).
+- **Deployment Strategy:** Structure code to support blue-green deployments when applicable.
+- **Resource Optimization:** Design containers for efficient resource usage and fast startup times.
