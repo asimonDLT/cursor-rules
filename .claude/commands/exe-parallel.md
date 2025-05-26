@@ -9,6 +9,7 @@ NAVIGATE to the root of the project
 RUN `eza server --tree --git-ignore`
 RUN `eza client --tree --git-ignore`
 RUN `eza trees --tree --level 3`
+READ: PLAN_TO_EXECUTE
 
 ## Instructions
 
