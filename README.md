@@ -1,6 +1,6 @@
 # Cursor Rules Organization
 
-This repository follows Cursor best practices for rule organization in large projects.
+A comprehensive framework for organizing Cursor AI rules in large projects with automated quality assurance tools. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling.
 
 ## Structure
 
@@ -24,7 +24,8 @@ cursor_rules/
         │   └── prd.mdc              # Project requirements standards
         ├── frontend/                # 🎨 Frontend Rules
         │   └── typescript.mdc       # TypeScript/web development standards
-        └── roles/                   # 👥 Role-Based Rules (future expansion)
+        └── roles/                   # 👥 Role-Based Rules
+            └── cto.mdc              # Chief Technology Officer perspective
 ```
 
 ## How It Works
@@ -80,7 +81,8 @@ Documentation and specification standards:
 - **Design Specs**: Technical specifications with implementation-ready details
 
 ### 👥 Role-Based Rules (`roles/`)
-Future expansion for role-specific guidance (architect, security engineer, etc.)
+Executive and specialist personas for strategic guidance:
+- **CTO**: Chief Technology Officer perspective for architecture decisions and technical strategy
 
 ## Best Practices
 
@@ -137,6 +139,46 @@ The structure easily accommodates growth:
 ├── testing/         # Testing strategies and tools
 └── integrations/    # Third-party service integrations
 ```
+
+## Development Tools
+
+This repository includes automated quality assurance tools to maintain rule consistency:
+
+### Pre-commit Hooks
+- **Line limit enforcement**: Automatically checks `.mdc` files don't exceed 150 lines
+- **Cross-platform compatibility**: Python-based linter works on Windows, macOS, and Linux
+- **Rich output**: Colorful terminal output with detailed validation summaries
+
+### MDC Linter (`scripts/lint_mdc.py`)
+A Python script that validates `.mdc` files with features like:
+- Progress indicators and spinner animations
+- Detailed pass/fail summaries with file names and line counts
+- Colorful categorized output using the Rich library
+- Unicode encoding support for cross-platform compatibility
+
+### Setup
+```bash
+# Install dependencies
+uv sync
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run linter manually
+python scripts/lint_mdc.py path/to/file.mdc
+```
+
+## Documentation
+
+- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete framework for creating standardized executive/specialist personas
+- **Governance**: File naming conventions, content guidelines, and maintenance procedures
+- **Templates**: Reusable role templates with proper YAML front-matter
+
+## Dependencies
+
+- **Python**: >=3.12
+- **Runtime**: Rich library for enhanced terminal output
+- **Development**: pre-commit, ruff, pytest with coverage and async support
 
 ## References
 - [Cursor Rules Documentation](https://docs.cursor.com/customization/rules-for-ai)
