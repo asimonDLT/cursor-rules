@@ -3,6 +3,8 @@ repos:
     hooks:
       - id: mdc-line-limit
         name: MDC File Line Limiter
-        entry: bash .lint-mdc.sh
+        entry: python scripts/lint_mdc.py
         language: system
-        files: \.mdc$ 
+        files: \.mdc$
+        exclude: ^\.cursor/rules/docs/
+        pass_filenames: true 
