@@ -30,9 +30,21 @@ cursor_rules/
 ## How It Works
 
 - **Centralized Organization**: All rules organized under `.cursor/rules/` with logical domain folders
-- **Domain-Specific Guidance**: Rules automatically attach based on file patterns and project context
+- **Auto-Attachment**: Rules automatically attach based on glob patterns defined in each file
+- **Domain-Specific Guidance**: Targeted rules load based on file types and project context
 - **Scalable Structure**: Easy to add new domains or technologies as projects grow
 - **Clean Separation**: Related rules grouped together for better maintainability
+
+### Auto-Attachment Patterns
+
+Rules automatically attach based on file types:
+
+- **Python files** (`*.py`, `pyproject.toml`) → Backend Python rules
+- **TypeScript files** (`*.ts`, `*.tsx`, `package.json`) → Frontend TypeScript rules  
+- **SQL files** (`*.sql`, `alembic/**`) → Backend database rules
+- **AWS files** (`*.cfn.yml`, `aws/**`) → Cloud AWS rules
+- **Markdown files** (`*.md`, `docs/**`) → Documentation markdown rules
+- **MCP files** (`*mcp*`, `mcp-config.json`) → Backend MCP rules
 
 ## Rule Categories
 
@@ -44,28 +56,28 @@ Universal development standards that apply across all projects and technologies:
 
 ### 🔧 Backend Rules (`backend/`)
 Server-side development and infrastructure:
-- Python development patterns and tooling
-- Database design and SQL standards
-- Container deployment and orchestration
-- MCP server development guidelines
+- **Python**: SQLAlchemy, pytest, async patterns, packaging with uv
+- **Database**: SQL formatting, migrations, query optimization, testing
+- **Containers**: Multi-stage Dockerfiles, resource optimization, deployment
+- **MCP**: Model Context Protocol server development and security
 
 ### ☁️ Cloud Rules (`cloud/`)
 Cloud platform and infrastructure standards:
-- AWS services and CloudFormation templates
-- Infrastructure as code patterns
-- Cloud security and compliance
+- **AWS**: CloudFormation, CLI tools, SDK usage, security best practices
+- **Serverless**: Lambda, ECS/Fargate deployment strategies
+- **Monitoring**: CloudWatch integration, health check patterns
 
 ### 🎨 Frontend Rules (`frontend/`)
 Client-side development standards:
-- TypeScript/JavaScript patterns
-- Web development tooling (Vite, React, etc.)
-- Frontend testing and performance
+- **TypeScript**: pnpm, Biome, Vite, Prisma for type-safe development
+- **Testing**: Vitest for unit tests, Playwright for E2E testing
+- **Build**: Modern tooling and performance optimization
 
 ### 📝 Documentation Rules (`docs/`)
 Documentation and specification standards:
-- Markdown formatting and structure
-- Project requirements document (PRD) templates
-- Technical design specification guidelines
+- **Markdown**: Advanced formatting, Mermaid diagrams, structured content
+- **PRD**: Project requirements with measurable objectives and risk management
+- **Design Specs**: Technical specifications with implementation-ready details
 
 ### 👥 Role-Based Rules (`roles/`)
 Future expansion for role-specific guidance (architect, security engineer, etc.)
@@ -86,24 +98,32 @@ Future expansion for role-specific guidance (architect, security engineer, etc.)
 - Descriptive names that indicate scope and purpose
 
 ### Rule Content
-- Focus on one domain/technology per rule
-- Include specific examples and patterns
-- Reference related files using `@filename` (not `@folder`)
+- **Single Responsibility**: Each rule file focuses on one domain or technology
+- **Composable Design**: Rules work together without conflicts
+- **Specific Guidance**: Actionable patterns and examples, not vague principles
+- **Context Awareness**: Rules provide relevant guidance for the current task
 - Keep rules under 500 lines for maintainability
 
 ## Context Loading
 
 Developers automatically receive relevant rules based on their work:
 
-- **Any file**: Core rules for universal standards
-- **Python files**: Backend rules + core rules
-- **TypeScript files**: Frontend rules + core rules  
-- **CloudFormation**: Cloud rules + core rules
-- **Markdown files**: Documentation rules + core rules
-- **Database files**: Backend database rules + core rules
+```
+Working on Python backend → Core + Backend (Python + Database + Containers)
+Working on React frontend → Core + Frontend (TypeScript)
+Working on AWS CloudFormation → Core + Cloud (AWS)
+Writing documentation → Core + Docs (Markdown + PRD/Design Spec)
+Building MCP server → Core + Backend (Python + MCP + Database)
+```
 
-## Version Control
-All `.cursor/rules/` directories are version-controlled to ensure team consistency.
+## Maintenance
+
+- Keep rules under 500 lines for readability
+- Use kebab-case filenames with `.mdc` extensions
+- Test rule interactions to avoid conflicts
+- Update glob patterns when adding new file types
+- Document rule changes in commit messages
+- All `.cursor/rules/` directories are version-controlled to ensure team consistency
 
 ## Future Expansion
 
