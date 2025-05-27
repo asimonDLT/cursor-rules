@@ -12,5 +12,5 @@ repos:
         name: Tool Registry Linter
         entry: uv run python scripts/lint_tool_registry.py
         language: system
-        files: ^scripts/tool_registry\.json$
+        files: ^\.cursor/rules/tools/tool_registry\.json$
         pass_filenames: true 

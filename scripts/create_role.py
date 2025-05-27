@@ -44,7 +44,9 @@ REQUIRED_SPECIALIST_BUCKETS = ["identity", "objectives"]
 # Tool registry functions
 def load_tool_registry() -> Dict[str, Any]:
     """Load the tool registry with error handling."""
-    registry_path = Path(__file__).parent / "tool_registry.json"
+    registry_path = (
+        Path(__file__).parent.parent / ".cursor/rules/tools/tool_registry.json"
+    )
 
     if not registry_path.exists():
         logger.warning(f"Tool registry not found at {registry_path}")
@@ -189,92 +191,42 @@ def deep_merge(base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]
     return result
 
 
-# Template definitions
-EXECUTIVE_TEMPLATE = """---
-rule_type: Agent Requested
-description: {role} perspective for {domain}. Opt-in via @{role}.
----
+# Template loading functions
+def load_template(template_name: str) -> str:
+    """Load a template file from the templates directory.
+    
+    Args:
+        template_name: Name of the template file (without .template extension)
+        
+    Returns:
+        Template content as string
+        
+    Raises:
+        SystemExit: If template file is not found or cannot be read
+    """
+    template_path = Path(__file__).parent / "templates" / f"{template_name}.mdc.template"
+    
+    try:
+        with open(template_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        logger.error(f"Template file not found: {template_path}")
+        console.print(f"[red]Error:[/red] Template file not found: {template_path}")
+        sys.exit(1)
+    except OSError as e:
+        logger.error(f"Failed to read template file {template_path}: {e}")
+        console.print(f"[red]Error:[/red] Failed to read template file: {e}")
+        sys.exit(1)
 
-# {title} (v1.0)
 
-## Identity & Context
-* Scope / region: {scope}
-* Seniority: {seniority}
-* Span of control: {span_of_control}
+def get_executive_template() -> str:
+    """Get the executive role template."""
+    return load_template("executive_role")
 
-## Objectives, KPIs & Mandate
-* Top objectives: {top_objectives}
-* Success metrics: {kpis}
 
-## Influence & Decision Power
-* Decision rights: {decision_rights}
-* Key stakeholders: {stakeholders}
-
-## Behaviors, Tools & Preferences
-* Comms style: {comms}
-* Trusted tools: {trusted_tools}
-* Risk posture: {risk_posture}
-
-## Motivations, Pain Points & Constraints
-* Drivers: {drivers}
-* Pain points: {pain_points}
-
-## Synthesis & Domain Integration
-When providing guidance, synthesize and apply relevant standards from these domain experts:
-{synthesis_instructions}
-
-> Project rules override this Role if they conflict.
-
-## Output Template
-
-**{title} Assessment:**
-- {{{{finding_1}}}}
-- {{{{finding_2}}}}
-
-**Decision:** <GO / NO-GO / REVISE>
-**Next steps:**
-- {{{{action_1}}}}
-- {{{{action_2}}}}
-"""
-
-SPECIALIST_TEMPLATE = """---
-rule_type: Agent Requested
-description: {role} expertise for {domain}. Opt-in via @{role}.
----
-
-# {title} (v1.0)
-
-## Identity & Context
-* Scope / focus: {scope}
-* Seniority: {seniority}
-* Span of control: {span_of_control}
-
-## Objectives & Quality Standards
-* Top objectives: {top_objectives}
-* Success metrics: {kpis}
-* Standards: {standards}
-
-## Quality Gates & Behaviors
-* Quality gates: {gates}
-* Trusted tools: {trusted_tools}
-* Risk posture: {risk_posture}
-
-## Synthesis & Domain Integration
-When reviewing code/architecture, synthesize and apply relevant standards from these domain experts:
-{synthesis_instructions}
-
-> Project rules override this Role if they conflict.
-
-## Output Template
-
-**{title} Review:**
-- {{{{technical_finding}}}}
-- {{{{recommendation}}}}
-
-**Status:** <APPROVED / BLOCKED / NEEDS_REVISION>
-**Next steps:**
-- {{{{action}}}}
-"""
+def get_specialist_template() -> str:
+    """Get the specialist role template."""
+    return load_template("specialist_role")
 
 
 def validate_role_library(library: Dict[str, Any]) -> None:
@@ -317,7 +269,9 @@ def validate_role_library(library: Dict[str, Any]) -> None:
 
 def load_role_library() -> Dict[str, Any]:
     """Load the role library JSON with error handling."""
-    library_path = Path(__file__).parent / "role_library.json"
+    library_path = (
+        Path(__file__).parent.parent / ".cursor/rules/tools/role_library.json"
+    )
 
     logger.info(f"Loading role library from {library_path}")
 
@@ -435,26 +389,28 @@ def generate_synthesis_instructions(tool_domains: List[str]) -> str:
     domain_instructions = {
         "aws": "* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices",
         "python": "* For Python development: Invoke @python for coding standards and tooling recommendations",
-        "database": "* For database work: Invoke @database for query optimization and schema design", 
-        "martech": "* For MarTech guidance: Invoke @martech for marketing analytics and campaign best practices"
+        "database": "* For database work: Invoke @database for query optimization and schema design",
+        "martech": "* For MarTech guidance: Invoke @martech for marketing analytics and campaign best practices",
     }
-    
+
     instructions = []
     for domain in tool_domains:
         if domain in domain_instructions:
             instructions.append(domain_instructions[domain])
         else:
             # Generic instruction for unknown domains
-            instructions.append(f"* For {domain} guidance: Invoke @{domain} for domain-specific standards")
-    
+            instructions.append(
+                f"* For {domain} guidance: Invoke @{domain} for domain-specific standards"
+            )
+
     # Add default domains if none provided
     if not instructions:
         instructions = [
             "* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices",
-            "* For Python development: Invoke @python for coding standards and tooling recommendations", 
-            "* For database work: Invoke @database for query optimization and schema design"
+            "* For Python development: Invoke @python for coding standards and tooling recommendations",
+            "* For database work: Invoke @database for query optimization and schema design",
         ]
-    
+
     return "\n".join(instructions)
 
 
@@ -501,12 +457,13 @@ def generate_executive_role(
     influence = role_data.get("influence", {})
     behaviors = role_data.get("behaviors", {})
     motivations = role_data.get("motivations", {})
-    
+
     # Generate synthesis instructions based on tool domains
     tool_domains = behaviors.get("tool_domains", [])
     synthesis_instructions = generate_synthesis_instructions(tool_domains)
 
-    return EXECUTIVE_TEMPLATE.format(
+    template = get_executive_template()
+    return template.format(
         role=role_name,
         domain="strategy & execution",
         title=title,
@@ -572,12 +529,13 @@ def generate_specialist_role(
     if behaviors:
         trusted_tools = behaviors.get("trusted_tools", [])
         risk_posture = behaviors.get("risk_posture", risk_posture)
-    
+
     # Generate synthesis instructions based on tool domains
     tool_domains = behaviors.get("tool_domains", [])
     synthesis_instructions = generate_synthesis_instructions(tool_domains)
 
-    return SPECIALIST_TEMPLATE.format(
+    template = get_specialist_template()
+    return template.format(
         role=role_name,
         domain="technical review",
         title=title,
@@ -741,18 +699,18 @@ def main() -> None:
     # Apply tool domain resolution from registry
     # First check for tool_domains in role library data
     domains_to_resolve = []
-    
+
     # Get domains from role library data
     behaviors = role_data.get("behaviors", {})
     if "tool_domains" in behaviors:
         domains_to_resolve.extend(behaviors["tool_domains"])
         logger.info(f"Found tool_domains in role library: {behaviors['tool_domains']}")
-    
+
     # Override with CLI domains if provided
     if args.tool_domains:
         domains_to_resolve = coerce_csv(args.tool_domains)
         logger.info(f"Using CLI tool_domains override: {domains_to_resolve}")
-    
+
     if domains_to_resolve:
         resolved_tools = resolve_tools_from_registry(domains_to_resolve, tool_registry)
         if resolved_tools:
@@ -783,7 +741,8 @@ def main() -> None:
         )
 
     # Write file
-    output_path = write_role_file(role_name, content, Path(args.output_dir))
+    output_dir = Path(args.output_dir) / args.type
+    output_path = write_role_file(role_name, content, output_dir)
 
     console.print(f"\n[green]✓ Role created:[/green] {output_path}")
     console.print(f"[dim]Invoke with: @{role_name}[/dim]")

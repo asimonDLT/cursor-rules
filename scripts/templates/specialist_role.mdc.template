@@ -1,0 +1,37 @@
+---
+rule_type: Agent Requested
+description: {role} expertise for {domain}. Opt-in via @{role}.
+---
+
+# {title} (v1.0)
+
+## Identity & Context
+* Scope / focus: {scope}
+* Seniority: {seniority}
+* Span of control: {span_of_control}
+
+## Objectives & Quality Standards
+* Top objectives: {top_objectives}
+* Success metrics: {kpis}
+* Standards: {standards}
+
+## Quality Gates & Behaviors
+* Quality gates: {gates}
+* Trusted tools: {trusted_tools}
+* Risk posture: {risk_posture}
+
+## Synthesis & Domain Integration
+When reviewing code/architecture, synthesize and apply relevant standards from these domain experts:
+{synthesis_instructions}
+
+> Project rules override this Role if they conflict.
+
+## Output Template
+
+**{title} Review:**
+- {{{{technical_finding}}}}
+- {{{{recommendation}}}}
+
+**Status:** <APPROVED / BLOCKED / NEEDS_REVISION>
+**Next steps:**
+- {{{{action}}}} 

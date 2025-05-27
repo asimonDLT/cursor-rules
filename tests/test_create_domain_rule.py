@@ -17,6 +17,7 @@ from scripts.create_domain_rule import (
     create_domain_rule_file,
     generate_domain_rule_content,
     load_domain_metadata,
+    load_domain_rule_template,
     sanitize_name,
     validate_input,
 )
@@ -405,6 +406,24 @@ class TestCreateDomainRuleFile:
         # Act & Assert
         with pytest.raises(SystemExit):
             create_domain_rule_file(dangerous_name, category, output_base_dir=str(temp_output_dir))
+
+
+class TestTemplateLoading:
+    """Test cases for template loading functions."""
+    
+    def test_load_domain_rule_template(self):
+        """Test loading domain rule template."""
+        # Act
+        template = load_domain_rule_template()
+        
+        # Assert
+        assert template is not None
+        assert "rule_type: Agent Requested" in template
+        assert "{title}" in template
+        assert "Core Principles" in template
+        assert "Best Practices" in template
+        assert "Standards & Guidelines" in template
+        assert "Common Patterns" in template
 
 
 class TestConstants:

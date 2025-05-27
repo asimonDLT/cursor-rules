@@ -103,8 +103,8 @@ def main():
     """Main migration entry point."""
     console.print(Panel("Role Library Migration to Five-Bucket Standard", border_style="blue"))
     
-    library_path = Path(__file__).parent / "role_library.json"
-    backup_path = Path(__file__).parent / "role_library_backup.json"
+    library_path = Path(__file__).parent.parent / ".cursor/rules/tools/role_library.json"
+    backup_path = Path(__file__).parent.parent / ".cursor/rules/tools/role_library.json.backup"
     
     if not library_path.exists():
         console.print(f"[red]Error:[/red] {library_path} not found")

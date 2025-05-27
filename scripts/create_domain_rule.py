@@ -9,7 +9,7 @@ import json
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Dict, Optional
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -39,26 +39,29 @@ VALID_CATEGORIES = [
     "martech",
 ]
 
-# Domain rule template
-DOMAIN_RULE_TEMPLATE = """---
-rule_type: Agent Requested
-description: {description}
----
-
-# {title}
-
-## Core Principles
-- {principle_placeholder}
-
-## Best Practices
-- {practice_placeholder}
-
-## Standards & Guidelines
-- {standard_placeholder}
-
-## Common Patterns
-- {pattern_placeholder}
-"""
+# Template loading function
+def load_domain_rule_template() -> str:
+    """Load the domain rule template from external file.
+    
+    Returns:
+        Template content as string
+        
+    Raises:
+        SystemExit: If template file is not found or cannot be read
+    """
+    template_path = Path(__file__).parent / "templates" / "domain_rule.mdc.template"
+    
+    try:
+        with open(template_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        logger.error(f"Template file not found: {template_path}")
+        console.print(f"[red]Error:[/red] Template file not found: {template_path}")
+        sys.exit(1)
+    except OSError as e:
+        logger.error(f"Failed to read template file {template_path}: {e}")
+        console.print(f"[red]Error:[/red] Failed to read template file: {e}")
+        sys.exit(1)
 
 
 def validate_input(value: str, field_name: str) -> bool:
@@ -128,34 +131,129 @@ def sanitize_name(name: str) -> str:
     return sanitized
 
 
-def load_domain_metadata(name: str) -> Optional[str]:
+def load_domain_metadata(name: str) -> Optional[Dict]:
     """
-    Load domain description from tool_registry.json domain_metadata.
-    
+    Load complete domain metadata from tool_registry.json domain_metadata.
+
     Args:
         name: Domain name to look up
-        
+
     Returns:
-        Description from domain_metadata or None if not found
+        Complete domain metadata dict or None if not found
     """
     try:
-        registry_path = Path(__file__).parent / "tool_registry.json"
+        registry_path = (
+            Path(__file__).parent.parent / ".cursor/rules/tools/tool_registry.json"
+        )
         if registry_path.exists():
             with open(registry_path, "r", encoding="utf-8") as f:
                 registry = json.load(f)
                 domain_metadata = registry.get("domain_metadata", {})
                 if name in domain_metadata:
-                    return domain_metadata[name].get("description")
+                    return domain_metadata[name]
     except (json.JSONDecodeError, OSError) as e:
         logger.warning(f"Could not load domain metadata: {e}")
     return None
+
+
+def get_template_placeholders(template_type: str) -> Dict[str, str]:
+    """
+    Get template placeholders based on template_type from domain metadata.
+
+    Args:
+        template_type: The template type from domain metadata
+
+    Returns:
+        Dictionary of placeholder values for the template
+    """
+    template_configs = {
+        "layered_architecture": {
+            "principle_placeholder": "Design for scalability and maintainability",
+            "practice_placeholder": "Use proper error handling and logging",
+            "standard_placeholder": "Follow RESTful API design principles",
+            "pattern_placeholder": "Layered architecture with clear separation of concerns"
+        },
+        "cloud_native": {
+            "principle_placeholder": "Design for cloud-native scalability and resilience",
+            "practice_placeholder": "Use infrastructure as code for all deployments",
+            "standard_placeholder": "Follow cloud security best practices",
+            "pattern_placeholder": "Microservices with proper service mesh configuration"
+        },
+        "universal_standards": {
+            "principle_placeholder": "Maintain consistency across all development practices",
+            "practice_placeholder": "Use structured communication and documentation",
+            "standard_placeholder": "Follow enterprise coding and security standards",
+            "pattern_placeholder": "Standardized workflows with clear governance"
+        },
+        "data_platform": {
+            "principle_placeholder": "Ensure data quality and governance",
+            "practice_placeholder": "Implement proper data validation and monitoring",
+            "standard_placeholder": "Follow data privacy and compliance requirements",
+            "pattern_placeholder": "ETL pipelines with proper error handling and recovery"
+        },
+        "documentation": {
+            "principle_placeholder": "Create clear, actionable, and maintainable documentation",
+            "practice_placeholder": "Use consistent formatting and structure",
+            "standard_placeholder": "Follow technical writing best practices",
+            "pattern_placeholder": "Documentation-as-code with version control"
+        },
+        "component_driven": {
+            "principle_placeholder": "Prioritize user experience and performance",
+            "practice_placeholder": "Use semantic HTML and accessible design patterns",
+            "standard_placeholder": "Follow WCAG 2.1 AA accessibility guidelines",
+            "pattern_placeholder": "Component-based architecture with reusable UI elements"
+        },
+        "tracking_and_analytics": {
+            "principle_placeholder": "Respect user privacy and consent preferences",
+            "practice_placeholder": "Use consistent naming conventions for tracking events",
+            "standard_placeholder": "Follow GDPR and privacy compliance requirements",
+            "pattern_placeholder": "Centralized tag management with proper data governance"
+        },
+        "security_first": {
+            "principle_placeholder": "Apply defense in depth security strategy",
+            "practice_placeholder": "Use principle of least privilege for all access",
+            "standard_placeholder": "Follow OWASP security guidelines",
+            "pattern_placeholder": "Zero-trust architecture with proper authentication"
+        },
+        "aws_services": {
+            "principle_placeholder": "Optimize for cost, security, and performance",
+            "practice_placeholder": "Use managed services and infrastructure as code",
+            "standard_placeholder": "Follow AWS Well-Architected Framework",
+            "pattern_placeholder": "Cloud-native patterns with proper monitoring"
+        },
+        "language_specific": {
+            "principle_placeholder": "Follow language idioms and best practices",
+            "practice_placeholder": "Use consistent code style and formatting",
+            "standard_placeholder": "Implement comprehensive testing strategies",
+            "pattern_placeholder": "Modular design with clear dependency management"
+        },
+        "data_storage": {
+            "principle_placeholder": "Design for performance, consistency, and scalability",
+            "practice_placeholder": "Use proper indexing and query optimization",
+            "standard_placeholder": "Follow database normalization and security practices",
+            "pattern_placeholder": "Schema design with proper data modeling"
+        },
+        "role_specific": {
+            "principle_placeholder": "Focus on role-specific best practices and workflows",
+            "practice_placeholder": "Use domain-appropriate tools and methodologies",
+            "standard_placeholder": "Follow industry standards for the role",
+            "pattern_placeholder": "Established patterns for role responsibilities"
+        }
+    }
+    
+    return template_configs.get(template_type, {
+        "principle_placeholder": "Follow domain-specific best practices",
+        "practice_placeholder": "Implement proper patterns and methodologies",
+        "standard_placeholder": "Adhere to industry standards",
+        "pattern_placeholder": "Use established architectural patterns"
+    })
 
 
 def generate_domain_rule_content(
     name: str, category: str, description: Optional[str] = None
 ) -> str:
     """
-    Generate domain rule content with proper structure.
+    Generate domain rule content with proper structure using metadata-driven templates.
 
     Args:
         name: Domain rule name
@@ -167,58 +265,42 @@ def generate_domain_rule_content(
     """
     title = name.replace("_", " ").replace("-", " ").title()
 
-    # Try to get description from domain metadata first
-    if not description:
-        description = load_domain_metadata(name)
+    # Load complete domain metadata
+    domain_metadata = load_domain_metadata(name)
     
-    # Fallback to default description
+    # Get description from metadata or use provided/default
     if not description:
-        description = f"Standards and best practices for {title.lower()}."
+        if domain_metadata:
+            description = domain_metadata.get("description")
+        if not description:
+            description = f"Standards and best practices for {title.lower()}."
 
-    # Generate contextual placeholders based on category
-    if category == "frontend":
-        principle_placeholder = "Prioritize user experience and performance"
-        practice_placeholder = "Use semantic HTML and accessible design patterns"
-        standard_placeholder = "Follow WCAG 2.1 AA accessibility guidelines"
-        pattern_placeholder = "Component-based architecture with reusable UI elements"
-    elif category == "backend":
-        principle_placeholder = "Design for scalability and maintainability"
-        practice_placeholder = "Use proper error handling and logging"
-        standard_placeholder = "Follow RESTful API design principles"
-        pattern_placeholder = "Layered architecture with clear separation of concerns"
-    elif category == "cloud":
-        principle_placeholder = "Design for cloud-native scalability and resilience"
-        practice_placeholder = "Use infrastructure as code for all deployments"
-        standard_placeholder = "Follow cloud security best practices"
-        pattern_placeholder = "Microservices with proper service mesh configuration"
-    elif category == "data":
-        principle_placeholder = "Ensure data quality and governance"
-        practice_placeholder = "Implement proper data validation and monitoring"
-        standard_placeholder = "Follow data privacy and compliance requirements"
-        pattern_placeholder = "ETL pipelines with proper error handling and recovery"
-    elif category == "security":
-        principle_placeholder = "Apply defense in depth security strategy"
-        practice_placeholder = "Use principle of least privilege for all access"
-        standard_placeholder = "Follow OWASP security guidelines"
-        pattern_placeholder = "Zero-trust architecture with proper authentication"
-    elif category == "martech":
-        principle_placeholder = "Respect user privacy and consent preferences"
-        practice_placeholder = "Use consistent naming conventions for tracking events"
-        standard_placeholder = "Follow GDPR and privacy compliance requirements"
-        pattern_placeholder = "Centralized tag management with proper data governance"
-    else:
-        principle_placeholder = f"Follow {title.lower()} best practices"
-        practice_placeholder = f"Implement proper {title.lower()} patterns"
-        standard_placeholder = f"Adhere to industry {title.lower()} standards"
-        pattern_placeholder = f"Use established {title.lower()} architectural patterns"
+    # Get template type from metadata or fallback to category-based logic
+    template_type = None
+    if domain_metadata:
+        template_type = domain_metadata.get("template_type")
+    
+    # Fallback to category-based template mapping if no metadata template_type
+    if not template_type:
+        category_to_template = {
+            "frontend": "component_driven",
+            "backend": "layered_architecture", 
+            "cloud": "cloud_native",
+            "data": "data_platform",
+            "security": "security_first",
+            "martech": "tracking_and_analytics",
+            "docs": "documentation"
+        }
+        template_type = category_to_template.get(category, "universal_standards")
 
-    return DOMAIN_RULE_TEMPLATE.format(
+    # Get template placeholders based on template type
+    placeholders = get_template_placeholders(template_type)
+
+    template = load_domain_rule_template()
+    return template.format(
         description=description,
         title=title,
-        principle_placeholder=principle_placeholder,
-        practice_placeholder=practice_placeholder,
-        standard_placeholder=standard_placeholder,
-        pattern_placeholder=pattern_placeholder,
+        **placeholders
     )
 
 
@@ -307,7 +389,7 @@ def main() -> None:
     parser.add_argument("--description", help="Custom description for the domain rule")
     parser.add_argument(
         "--output-dir",
-        default=".cursor/rules",
+        default=".cursor/rules/domains",
         help="Base output directory for rule files",
     )
     parser.add_argument(

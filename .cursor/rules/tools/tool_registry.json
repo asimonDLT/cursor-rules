@@ -1,0 +1,251 @@
+{
+  "tool_categories": {
+    "aws_core": {
+      "description": "Core AWS cloud infrastructure tools",
+      "tools": ["AWS CLI", "CloudFormation", "boto3", "CloudWatch", "CloudTrail", "GuardDuty"]
+    },
+    "aws_security": {
+      "description": "AWS security and secrets management",
+      "tools": ["AWS Secrets Manager", "Parameter Store", "IAM"]
+    },
+    "aws_compute": {
+      "description": "AWS compute and deployment services",
+      "tools": ["AWS Lambda", "AWS ECS", "AWS Fargate"]
+    },
+    "python_dev": {
+      "description": "Python development and package management",
+      "tools": ["uv", "Ruff", "rich", "Polars", "Maturin", "PyO3"]
+    },
+    "python_data": {
+      "description": "Python data manipulation and analysis",
+      "tools": ["Polars", "SQLAlchemy", "Alembic"]
+    },
+    "python_testing": {
+      "description": "Python testing framework and tools",
+      "tools": ["pytest", "pytest-asyncio", "pytest-cov", "factory-boy"]
+    },
+    "database_core": {
+      "description": "Database engines and analysis tools",
+      "tools": ["DuckDB", "SQLAlchemy", "Alembic", "Prisma"]
+    },
+    "database_tooling": {
+      "description": "Database development and migration tools",
+      "tools": ["sqlfluff", "Prisma Migrate"]
+    },
+    "data_engineering": {
+      "description": "Data pipeline and quality tools",
+      "tools": ["Glue", "Athena", "Redshift", "dbt", "Great Expectations", "Snowflake"]
+    },
+    "martech_analytics": {
+      "description": "Web and product analytics platforms",
+      "tools": ["Google Analytics 4", "Google Tag Manager", "Mixpanel", "Amplitude"]
+    },
+    "martech_ads": {
+      "description": "Paid advertising platforms and APIs",
+      "tools": ["Google Ads API", "Meta Ads API", "LinkedIn Ads API"]
+    },
+    "martech_seo": {
+      "description": "Search Engine Optimization tools",
+      "tools": ["Screaming Frog", "Semrush", "Ahrefs"]
+    }
+  },
+  "domain_mappings": {
+    "aws": ["aws_core", "aws_security", "aws_compute"],
+    "python": ["python_dev", "python_data", "python_testing"],
+    "database": ["database_core", "database_tooling"],
+    "backend": ["python_dev", "database_core", "aws_core"],
+    "cloud": ["aws_core", "aws_security", "aws_compute"],
+    "core": [],
+    "data": ["python_data", "database_core", "data_engineering"],
+    "docs": [],
+    "frontend": [],
+    "martech": ["martech_analytics", "martech_ads", "martech_seo"],
+    "security": ["aws_security"],
+    "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"],
+    "data_analyst": ["python_data", "database_core", "data_engineering", "martech_analytics"]
+  },
+  "domain_metadata": {
+    "backend": {
+      "description": "Core standards for all server-side development, including APIs, databases, and containers.",
+      "owner": "@my-org/backend-platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-20",
+      "template_type": "layered_architecture",
+      "required_sections": [
+        "## Core Principles",
+        "## API Design",
+        "## Database Integration",
+        "## Security Considerations"
+      ],
+      "compliance_requirements": ["Security standards", "API governance"]
+    },
+    "cloud": {
+      "description": "Cloud infrastructure and platform services with focus on AWS best practices.",
+      "owner": "@my-org/platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-15",
+      "template_type": "cloud_native",
+      "required_sections": [
+        "## Core Principles",
+        "## Infrastructure as Code",
+        "## Security & Compliance",
+        "## Cost Optimization"
+      ],
+      "compliance_requirements": ["Security standards", "Cost governance"]
+    },
+    "core": {
+      "description": "Universal development standards and communication guidelines.",
+      "owner": "@my-org/engineering-leadership",
+      "status": "active",
+      "last_reviewed": "2025-05-27",
+      "template_type": "universal_standards",
+      "required_sections": [
+        "## Core Principles",
+        "## Communication Standards",
+        "## Code Quality",
+        "## Security Mandates"
+      ],
+      "compliance_requirements": ["Code quality", "Security mandates"]
+    },
+    "data": {
+      "description": "Data engineering and analytics platform standards with governance focus.",
+      "owner": "@my-org/data-platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-10",
+      "template_type": "data_platform",
+      "required_sections": [
+        "## Core Principles",
+        "## Data Quality Standards",
+        "## Privacy & Governance",
+        "## Pipeline Architecture"
+      ],
+      "compliance_requirements": ["Data governance", "Privacy regulations"]
+    },
+    "docs": {
+      "description": "Documentation standards and technical writing guidelines.",
+      "owner": "@my-org/technical-writing-team",
+      "status": "active",
+      "last_reviewed": "2025-04-30",
+      "template_type": "documentation",
+      "required_sections": [
+        "## Core Principles",
+        "## Writing Standards",
+        "## Documentation Types",
+        "## Review Process"
+      ],
+      "compliance_requirements": ["Documentation standards"]
+    },
+    "frontend": {
+      "description": "Frontend development and user interface standards with accessibility focus.",
+      "owner": "@my-org/frontend-team",
+      "status": "active",
+      "last_reviewed": "2025-05-05",
+      "template_type": "component_driven",
+      "required_sections": [
+        "## Core Principles",
+        "## Component Architecture",
+        "## Accessibility Standards",
+        "## Performance Guidelines"
+      ],
+      "compliance_requirements": ["Accessibility", "Performance standards"]
+    },
+    "martech": {
+      "description": "Marketing Technology tools for analytics, advertising, and SEO, with a focus on privacy compliance.",
+      "owner": "@my-org/data-analytics-team",
+      "status": "active",
+      "last_reviewed": "2025-05-27",
+      "template_type": "tracking_and_analytics",
+      "required_sections": [
+        "## Core Principles",
+        "## Event Tracking & Naming",
+        "## Privacy & Consent Management",
+        "## Campaign Attribution"
+      ],
+      "compliance_requirements": ["GDPR", "CCPA"]
+    },
+    "security": {
+      "description": "Security standards and cybersecurity best practices across all systems.",
+      "owner": "@my-org/security-team",
+      "status": "active",
+      "last_reviewed": "2025-05-22",
+      "template_type": "security_first",
+      "required_sections": [
+        "## Core Principles",
+        "## Threat Modeling",
+        "## Secure Development",
+        "## Incident Response"
+      ],
+      "compliance_requirements": ["Security frameworks", "Compliance standards"]
+    },
+    "aws": {
+      "description": "Amazon Web Services cloud platform tools and services.",
+      "owner": "@my-org/platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-15",
+      "template_type": "aws_services",
+      "required_sections": [
+        "## Core Principles",
+        "## Service Selection",
+        "## Cost Management",
+        "## Security Configuration"
+      ],
+      "compliance_requirements": ["Security standards", "Cost governance"]
+    },
+    "python": {
+      "description": "Python programming language tools and frameworks.",
+      "owner": "@my-org/backend-team",
+      "status": "active",
+      "last_reviewed": "2025-05-18",
+      "template_type": "language_specific",
+      "required_sections": [
+        "## Core Principles",
+        "## Code Style & Formatting",
+        "## Testing Standards",
+        "## Package Management"
+      ],
+      "compliance_requirements": ["Code quality", "Security standards"]
+    },
+    "database": {
+      "description": "Database engines and data management tools.",
+      "owner": "@my-org/data-platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-12",
+      "template_type": "data_storage",
+      "required_sections": [
+        "## Core Principles",
+        "## Schema Design",
+        "## Query Optimization",
+        "## Data Security"
+      ],
+      "compliance_requirements": ["Data governance", "Security standards"]
+    },
+    "data_engineer": {
+      "description": "Data engineering tools and platform technologies.",
+      "owner": "@my-org/data-platform-team",
+      "status": "active",
+      "last_reviewed": "2025-05-10",
+      "template_type": "role_specific",
+      "required_sections": [
+        "## Core Principles",
+        "## Pipeline Development",
+        "## Data Quality Assurance",
+        "## Monitoring & Alerting"
+      ],
+      "compliance_requirements": ["Data governance", "Privacy regulations"]
+    },
+    "data_analyst": {
+      "description": "Data analysis and business intelligence tools and methodologies.",
+      "owner": "@my-org/data-analytics-team",
+      "status": "active",
+      "last_reviewed": "2025-05-27",
+      "template_type": "role_specific",
+      "required_sections": [
+        "## Core Principles",
+        "## Analysis Methodology",
+        "## Visualization Standards",
+        "## Statistical Rigor"
+      ],
+      "compliance_requirements": ["Data governance", "Privacy regulations"]
+    }
+  }
+}

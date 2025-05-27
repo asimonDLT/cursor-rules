@@ -6,6 +6,7 @@ Validates that domain directories and registry entries are synchronized.
 
 import json
 import logging
+import re
 import sys
 import uuid
 from pathlib import Path
@@ -182,6 +183,128 @@ def validate_domain_consistency(
     return is_valid, errors
 
 
+def validate_domain_metadata_schema(
+    registry: Dict, correlation_id: str
+) -> Tuple[bool, List[str]]:
+    """
+    Validate the enhanced domain metadata schema fields.
+    
+    Args:
+        registry: Parsed tool registry data
+        correlation_id: Unique identifier for this validation run
+        
+    Returns:
+        Tuple of (is_valid, list_of_errors)
+    """
+    logger.info(f"[{correlation_id}] Validating domain metadata schema")
+    
+    errors = []
+    domain_metadata = registry.get("domain_metadata", {})
+    valid_statuses = {"active", "beta", "deprecated"}
+    
+    for domain_name, metadata in domain_metadata.items():
+        # Validate status field
+        status = metadata.get("status")
+        if not status:
+            errors.append(f"Domain '{domain_name}' missing required 'status' field")
+        elif status not in valid_statuses:
+            errors.append(f"Domain '{domain_name}' has invalid status '{status}'. Must be one of: {valid_statuses}")
+        
+        # Validate last_reviewed field format (YYYY-MM-DD)
+        last_reviewed = metadata.get("last_reviewed")
+        if last_reviewed:
+            if not re.match(r'^\d{4}-\d{2}-\d{2}$', last_reviewed):
+                errors.append(f"Domain '{domain_name}' has invalid last_reviewed format '{last_reviewed}'. Must be YYYY-MM-DD")
+        
+        # Validate template_type field exists
+        template_type = metadata.get("template_type")
+        if not template_type:
+            errors.append(f"Domain '{domain_name}' missing required 'template_type' field")
+        
+        # Validate required_sections is a list
+        required_sections = metadata.get("required_sections")
+        if required_sections is not None and not isinstance(required_sections, list):
+            errors.append(f"Domain '{domain_name}' 'required_sections' must be a list")
+    
+    is_valid = len(errors) == 0
+    
+    if is_valid:
+        logger.info(f"[{correlation_id}] Domain metadata schema validation passed")
+    else:
+        logger.error(f"[{correlation_id}] Domain metadata schema validation failed with {len(errors)} errors")
+    
+    return is_valid, errors
+
+
+def validate_required_sections(
+    filesystem_domains: Set[str], registry: Dict, correlation_id: str
+) -> Tuple[bool, List[str]]:
+    """
+    Validate that domain .mdc files contain all required sections.
+    
+    Args:
+        filesystem_domains: Domain directories from filesystem
+        registry: Parsed tool registry data
+        correlation_id: Unique identifier for this validation run
+        
+    Returns:
+        Tuple of (is_valid, list_of_errors)
+    """
+    logger.info(f"[{correlation_id}] Validating required sections in domain files")
+    
+    errors = []
+    domain_metadata = registry.get("domain_metadata", {})
+    script_dir = Path(__file__).parent
+    domains_dir = script_dir.parent / ".cursor" / "rules" / "domains"
+    
+    for domain_name in filesystem_domains:
+        if domain_name not in domain_metadata:
+            continue  # Skip domains not in metadata (handled by other validation)
+        
+        metadata = domain_metadata[domain_name]
+        required_sections = metadata.get("required_sections", [])
+        
+        if not required_sections:
+            continue  # No required sections defined
+        
+        # Find the domain's .mdc file
+        domain_dir = domains_dir / domain_name
+        mdc_files = list(domain_dir.glob("*.mdc"))
+        
+        if not mdc_files:
+            errors.append(f"Domain '{domain_name}' has no .mdc files but has required_sections defined")
+            continue
+        
+        # Check each .mdc file for required sections
+        for mdc_file in mdc_files:
+            try:
+                with open(mdc_file, "r", encoding="utf-8") as f:
+                    content = f.read()
+                
+                # Extract all H2 headers from the file
+                h2_headers = re.findall(r'^## (.+)$', content, re.MULTILINE)
+                found_headers = {f"## {header}" for header in h2_headers}
+                
+                # Check for missing required sections
+                missing_sections = set(required_sections) - found_headers
+                if missing_sections:
+                    errors.append(
+                        f"Domain '{domain_name}' file '{mdc_file.name}' missing required sections: {sorted(missing_sections)}"
+                    )
+                
+            except (OSError, UnicodeDecodeError) as e:
+                errors.append(f"Error reading domain file '{mdc_file}': {e}")
+    
+    is_valid = len(errors) == 0
+    
+    if is_valid:
+        logger.info(f"[{correlation_id}] Required sections validation passed")
+    else:
+        logger.error(f"[{correlation_id}] Required sections validation failed with {len(errors)} errors")
+    
+    return is_valid, errors
+
+
 def display_validation_summary(
     filesystem_domains: Set[str],
     registry_mappings: Set[str],
@@ -223,8 +346,8 @@ def main():
     
     # Set up paths
     script_dir = Path(__file__).parent
-    registry_path = script_dir / "tool_registry.json"
-    rules_dir = script_dir.parent / ".cursor" / "rules"
+    registry_path = script_dir.parent / ".cursor/rules/tools/tool_registry.json"
+    rules_dir = script_dir.parent / ".cursor" / "rules" / "domains"
     
     # Load tool registry
     registry = load_tool_registry(registry_path, correlation_id)
@@ -237,13 +360,25 @@ def main():
     registry_mappings, registry_metadata = get_registry_domains(registry, correlation_id)
     
     # Validate consistency
-    is_valid, errors = validate_domain_consistency(
+    consistency_valid, consistency_errors = validate_domain_consistency(
         filesystem_domains, registry_mappings, registry_metadata, correlation_id
     )
     
+    # Validate domain metadata schema
+    schema_valid, schema_errors = validate_domain_metadata_schema(registry, correlation_id)
+    
+    # Validate required sections in domain files
+    sections_valid, sections_errors = validate_required_sections(
+        filesystem_domains, registry, correlation_id
+    )
+    
+    # Combine all validation results
+    all_errors = consistency_errors + schema_errors + sections_errors
+    is_valid = consistency_valid and schema_valid and sections_valid
+    
     # Display results
     display_validation_summary(
-        filesystem_domains, registry_mappings, registry_metadata, is_valid, errors, correlation_id
+        filesystem_domains, registry_mappings, registry_metadata, is_valid, all_errors, correlation_id
     )
     
     # Exit with appropriate code

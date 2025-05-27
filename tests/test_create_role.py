@@ -22,8 +22,11 @@ from scripts.create_role import (
     generate_executive_role,
     generate_specialist_role,
     generate_synthesis_instructions,
+    get_executive_template,
     get_role_data,
+    get_specialist_template,
     load_role_library,
+    load_template,
     load_tool_registry,
     resolve_tools_from_registry,
     validate_cli_input,
@@ -855,6 +858,49 @@ class TestWriteRoleFile:
         with patch('scripts.create_role.Confirm.ask', return_value=False):
             with pytest.raises(SystemExit):
                 write_role_file(role_name, content, temp_output_dir)
+
+
+class TestTemplateLoading:
+    """Test cases for template loading functions."""
+    
+    def test_load_executive_template(self):
+        """Test loading executive template."""
+        # Act
+        template = get_executive_template()
+        
+        # Assert
+        assert template is not None
+        assert "rule_type: Agent Requested" in template
+        assert "{title}" in template
+        assert "Identity & Context" in template
+        assert "Objectives, KPIs & Mandate" in template
+    
+    def test_load_specialist_template(self):
+        """Test loading specialist template."""
+        # Act
+        template = get_specialist_template()
+        
+        # Assert
+        assert template is not None
+        assert "rule_type: Agent Requested" in template
+        assert "{title}" in template
+        assert "Identity & Context" in template
+        assert "Quality Gates & Behaviors" in template
+    
+    def test_load_template_direct(self):
+        """Test loading template directly by name."""
+        # Act
+        template = load_template("executive_role")
+        
+        # Assert
+        assert template is not None
+        assert "rule_type: Agent Requested" in template
+    
+    def test_load_nonexistent_template(self):
+        """Test loading nonexistent template raises SystemExit."""
+        # Act & Assert
+        with pytest.raises(SystemExit):
+            load_template("nonexistent_template")
 
 
 class TestConstants:

@@ -26,34 +26,21 @@ logger = logging.getLogger("lint_role_library")
 console = Console()
 
 # Role type validation constants
-VALID_ROLE_TYPES = {
-    "executive", 
-    "specialist"
-}
+VALID_ROLE_TYPES = {"executive", "specialist"}
 
 REQUIRED_EXECUTIVE_BUCKETS = {
-    "identity", 
-    "objectives", 
-    "influence", 
-    "behaviors", 
-    "motivations"
+    "identity",
+    "objectives",
+    "influence",
+    "behaviors",
+    "motivations",
 }
 
-REQUIRED_SPECIALIST_BUCKETS = {
-    "identity", 
-    "objectives"
-}
+REQUIRED_SPECIALIST_BUCKETS = {"identity", "objectives"}
 
-REQUIRED_IDENTITY_FIELDS = {
-    "scope", 
-    "seniority", 
-    "span_of_control"
-}
+REQUIRED_IDENTITY_FIELDS = {"scope", "seniority", "span_of_control"}
 
-REQUIRED_OBJECTIVES_FIELDS = {
-    "top_objectives", 
-    "kpis"
-}
+REQUIRED_OBJECTIVES_FIELDS = {"top_objectives", "kpis"}
 
 
 def sanitize_file_path(file_path_str: str) -> Path:
@@ -70,15 +57,7 @@ def sanitize_file_path(file_path_str: str) -> Path:
         ValueError: If path contains dangerous patterns
     """
     # Check for dangerous patterns
-    dangerous_patterns = [
-        "../", 
-        "~/", 
-        "$", 
-        "`", 
-        ";", 
-        "|", 
-        "&"
-    ]
+    dangerous_patterns = ["../", "~/", "$", "`", ";", "|", "&"]
     if any(pattern in file_path_str for pattern in dangerous_patterns):
         raise ValueError(f"Potentially dangerous file path: {file_path_str}")
 
@@ -102,10 +81,14 @@ def load_tool_registry(correlation_id: str) -> Dict[str, Any]:
     Returns:
         Dict: Tool registry data or empty dict if not found
     """
-    tool_registry_path = Path(__file__).parent / "tool_registry.json"
-    
+    tool_registry_path = (
+        Path(__file__).parent.parent / ".cursor/rules/tools/tool_registry.json"
+    )
+
     if not tool_registry_path.exists():
-        logger.warning(f"[{correlation_id}] Tool registry not found at {tool_registry_path}")
+        logger.warning(
+            f"[{correlation_id}] Tool registry not found at {tool_registry_path}"
+        )
         return {}
 
     try:
@@ -117,8 +100,7 @@ def load_tool_registry(correlation_id: str) -> Dict[str, Any]:
 
 
 def validate_json_structure(
-    library_data: Dict, 
-    correlation_id: str
+    library_data: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
     """
     Validate the basic JSON structure of the role library.
@@ -142,7 +124,9 @@ def validate_json_structure(
     # Validate that we have at least one valid role type
     found_role_types = set(library_data.keys()) & VALID_ROLE_TYPES
     if not found_role_types:
-        errors.append(f"No valid role types found. Expected one of: {', '.join(VALID_ROLE_TYPES)}")
+        errors.append(
+            f"No valid role types found. Expected one of: {', '.join(VALID_ROLE_TYPES)}"
+        )
 
     # Check for unknown role types
     unknown_types = set(library_data.keys()) - VALID_ROLE_TYPES
@@ -160,7 +144,9 @@ def validate_json_structure(
 
         for role_name, role_data in roles_by_type.items():
             if not isinstance(role_data, dict):
-                errors.append(f"Role '{role_name}' in '{role_type}' must be a dictionary")
+                errors.append(
+                    f"Role '{role_name}' in '{role_type}' must be a dictionary"
+                )
                 continue
 
             # Validate required buckets based on role type
@@ -176,7 +162,7 @@ def validate_json_structure(
                     errors.append(
                         f"Specialist role '{role_name}' missing required buckets: {', '.join(sorted(missing_buckets))}"
                     )
-                
+
                 # Specialists need either standards OR behaviors
                 has_standards_or_behaviors = (
                     "standards" in role_data or "behaviors" in role_data
@@ -199,8 +185,7 @@ def validate_json_structure(
 
 
 def validate_field_structure(
-    library_data: Dict, 
-    correlation_id: str
+    library_data: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
     """
     Validate the structure of individual fields within roles.
@@ -250,8 +235,12 @@ def validate_field_structure(
 
                     # Validate that objectives fields are arrays
                     for field in ["top_objectives", "kpis"]:
-                        if field in objectives and not isinstance(objectives[field], list):
-                            errors.append(f"Role '{role_name}' objectives.{field} must be an array")
+                        if field in objectives and not isinstance(
+                            objectives[field], list
+                        ):
+                            errors.append(
+                                f"Role '{role_name}' objectives.{field} must be an array"
+                            )
 
             # Validate behaviors structure (for specialists with tool_domains)
             if "behaviors" in role_data:
@@ -263,17 +252,27 @@ def validate_field_structure(
                     if "tool_domains" in behaviors:
                         tool_domains = behaviors["tool_domains"]
                         if not isinstance(tool_domains, list):
-                            errors.append(f"Role '{role_name}' behaviors.tool_domains must be an array")
-                        elif not all(isinstance(domain, str) for domain in tool_domains):
-                            errors.append(f"Role '{role_name}' behaviors.tool_domains must contain only strings")
+                            errors.append(
+                                f"Role '{role_name}' behaviors.tool_domains must be an array"
+                            )
+                        elif not all(
+                            isinstance(domain, str) for domain in tool_domains
+                        ):
+                            errors.append(
+                                f"Role '{role_name}' behaviors.tool_domains must contain only strings"
+                            )
 
                     # Validate trusted_tools if present
                     if "trusted_tools" in behaviors:
                         trusted_tools = behaviors["trusted_tools"]
                         if not isinstance(trusted_tools, list):
-                            errors.append(f"Role '{role_name}' behaviors.trusted_tools must be an array")
+                            errors.append(
+                                f"Role '{role_name}' behaviors.trusted_tools must be an array"
+                            )
                         elif not all(isinstance(tool, str) for tool in trusted_tools):
-                            errors.append(f"Role '{role_name}' behaviors.trusted_tools must contain only strings")
+                            errors.append(
+                                f"Role '{role_name}' behaviors.trusted_tools must contain only strings"
+                            )
 
             # Validate standards structure (for specialists)
             if "standards" in role_data:
@@ -281,7 +280,9 @@ def validate_field_structure(
                 if not isinstance(standards, list):
                     errors.append(f"Role '{role_name}' standards must be an array")
                 elif not all(isinstance(standard, str) for standard in standards):
-                    errors.append(f"Role '{role_name}' standards must contain only strings")
+                    errors.append(
+                        f"Role '{role_name}' standards must contain only strings"
+                    )
 
             # Validate gates structure (for specialists)
             if "gates" in role_data:
@@ -304,9 +305,7 @@ def validate_field_structure(
 
 
 def validate_tool_registry_references(
-    library_data: Dict, 
-    tool_registry: Dict, 
-    correlation_id: str
+    library_data: Dict, tool_registry: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
     """
     Validate references to tool registry domains and categories.
@@ -324,7 +323,9 @@ def validate_tool_registry_references(
     errors = []
 
     if not tool_registry:
-        logger.warning(f"[{correlation_id}] Skipping tool registry validation - registry not available")
+        logger.warning(
+            f"[{correlation_id}] Skipping tool registry validation - registry not available"
+        )
         return True, []
 
     # Get available domains from tool registry
@@ -354,7 +355,7 @@ def validate_tool_registry_references(
     for role_type, roles_by_type in library_data.items():
         if role_type not in VALID_ROLE_TYPES:
             continue
-        
+
         for role_data in roles_by_type.values():
             if isinstance(role_data, dict):
                 behaviors = role_data.get("behaviors", {})
@@ -385,8 +386,7 @@ def validate_tool_registry_references(
 
 
 def validate_role_consistency(
-    library_data: Dict, 
-    correlation_id: str
+    library_data: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
     """
     Validate consistency across roles (duplicates, naming conventions, etc.).
@@ -409,9 +409,13 @@ def validate_role_consistency(
         if role_type in VALID_ROLE_TYPES and isinstance(roles_by_type, dict):
             all_role_names.extend(roles_by_type.keys())
 
-    duplicate_names = set(name for name in all_role_names if all_role_names.count(name) > 1)
+    duplicate_names = set(
+        name for name in all_role_names if all_role_names.count(name) > 1
+    )
     if duplicate_names:
-        errors.append(f"Duplicate role names found across types: {', '.join(sorted(duplicate_names))}")
+        errors.append(
+            f"Duplicate role names found across types: {', '.join(sorted(duplicate_names))}"
+        )
 
     # Check naming conventions (snake_case)
     for role_type, roles_by_type in library_data.items():
@@ -421,14 +425,18 @@ def validate_role_consistency(
         for role_name in roles_by_type.keys():
             if not isinstance(role_name, str):
                 continue
-                
+
             # Check for snake_case (allow underscores, lowercase letters, numbers)
             if not role_name.replace("_", "").replace("-", "").islower():
-                warnings.append(f"Role name '{role_name}' should use snake_case convention")
-            
+                warnings.append(
+                    f"Role name '{role_name}' should use snake_case convention"
+                )
+
             # Check for reasonable length
             if len(role_name) > 50:
-                warnings.append(f"Role name '{role_name}' is unusually long ({len(role_name)} characters)")
+                warnings.append(
+                    f"Role name '{role_name}' is unusually long ({len(role_name)} characters)"
+                )
 
     # Log warnings
     for warning in warnings:
@@ -447,10 +455,7 @@ def validate_role_consistency(
     return is_valid, errors
 
 
-def validate_role_library(
-    file_path: Path, 
-    correlation_id: str
-) -> Tuple[bool, Dict]:
+def validate_role_library(file_path: Path, correlation_id: str) -> Tuple[bool, Dict]:
     """
     Validate the role library file.
 
@@ -484,42 +489,32 @@ def validate_role_library(
 
     # Validate JSON structure
     structure_valid, structure_errors = validate_json_structure(
-        library_data, 
-        correlation_id
+        library_data, correlation_id
     )
     all_errors.extend(structure_errors)
 
     # Validate field structures (only if basic structure is valid)
     if structure_valid:
         field_valid, field_errors = validate_field_structure(
-            library_data, 
-            correlation_id
+            library_data, correlation_id
         )
         all_errors.extend(field_errors)
 
         # Validate tool registry references
         registry_valid, registry_errors = validate_tool_registry_references(
-            library_data, 
-            tool_registry, 
-            correlation_id
+            library_data, tool_registry, correlation_id
         )
         all_errors.extend(registry_errors)
 
         # Validate role consistency
         consistency_valid, consistency_errors = validate_role_consistency(
-            library_data, 
-            correlation_id
+            library_data, correlation_id
         )
         all_errors.extend(consistency_errors)
     else:
         field_valid = registry_valid = consistency_valid = False
 
-    is_valid = (
-        structure_valid and 
-        field_valid and 
-        registry_valid and 
-        consistency_valid
-    )
+    is_valid = structure_valid and field_valid and registry_valid and consistency_valid
 
     # Display results
     if is_valid:
@@ -535,10 +530,7 @@ def validate_role_library(
 
 
 def display_summary(
-    file_path: Path, 
-    is_valid: bool, 
-    library_data: Dict, 
-    correlation_id: str
+    file_path: Path, is_valid: bool, library_data: Dict, correlation_id: str
 ) -> None:
     """Display a summary of the role library validation."""
     logger.info(f"[{correlation_id}] Generating validation summary")
