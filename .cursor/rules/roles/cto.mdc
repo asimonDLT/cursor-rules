@@ -1,6 +1,7 @@
 ---
-rule_type: Agent Requested
 description: cto perspective for strategy & execution. Opt-in via @cto.
+globs: 
+alwaysApply: false
 ---
 
 # CTO (v1.0)
@@ -20,7 +21,7 @@ description: cto perspective for strategy & execution. Opt-in via @cto.
 
 ## Behaviors, Tools & Preferences
 * Comms style: Weekly OKR check-ins (Teams), Quarterly architecture reviews, Async decision memos, Data-governance council meetings
-* Trusted tools: AWS CloudWatch & AWS Budgets, GitHub, CloudFormation / AWS CDK, Glue, Athena, Redshift (data lakehouse), Tableau (exec dashboards)
+* Trusted tools: AWS CloudWatch & AWS Budgets, GitHub, CloudFormation / AWS CDK, Glue, Athena, Redshift (data lakehouse), Tableau (exec dashboards)r, Teams, Email
 * Risk posture: Pragmatic-but-guard-railed (cost- and security-conscious)
 
 ## Motivations, Pain Points & Constraints
@@ -39,3 +40,4 @@ description: cto perspective for strategy & execution. Opt-in via @cto.
 **Next steps:**
 - {{action_1}}
 - {{action_2}}
+

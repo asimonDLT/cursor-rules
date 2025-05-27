@@ -1,6 +1,6 @@
 # Cursor Rules Organization
 
-A comprehensive framework for organizing Cursor AI rules in large projects with automated quality assurance tools. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling.
+A comprehensive framework for organizing Cursor AI rules in large projects with automated role factory and quality assurance tools. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling with enterprise-grade automation.
 
 ## Structure
 
@@ -28,7 +28,8 @@ cursor_rules/
             ├── cmo.mdc              # Chief Marketing Officer perspective  
             ├── cto.mdc              # Chief Technology Officer perspective
             ├── qa_lead.mdc          # QA Lead specialist perspective
-            └── security.mdc         # Security specialist perspective
+            ├── security.mdc         # Security specialist perspective
+            └── ... (11 total roles) # Complete executive & specialist library
 ```
 
 ## How It Works
@@ -85,10 +86,23 @@ Documentation and specification standards:
 
 ### 👥 Role-Based Rules (`roles/`)
 Executive and specialist personas for strategic guidance:
-- **CMO**: Chief Marketing Officer perspective for growth strategy and market positioning
-- **CTO**: Chief Technology Officer perspective for architecture decisions and technical strategy  
-- **QA Lead**: Quality assurance specialist for testing strategy and release management
-- **Security**: Security specialist for threat assessment and compliance review
+
+**Executive Roles (6):**
+- **CMO**: Growth marketing with AARRR metrics and jobs-to-be-done framework
+- **CTO**: Enterprise data governance, 20% cloud cost reduction, 99.95% uptime with <30min MTTR
+- **CFO**: SaaS metrics, financial planning, unit economics
+- **CSO**: NIST framework, zero-trust security, risk management
+- **CPO**: Product-led growth, design thinking, lean startup methodology
+- **VP Sales**: Revenue operations, sales methodology, customer success
+
+**Specialist Roles (11):**
+- **Security**: NIST framework, zero-trust, SOC2 compliance
+- **QA Lead**: Test pyramid, shift-left testing, automation-first
+- **DevOps**: CI/CD, infrastructure-as-code, observability
+- **Frontend/Backend Architects**: Component design, API standards, scalability
+- **ML Engineer**: MLOps, model governance, data quality (new)
+- **Platform Engineer**: Developer experience, self-service, golden path (new)
+- **Persona Creator**: User-centered design, evidence-based research (new)
 
 ## Best Practices
 
@@ -146,47 +160,71 @@ The structure easily accommodates growth:
 └── integrations/    # Third-party service integrations
 ```
 
-## Automated Role Factory
+## Automated Role Factory (v2.1)
 
-This repository includes a complete role automation system for generating standardized executive and specialist personas:
+Enterprise-grade role automation system for generating standardized executive and specialist personas with enhanced security and validation.
 
-### Role Generator (`scripts/create_role.py`)
-Automated role creation with three-tier override system:
+### Quick Start
 ```bash
-# Generate a new executive role
+# Get help
+uv run python scripts/create_role.py --help
+
+# Generate executive role
 uv run python scripts/create_role.py --name cfo --type executive
 
 # Generate with CLI overrides (highest precedence)
 uv run python scripts/create_role.py --name cto --type executive \
-  --trusted-tools "Kubernetes, Terraform" \
-  --kpis "MTTR, Lead Time, Change Failure Rate"
+  --trusted-tools "AWS CloudWatch, GitHub" \
+  --kpis "MTTR, Data Quality Score" \
+  --scope "Global" --span-of-control "250"
 
 # Generate with JSON override file (middle precedence)  
 uv run python scripts/create_role.py --name cmo --type executive \
   --json-override custom_overrides.json
 
-# Generate specialist role
-uv run python scripts/create_role.py --name devops --type specialist
+# List all available templates
+uv run python scripts/create_role.py --list-templates
+
+# Validate existing roles
+uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
 ```
 
-### Features
+### Key Features
 - **Three-tier precedence**: CLI flags > JSON override > role library defaults
-- **Industry frameworks**: Pre-populated KPIs, tools, and objectives from `role_library.json`
-- **Template validation**: Ensures five-bucket structure for executives, three-bucket for specialists
-- **Input sanitization**: Prevents template injection and validates against library data
+- **Enhanced CLI**: 11 override flags including scope, seniority, span-of-control
+- **Security hardened**: Input validation, injection prevention, 500-char limits
+- **17 role templates**: 6 executive + 11 specialist roles with industry frameworks
+- **Auto-validation**: Real-time linting with five-bucket compliance checking
+- **Span of control guidelines**: Realistic organizational modeling (0-500+ range)
 
-### Role Library (`scripts/role_library.json`)
-Comprehensive database of industry-standard role data:
-- **Executive roles**: CMO, CTO, CFO, CPO with complete five-bucket profiles
-- **Specialist roles**: Security, QA, DevOps with technical focus areas
-- **Framework mappings**: AARRR metrics, NIST standards, DORA metrics, growth frameworks
+### Available Role Templates
 
-### Enhanced MDC Linter (`scripts/lint_mdc.py`)
-Advanced validation with structure checking:
-- **Line limit enforcement**: 150-line maximum with rich terminal output
-- **Structure validation**: Five-bucket compliance for executives, three-bucket for specialists
-- **Template checking**: Warns about unresolved `{{placeholders}}`
-- **YAML validation**: Ensures proper front-matter and `rule_type` fields
+**Executive Roles (6):**
+- `cmo` - Growth marketing with AARRR metrics
+- `cto` - Data governance, cloud optimization, platform engineering
+- `cfo` - SaaS metrics, financial planning, unit economics
+- `cso` - NIST framework, zero-trust security
+- `cpo` - Product-led growth, design thinking
+- `vp_sales` - Revenue operations, sales methodology
+
+**Specialist Roles (11):**
+- `security` - NIST framework, zero-trust, SOC2
+- `qa_lead` - Test pyramid, shift-left testing
+- `devops` - CI/CD, infrastructure-as-code
+- `accessibility` - WCAG 2.1, Section 508
+- `performance` - Core Web Vitals, performance budgets
+- `data_engineer` - Data quality, governance, privacy
+- `frontend_architect` - Component design, performance-first
+- `backend_architect` - API design, scalability
+- `ml_engineer` - MLOps, model governance (new)
+- `platform_engineer` - Developer experience, golden path (new)
+- `persona_creator` - User research, evidence-based design (new)
+
+### Enhanced Security & Validation
+- **Input sanitization**: Blocks injection patterns, enforces character limits
+- **Role library validation**: Startup checks for five-bucket compliance
+- **Template security**: Fixed placeholder format prevents rendering issues
+- **Real-time feedback**: Immediate validation with detailed error messages
 
 ### Development Setup
 ```bash
@@ -196,27 +234,35 @@ uv sync
 # Install pre-commit hooks  
 pre-commit install
 
-# Generate a new role
-uv run python scripts/create_role.py --name analyst --type specialist
+# Generate a new role with full customization
+uv run python scripts/create_role.py --name data_scientist --type specialist \
+  --trusted-tools "Python, Jupyter, MLflow" \
+  --kpis "Model accuracy, Data quality" \
+  --scope "Data platform" --seniority "Senior specialist"
 
-# Validate all roles
+# Validate all roles with detailed output
 uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
 
-# Migrate existing roles to new format
-uv run python scripts/migrate_roles.py
+# List available templates by category
+uv run python scripts/create_role.py --list-templates
+
+# Generate with verbose logging for debugging
+uv run python scripts/create_role.py --name analyst --type specialist --verbose
 ```
 
 ## Documentation
 
-- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete automation framework with templates, override system, and maintenance procedures
+- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete v2.1 automation framework with CLI reference, span of control guidelines, security features, and maintenance procedures
 - **Five-bucket standard**: Identity, Objectives, Influence, Behaviors, Motivations for executives
 - **Three-bucket standard**: Identity, Objectives, Standards/Behaviors for specialists
+- **Security & validation**: Input sanitization, role library validation, template security
 
 ## Dependencies
 
-- **Python**: >=3.12
-- **Runtime**: Rich library for enhanced terminal output
-- **Development**: pre-commit, ruff, pytest with coverage and async support
+- **Python**: >=3.12 with uv package manager
+- **Runtime**: Rich library for enhanced terminal output and colorful validation
+- **Development**: pre-commit hooks, ruff linting, pytest with coverage and async support
+- **Security**: Input validation, template sanitization, role library validation
 
 ## References
 - [Cursor Rules Documentation](https://docs.cursor.com/customization/rules-for-ai)
