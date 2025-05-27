@@ -5,6 +5,7 @@ Ensures all new domain rules are created as invocable agents with required YAML 
 """
 
 import argparse
+import json
 import logging
 import sys
 from pathlib import Path
@@ -127,6 +128,29 @@ def sanitize_name(name: str) -> str:
     return sanitized
 
 
+def load_domain_metadata(name: str) -> Optional[str]:
+    """
+    Load domain description from tool_registry.json domain_metadata.
+    
+    Args:
+        name: Domain name to look up
+        
+    Returns:
+        Description from domain_metadata or None if not found
+    """
+    try:
+        registry_path = Path(__file__).parent / "tool_registry.json"
+        if registry_path.exists():
+            with open(registry_path, "r", encoding="utf-8") as f:
+                registry = json.load(f)
+                domain_metadata = registry.get("domain_metadata", {})
+                if name in domain_metadata:
+                    return domain_metadata[name].get("description")
+    except (json.JSONDecodeError, OSError) as e:
+        logger.warning(f"Could not load domain metadata: {e}")
+    return None
+
+
 def generate_domain_rule_content(
     name: str, category: str, description: Optional[str] = None
 ) -> str:
@@ -143,6 +167,11 @@ def generate_domain_rule_content(
     """
     title = name.replace("_", " ").replace("-", " ").title()
 
+    # Try to get description from domain metadata first
+    if not description:
+        description = load_domain_metadata(name)
+    
+    # Fallback to default description
     if not description:
         description = f"Standards and best practices for {title.lower()}."
 
