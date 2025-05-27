@@ -7,4 +7,10 @@ repos:
         language: system
         files: \.mdc$
         exclude: ^\.cursor/rules/docs/
+        pass_filenames: true
+      - id: tool-registry-lint
+        name: Tool Registry Linter
+        entry: python scripts/lint_tool_registry.py
+        language: system
+        files: ^scripts/tool_registry\.json$
         pass_filenames: true 

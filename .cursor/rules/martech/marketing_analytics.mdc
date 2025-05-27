@@ -1,0 +1,17 @@
+---
+rule_type: Agent Requested
+description: Standards and best practices for Marketing Technology tools like GA4, GTM, and SEO platforms.
+---
+# MarTech & Web Analytics Standards
+
+## Core Principles
+- GA4 events must follow the 'object_verb' naming convention
+- All tracking implementations must respect user privacy and consent preferences
+- Marketing data should be validated for accuracy and completeness before analysis
+
+## Best Practices
+- Use Google Tag Manager for centralized tag management and deployment
+- Implement proper event tracking hierarchy with clear naming conventions
+- Ensure cross-platform attribution tracking is properly configured
+- Maintain data quality standards for marketing attribution models
+

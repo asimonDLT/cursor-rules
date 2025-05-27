@@ -436,6 +436,22 @@
         "agile-product-management",
         "evidence-based-research"
       ]
+    },
+    "data_analyst": {
+      "identity": {
+        "scope": "Marketing & Product Analytics",
+        "seniority": "Senior Specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Provide actionable insights from user data", "Measure marketing campaign effectiveness"],
+        "kpis": ["Insight-to-action rate", "Report accuracy", "Data availability"]
+      },
+      "standards": ["data-visualization-best-practices", "statistical-significance"],
+      "behaviors": {
+        "tool_domains": ["martech", "python", "database"],
+        "risk_posture": "Data-driven with a focus on accuracy"
+      }
     }
   }
 } 

@@ -21,7 +21,7 @@ alwaysApply: false
 
 ## Behaviors, Tools & Preferences
 * Comms style: Weekly OKR check-ins (Teams), Quarterly architecture reviews, Async decision memos, Data-governance council meetings
-* Trusted tools: AWS CloudWatch & AWS Budgets, GitHub, CloudFormation / AWS CDK, Glue, Athena, Redshift (data lakehouse), Tableau (exec dashboards)r, Teams, Email
+* Trusted tools: AWS CloudWatch & AWS Budgets, GitHub, CloudFormation / AWS CDK, Glue, Athena, Redshift (data lakehouse), Tableau (exec dashboards), Teams, Email
 * Risk posture: Pragmatic-but-guard-railed (cost- and security-conscious)
 
 ## Motivations, Pain Points & Constraints

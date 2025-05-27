@@ -135,7 +135,7 @@ def main():
         
     except Exception as e:
         console.print(f"[red]Migration failed:[/red] {e}")
-        console.print(f"[yellow]Restoring backup...[/yellow]")
+        console.print("[yellow]Restoring backup...[/yellow]")
         with open(backup_path, 'r', encoding='utf-8') as f:
             backup_data = f.read()
         with open(library_path, 'w', encoding='utf-8') as f:

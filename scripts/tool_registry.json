@@ -35,12 +35,25 @@
     "data_engineering": {
       "description": "Data pipeline and quality tools",
       "tools": ["Glue", "Athena", "Redshift", "dbt", "Great Expectations", "Snowflake"]
+    },
+    "martech_analytics": {
+      "description": "Web and product analytics platforms",
+      "tools": ["Google Analytics 4", "Google Tag Manager", "Mixpanel", "Amplitude"]
+    },
+    "martech_ads": {
+      "description": "Paid advertising platforms and APIs",
+      "tools": ["Google Ads API", "Meta Ads API", "LinkedIn Ads API"]
+    },
+    "martech_seo": {
+      "description": "Search Engine Optimization tools",
+      "tools": ["Screaming Frog", "Semrush", "Ahrefs"]
     }
   },
   "domain_mappings": {
     "aws": ["aws_core", "aws_security", "aws_compute"],
     "python": ["python_dev", "python_data", "python_testing"],
     "database": ["database_core", "database_tooling"],
-    "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"]
+    "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"],
+    "martech": ["martech_analytics", "martech_ads", "martech_seo"]
   }
 }

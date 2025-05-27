@@ -221,9 +221,7 @@ description: {role} perspective for {domain}. Opt-in via @{role}.
 
 ## Synthesis & Domain Integration
 When providing guidance, synthesize and apply relevant standards from these domain experts:
-* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
-* For Python development: Invoke @python for coding standards and tooling recommendations
-* For database work: Invoke @database for query optimization and schema design
+{synthesis_instructions}
 
 > Project rules override this Role if they conflict.
 
@@ -263,9 +261,7 @@ description: {role} expertise for {domain}. Opt-in via @{role}.
 
 ## Synthesis & Domain Integration
 When reviewing code/architecture, synthesize and apply relevant standards from these domain experts:
-* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
-* For Python development: Invoke @python for coding standards and tooling recommendations
-* For database work: Invoke @database for query optimization and schema design
+{synthesis_instructions}
 
 > Project rules override this Role if they conflict.
 
@@ -434,6 +430,34 @@ def get_role_data(
     return {}
 
 
+def generate_synthesis_instructions(tool_domains: List[str]) -> str:
+    """Generate dynamic synthesis instructions based on tool domains."""
+    domain_instructions = {
+        "aws": "* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices",
+        "python": "* For Python development: Invoke @python for coding standards and tooling recommendations",
+        "database": "* For database work: Invoke @database for query optimization and schema design", 
+        "martech": "* For MarTech guidance: Invoke @martech for marketing analytics and campaign best practices"
+    }
+    
+    instructions = []
+    for domain in tool_domains:
+        if domain in domain_instructions:
+            instructions.append(domain_instructions[domain])
+        else:
+            # Generic instruction for unknown domains
+            instructions.append(f"* For {domain} guidance: Invoke @{domain} for domain-specific standards")
+    
+    # Add default domains if none provided
+    if not instructions:
+        instructions = [
+            "* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices",
+            "* For Python development: Invoke @python for coding standards and tooling recommendations", 
+            "* For database work: Invoke @database for query optimization and schema design"
+        ]
+    
+    return "\n".join(instructions)
+
+
 def generate_executive_role(
     role_name: str,
     role_data: Dict[str, Any],
@@ -477,6 +501,10 @@ def generate_executive_role(
     influence = role_data.get("influence", {})
     behaviors = role_data.get("behaviors", {})
     motivations = role_data.get("motivations", {})
+    
+    # Generate synthesis instructions based on tool domains
+    tool_domains = behaviors.get("tool_domains", [])
+    synthesis_instructions = generate_synthesis_instructions(tool_domains)
 
     return EXECUTIVE_TEMPLATE.format(
         role=role_name,
@@ -498,6 +526,7 @@ def generate_executive_role(
         risk_posture=behaviors.get("risk_posture") or "Not specified",
         drivers=", ".join(motivations.get("drivers", ["Growth"])),
         pain_points=", ".join(motivations.get("pain_points", ["Resource constraints"])),
+        synthesis_instructions=synthesis_instructions,
     )
 
 
@@ -543,6 +572,10 @@ def generate_specialist_role(
     if behaviors:
         trusted_tools = behaviors.get("trusted_tools", [])
         risk_posture = behaviors.get("risk_posture", risk_posture)
+    
+    # Generate synthesis instructions based on tool domains
+    tool_domains = behaviors.get("tool_domains", [])
+    synthesis_instructions = generate_synthesis_instructions(tool_domains)
 
     return SPECIALIST_TEMPLATE.format(
         role=role_name,
@@ -561,6 +594,7 @@ def generate_specialist_role(
         risk_posture=risk_posture
         if risk_posture != "Standards-focused"
         else "Standards-focused",
+        synthesis_instructions=synthesis_instructions,
     )
 
 
@@ -705,23 +739,35 @@ def main() -> None:
     role_data = apply_overrides(role_data, args, args.json_override)
 
     # Apply tool domain resolution from registry
+    # First check for tool_domains in role library data
+    domains_to_resolve = []
+    
+    # Get domains from role library data
+    behaviors = role_data.get("behaviors", {})
+    if "tool_domains" in behaviors:
+        domains_to_resolve.extend(behaviors["tool_domains"])
+        logger.info(f"Found tool_domains in role library: {behaviors['tool_domains']}")
+    
+    # Override with CLI domains if provided
     if args.tool_domains:
-        domains = coerce_csv(args.tool_domains)
-        if domains:
-            resolved_tools = resolve_tools_from_registry(domains, tool_registry)
-            if resolved_tools:
-                # Ensure behaviors bucket exists
-                if "behaviors" not in role_data:
-                    role_data["behaviors"] = {}
-                # Merge with existing trusted tools
-                existing_tools = role_data["behaviors"].get("trusted_tools", [])
-                all_tools = existing_tools + resolved_tools
-                role_data["behaviors"]["trusted_tools"] = list(
-                    dict.fromkeys(all_tools)
-                )  # Remove duplicates
-                logger.info(
-                    f"Applied tool domains {domains}, resolved {len(resolved_tools)} tools"
-                )
+        domains_to_resolve = coerce_csv(args.tool_domains)
+        logger.info(f"Using CLI tool_domains override: {domains_to_resolve}")
+    
+    if domains_to_resolve:
+        resolved_tools = resolve_tools_from_registry(domains_to_resolve, tool_registry)
+        if resolved_tools:
+            # Ensure behaviors bucket exists
+            if "behaviors" not in role_data:
+                role_data["behaviors"] = {}
+            # Merge with existing trusted tools
+            existing_tools = role_data["behaviors"].get("trusted_tools", [])
+            all_tools = existing_tools + resolved_tools
+            role_data["behaviors"]["trusted_tools"] = list(
+                dict.fromkeys(all_tools)
+            )  # Remove duplicates
+            logger.info(
+                f"Applied tool domains {domains_to_resolve}, resolved {len(resolved_tools)} tools"
+            )
 
     # Generate role content
     console.print(f"\n[blue]Generating {args.type} role: {role_name}[/blue]")
