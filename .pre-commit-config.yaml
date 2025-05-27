@@ -6,7 +6,7 @@ repos:
         entry: uv run python scripts/lint_mdc.py
         language: system
         files: \.mdc$
-        exclude: ^\.cursor/rules/docs/
+        exclude: ^\.cursor/rules/domains/docs/
         pass_filenames: true
       - id: tool-registry-lint
         name: Tool Registry Linter
