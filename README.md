@@ -2,6 +2,14 @@
 
 A comprehensive framework for organizing Cursor AI rules in large projects with **hybrid modular tool system** and automated role factory. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling with enterprise-grade automation and intelligent tool synchronization.
 
+## 🎯 Recent Achievements (v2.3)
+
+**✅ Data Analyst Role Delivered** - Complete MarTech integration with GA4, privacy compliance, and business intelligence capabilities
+
+**✅ Domain Management Enhanced** - Centralized metadata system with automated validation and consistency checking
+
+**✅ Architecture Validated** - CTO-approved strategic enhancements avoiding overengineering while maintaining scalability
+
 ## Structure
 
 ```
@@ -18,18 +26,26 @@ cursor_rules/
         │   └── aws.mdc              # AWS infrastructure standards
         ├── core/                    # 🌍 Universal Rules
         │   └── core.mdc             # Core development standards & communication
+        ├── data/                    # 📊 Data Platform Rules
+        │   └── (data engineering standards)
         ├── docs/                    # 📝 Documentation Rules
         │   ├── design_spec.mdc      # Technical specification standards
         │   ├── markdown.mdc         # Markdown documentation standards
         │   └── prd.mdc              # Project requirements standards
         ├── frontend/                # 🎨 Frontend Rules
         │   └── typescript.mdc       # TypeScript/web development standards
+        ├── martech/                 # 📈 Marketing Technology Rules
+        │   └── marketing_analytics.mdc # GA4, GTM, privacy compliance
+        ├── security/                # 🔒 Security Rules
+        │   └── (security standards)
         └── roles/                   # 👥 Executive & Specialist Personas
             ├── cmo.mdc              # Chief Marketing Officer (Executive)
             ├── cto.mdc              # Chief Technology Officer (Executive)
+            ├── data_analyst.mdc     # Data Analyst (Specialist) ✨ NEW
+            ├── data_engineer.mdc    # Data Engineer (Specialist)
             ├── qa_lead.mdc          # QA Lead (Specialist)
             ├── security.mdc         # Security Specialist
-            └── ... (17 total roles) # Complete executive & specialist library
+            └── ... (6 total roles)  # Growing specialist library
 ```
 
 ## How It Works
@@ -48,6 +64,8 @@ cursor_rules/
 - **@python** → Python development standards and tooling recommendations  
 - **@database** → Database query optimization and schema design
 - **@data_engineer** → Data platform expertise with cross-domain synthesis
+- **@data_analyst** → Business intelligence and analytics expertise ✨ NEW
+- **@marketing_analytics** → MarTech tools and privacy compliance ✨ NEW
 
 **Auto-Attachment Patterns** (for specific file types):
 - **Core files** (`*.md`, `.gitignore`) → Universal development standards
@@ -81,11 +99,29 @@ Client-side development standards:
 - **Testing**: Vitest for unit tests, Playwright for E2E testing
 - **Build**: Modern tooling and performance optimization
 
+### 📊 Data Platform Rules (`data/`)
+Data engineering and analytics standards:
+- **Data Quality**: Validation, monitoring, and governance frameworks
+- **Privacy**: GDPR, CCPA compliance and data protection standards
+- **Pipeline Architecture**: ETL/ELT patterns and error handling
+
 ### 📝 Documentation Rules (`docs/`)
 Documentation and specification standards:
 - **Markdown**: Advanced formatting, Mermaid diagrams, structured content
 - **PRD**: Project requirements with measurable objectives and risk management
 - **Design Specs**: Technical specifications with implementation-ready details
+
+### 📈 MarTech Rules (`martech/`)
+Marketing technology and analytics standards:
+- **Analytics**: GA4 event tracking, GTM implementation, attribution models
+- **Privacy**: GDPR/CCPA compliance, consent management, data governance
+- **SEO**: Technical SEO, performance optimization, accessibility standards
+
+### 🔒 Security Rules (`security/`)
+Security standards and cybersecurity best practices:
+- **Framework**: NIST, zero-trust architecture, defense in depth
+- **Compliance**: SOC2, security audits, vulnerability management
+- **Access Control**: Principle of least privilege, IAM best practices
 
 ### 👥 Role-Based Rules (`roles/`)
 Executive and specialist personas for strategic guidance:
@@ -98,14 +134,16 @@ Executive and specialist personas for strategic guidance:
 - **CPO**: Product-led growth, design thinking, lean startup methodology
 - **VP Sales**: Revenue operations, sales methodology, customer success
 
-**Specialist Roles (11):**
+**Specialist Roles (6 implemented, 11 planned):**
+- **Data Analyst**: Business intelligence, MarTech analytics, statistical analysis ✨ NEW
+- **Data Engineer**: Data platform expertise with cross-domain synthesis
 - **Security**: NIST framework, zero-trust, SOC2 compliance
 - **QA Lead**: Test pyramid, shift-left testing, automation-first
-- **DevOps**: CI/CD, infrastructure-as-code, observability
-- **Frontend/Backend Architects**: Component design, API standards, scalability
-- **ML Engineer**: MLOps, model governance, data quality (new)
-- **Platform Engineer**: Developer experience, self-service, golden path (new)
-- **Persona Creator**: User-centered design, evidence-based research, persona governance
+- **DevOps**: CI/CD, infrastructure-as-code, observability *(planned)*
+- **Frontend/Backend Architects**: Component design, API standards, scalability *(planned)*
+- **ML Engineer**: MLOps, model governance, data quality *(planned)*
+- **Platform Engineer**: Developer experience, self-service, golden path *(planned)*
+- **Persona Creator**: User-centered design, evidence-based research, persona governance *(planned)*
 
 
 ## Best Practices
@@ -114,9 +152,12 @@ Executive and specialist personas for strategic guidance:
 1. **Universal concerns** → `core/`
 2. **Backend/server concerns** → `backend/`
 3. **Cloud/infrastructure** → `cloud/`
-4. **Frontend/client concerns** → `frontend/`
-5. **Documentation** → `docs/`
-6. **Role-specific** → `roles/`
+4. **Data platform concerns** → `data/`
+5. **Frontend/client concerns** → `frontend/`
+6. **Marketing technology** → `martech/`
+7. **Security standards** → `security/`
+8. **Documentation** → `docs/`
+9. **Role-specific** → `roles/`
 
 ### File Naming
 - Use kebab-case: `my-rule.mdc`
@@ -138,6 +179,8 @@ Developers automatically receive relevant rules based on their work:
 Working on Python backend → Core + Backend (Python + Database + Containers)
 Working on React frontend → Core + Frontend (TypeScript)
 Working on AWS CloudFormation → Core + Cloud (AWS)
+Working on data analytics → Core + Data + MarTech (Analytics + Privacy) ✨ NEW
+Working on GA4 implementation → Core + MarTech (Analytics + Privacy) ✨ NEW
 Writing documentation → Core + Docs (Markdown + PRD/Design Spec)
 Building MCP server → Core + Backend (Python + MCP + Database)
 ```
@@ -151,6 +194,23 @@ Building MCP server → Core + Backend (Python + MCP + Database)
 - Document rule changes in commit messages
 - All `.cursor/rules/` directories are version-controlled to ensure team consistency
 
+## Current Implementation Status
+
+**✅ Fully Implemented Domains (8):**
+- `backend/` - Python, database, containers, MCP server development
+- `cloud/` - AWS infrastructure and deployment standards  
+- `core/` - Universal development standards and communication
+- `data/` - Data engineering and analytics platform standards
+- `docs/` - Markdown, PRD, and technical specification standards
+- `frontend/` - TypeScript and web development standards
+- `martech/` - Marketing analytics, privacy compliance, SEO standards
+- `security/` - Security frameworks and cybersecurity best practices
+
+**🎯 Active Development:**
+- **Data Analyst Role**: Fully implemented with MarTech integration
+- **Domain Validation**: Automated consistency checking between filesystem and registry
+- **Tool Registry**: Centralized metadata and domain mappings
+
 ## Future Expansion
 
 The structure easily accommodates growth:
@@ -158,10 +218,9 @@ The structure easily accommodates growth:
 ```
 .cursor/rules/
 ├── mobile/          # Mobile app development
-├── data/            # Data science and analytics
-├── security/        # Security-specific guidelines
 ├── testing/         # Testing strategies and tools
-└── integrations/    # Third-party service integrations
+├── integrations/    # Third-party service integrations
+└── compliance/      # Regulatory and compliance frameworks
 ```
 
 ## Hybrid Modular Tool System
@@ -237,8 +296,14 @@ uv run python scripts/create_role.py --name data_scientist --type specialist \
 # Validate all roles with detailed output
 uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
 
-# Validate with custom line limit
-MDC_LINE_LIMIT=200 uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
+# Validate domain consistency (NEW)
+uv run python scripts/validate_domains.py
+
+# Create new domain rules with metadata integration (ENHANCED)
+uv run python scripts/create_domain_rule.py --name api_design --category backend
+
+# Validate tool registry structure (NEW)
+uv run python scripts/lint_tool_registry.py scripts/tool_registry.json
 
 # List available templates and tool domains
 uv run python scripts/create_role.py --list-templates
@@ -247,21 +312,37 @@ uv run python scripts/create_role.py --list-templates
 uv run python scripts/create_role.py --name analyst --type specialist --verbose
 ```
 
+## Architecture & Governance
+
+### Domain Management System ✨ NEW
+- **Dual Domain Types**: Organizational domains (filesystem directories) + Technical domains (role-based tool mappings)
+- **Single Source of Truth**: `tool_registry.json` contains both tool mappings and domain metadata
+- **Automated Validation**: `validate_domains.py` ensures filesystem/registry consistency
+- **Enhanced Creation**: `create_domain_rule.py` reads descriptions from domain metadata
+
+### Tool Registry Architecture
+- **13 Tool Categories**: From `aws_core` to `martech_seo` with 50+ tools total
+- **13 Domain Mappings**: Mix organizational (`backend`, `martech`) and technical (`python`, `data_analyst`) domains
+- **Comprehensive Metadata**: Owner, compliance requirements, and descriptions for all domains
+- **Automated Linting**: `lint_tool_registry.py` validates structure and referential integrity
+
 ## Documentation
 
-- **Hybrid Modular System**: Complete v2.2 architecture with tool registry, domain composition, and agent synthesis (documented in this README)
-- **Tool Registry**: Centralized categorization with domain mappings for automatic tool resolution
-- **Agent Composition**: Runtime synthesis via @aws, @python, @database expert agents  
+- **Hybrid Modular System**: Complete v2.3 architecture with enhanced domain management and validation
+- **Tool Registry**: Centralized categorization with domain mappings and metadata for automatic tool resolution
+- **Agent Composition**: Runtime synthesis via @aws, @python, @database, @data_analyst expert agents  
 - **Five-bucket standard**: Identity, Objectives, Influence, Behaviors, Motivations for executives
 - **Three-bucket standard**: Identity, Objectives, Standards/Behaviors for specialists
-- **Security & validation**: Input sanitization, role library validation, template security
+- **Security & validation**: Input sanitization, role library validation, domain consistency checking
 
 ## Key Features
 
 - **🏗️ Hybrid Architecture**: Build-time tool composition + runtime behavioral synthesis
-- **📋 Tool Registry**: Single source of truth with domain mappings and category resolution
-- **🤖 Agent Synthesis**: Cross-domain expertise via @aws, @python, @database agents
+- **📋 Tool Registry**: Single source of truth with domain mappings, metadata, and category resolution
+- **🤖 Agent Synthesis**: Cross-domain expertise via @aws, @python, @database, @data_analyst agents
 - **🔄 Auto-Synchronization**: Tool updates propagate to all roles automatically
+- **✅ Domain Validation**: Automated consistency checking between filesystem and registry ✨ NEW
+- **📈 MarTech Integration**: GA4, GTM, privacy compliance, and analytics standards ✨ NEW
 - **🛡️ Enterprise Security**: Input validation, sanitization, automated testing
 - **📊 Rich CLI**: Color-coded output, verbose logging, progress indicators
 
