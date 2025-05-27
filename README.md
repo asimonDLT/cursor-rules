@@ -28,6 +28,8 @@ cursor_rules/
         │   └── core.mdc             # Core development standards & communication
         ├── data/                    # 📊 Data Platform Rules
         │   └── (data engineering standards)
+        ├── martech/                 # 📈 Marketing Technology Rules
+        │   └── marketing_analytics.mdc # GA4, GTM, privacy compliance
         ├── docs/                    # 📝 Documentation Rules
         │   ├── design_spec.mdc      # Technical specification standards
         │   ├── markdown.mdc         # Markdown documentation standards
@@ -45,7 +47,7 @@ cursor_rules/
             ├── data_engineer.mdc    # Data Engineer (Specialist)
             ├── qa_lead.mdc          # QA Lead (Specialist)
             ├── security.mdc         # Security Specialist
-            └── ... (6 total roles)  # Growing specialist library
+            └── ... (12 implemented) # Growing specialist library
 ```
 
 ## How It Works
@@ -56,6 +58,120 @@ cursor_rules/
 - **Automated Synchronization**: Tool updates propagate automatically to all relevant roles
 - **Domain-Specific Guidance**: Targeted rules load based on file types and project context
 - **Scalable Structure**: Easy to add new domains or technologies as projects grow
+
+### System Architecture Overview
+
+```mermaid
+graph TD
+    subgraph "Tool Registry System"
+        TR[tool_registry.json<br/>Single Source of Truth]
+        TC[Tool Categories<br/>13 categories, 50+ tools]
+        DM[Domain Mappings<br/>13 domain types]
+        META[Domain Metadata<br/>Owner & Compliance]
+    end
+    
+    subgraph "Domain Types"
+        ORG[Organizational Domains<br/>backend/, cloud/, data/, etc.]
+        TECH[Technical Domains<br/>aws, python, database, etc.]
+        ROLE[Role-Based Domains<br/>data_engineer, data_analyst]
+    end
+    
+    subgraph "Role Generation"
+        EXEC[Executive Roles<br/>CMO, CTO, CFO, etc.]
+        SPEC[Specialist Roles<br/>Data Analyst, QA Lead, etc.]
+        SYNTH[Synthesis Instructions<br/>@aws, @python, @database]
+    end
+    
+    subgraph "Runtime System"
+        AGENTS[Domain Expert Agents<br/>@aws, @python, @database]
+        AUTO[Auto-Attachment<br/>File type patterns]
+        CONTEXT[Context Loading<br/>Relevant rules only]
+    end
+    
+    TR --> TC
+    TR --> DM
+    TR --> META
+    
+    DM --> ORG
+    DM --> TECH
+    DM --> ROLE
+    
+    TC --> EXEC
+    TC --> SPEC
+    SPEC --> SYNTH
+    
+    SYNTH --> AGENTS
+    AUTO --> CONTEXT
+    AGENTS --> CONTEXT
+    
+    classDef registry fill:#e1f5fe
+    classDef domain fill:#f3e5f5
+    classDef role fill:#e8f5e8
+    classDef runtime fill:#fff3e0
+    
+    class TR,TC,DM,META registry
+    class ORG,TECH,ROLE domain
+    class EXEC,SPEC,SYNTH role
+    class AGENTS,AUTO,CONTEXT runtime
+```
+
+### Roles ↔ Tools ↔ Domains Relationship
+
+```mermaid
+graph LR
+    subgraph "Domain Categories"
+        AWS[AWS Domain<br/>aws_core + aws_security<br/>+ aws_compute]
+        PY[Python Domain<br/>python_dev + python_data<br/>+ python_testing]
+        DB[Database Domain<br/>database_core<br/>+ database_tooling]
+        DATA[Data Engineering<br/>data_engineering]
+        MARTECH[MarTech Domain<br/>martech_analytics<br/>+ martech_ads + martech_seo]
+    end
+    
+    subgraph "Tool Categories (13)"
+        T1[aws_core<br/>AWS CLI, CloudFormation<br/>boto3, CloudWatch]
+        T2[python_dev<br/>uv, Ruff, rich<br/>Polars, Maturin]
+        T3[database_core<br/>DuckDB, SQLAlchemy<br/>Alembic, Prisma]
+        T4[data_engineering<br/>Glue, Athena, dbt<br/>Great Expectations]
+        T5[martech_analytics<br/>GA4, GTM<br/>Mixpanel, Amplitude]
+    end
+    
+    subgraph "Generated Roles"
+        R1[Data Analyst<br/>Business Intelligence<br/>Statistical Analysis]
+        R2[Data Engineer<br/>Platform Expertise<br/>Cross-domain Synthesis]
+        R3[Backend Developer<br/>Server-side Development<br/>Infrastructure]
+        R4[Marketing Analyst<br/>Campaign Analytics<br/>Attribution Models]
+    end
+    
+    AWS --> T1
+    PY --> T2
+    DB --> T3
+    DATA --> T4
+    MARTECH --> T5
+    
+    T2 --> R1
+    T3 --> R1
+    T4 --> R1
+    T5 --> R1
+    
+    T1 --> R2
+    T2 --> R2
+    T3 --> R2
+    T4 --> R2
+    
+    T1 --> R3
+    T2 --> R3
+    T3 --> R3
+    
+    T5 --> R4
+    
+    classDef domain fill:#e3f2fd
+    classDef tool fill:#f1f8e9
+    classDef role fill:#fce4ec
+    
+    class AWS,PY,DB,DATA,MARTECH domain
+    class T1,T2,T3,T4,T5 tool
+    class R1,R2,R3,R4 role
+```
 
 ### Agent-Based Rule System
 
@@ -279,6 +395,68 @@ All generated roles include a synthesis section that instructs them to invoke do
 
 This ensures roles always access the most current domain expertise without hardcoding outdated guidance.
 
+### Workflow: Creating New Roles, Domains, and Tools
+
+```mermaid
+flowchart TD
+    START([User Need: New Role/Domain/Tool]) --> DECISION{What to Create?}
+    
+    DECISION -->|New Role| ROLE_FLOW[Role Creation Workflow]
+    DECISION -->|New Domain| DOMAIN_FLOW[Domain Creation Workflow]
+    DECISION -->|New Tool| TOOL_FLOW[Tool Addition Workflow]
+    
+    subgraph "Role Creation Workflow"
+        ROLE_FLOW --> ROLE_TYPE{Role Type?}
+        ROLE_TYPE -->|Executive| EXEC_CMD["uv run python scripts/create_role.py<br/>--name cmo --type executive<br/>--kpis 'CAC, LTV, Revenue Growth'<br/>--scope 'Global' --span-of-control '50'"]
+        ROLE_TYPE -->|Specialist| SPEC_CMD["uv run python scripts/create_role.py<br/>--name ml_engineer --type specialist<br/>--tool-domains aws,python,data_engineering<br/>--seniority 'Senior specialist'"]
+        
+        EXEC_CMD --> ROLE_VALIDATE
+        SPEC_CMD --> ROLE_VALIDATE
+        ROLE_VALIDATE["uv run python scripts/lint_mdc.py<br/>.cursor/rules/roles/*.mdc"]
+        ROLE_VALIDATE --> ROLE_DONE[✅ Role Created]
+    end
+    
+    subgraph "Domain Creation Workflow"
+        DOMAIN_FLOW --> DOMAIN_CHECK["Check tool_registry.json<br/>for domain metadata"]
+        DOMAIN_CHECK --> DOMAIN_CMD["uv run python scripts/create_domain_rule.py<br/>--name mobile --category frontend"]
+        DOMAIN_CMD --> DOMAIN_VALIDATE["uv run python scripts/validate_domains.py<br/>(Check filesystem/registry consistency)"]
+        DOMAIN_VALIDATE --> DOMAIN_UPDATE["Update tool_registry.json<br/>with new domain mapping"]
+        DOMAIN_UPDATE --> DOMAIN_DONE[✅ Domain Created]
+    end
+    
+    subgraph "Tool Addition Workflow"
+        TOOL_FLOW --> TOOL_CATEGORY{New Category<br/>or Existing?}
+        TOOL_CATEGORY -->|New Category| NEW_CAT["Add new tool_category<br/>to tool_registry.json"]
+        TOOL_CATEGORY -->|Existing| EXISTING_CAT["Add tools to existing<br/>category in tool_registry.json"]
+        
+        NEW_CAT --> TOOL_MAPPING
+        EXISTING_CAT --> TOOL_MAPPING
+        TOOL_MAPPING["Update domain_mappings<br/>to include new tools"]
+        TOOL_MAPPING --> TOOL_VALIDATE["uv run python scripts/lint_tool_registry.py<br/>scripts/tool_registry.json"]
+        TOOL_VALIDATE --> REGEN["Regenerate affected roles<br/>with updated tools"]
+        REGEN --> TOOL_DONE[✅ Tool Added]
+    end
+    
+    ROLE_DONE --> FINAL_VALIDATE
+    DOMAIN_DONE --> FINAL_VALIDATE
+    TOOL_DONE --> FINAL_VALIDATE
+    
+    FINAL_VALIDATE["Final Validation:<br/>• uv run python scripts/validate_domains.py<br/>• uv run python scripts/lint_tool_registry.py<br/>• Test role generation"]
+    FINAL_VALIDATE --> SUCCESS[🎉 Changes Complete]
+    
+    classDef startEnd fill:#e8f5e8
+    classDef decision fill:#fff3e0
+    classDef process fill:#e3f2fd
+    classDef command fill:#f1f8e9
+    classDef validate fill:#fce4ec
+    
+    class START,SUCCESS startEnd
+    class DECISION,ROLE_TYPE,TOOL_CATEGORY decision
+    class ROLE_FLOW,DOMAIN_FLOW,TOOL_FLOW,DOMAIN_CHECK,DOMAIN_UPDATE,TOOL_MAPPING,REGEN process
+    class EXEC_CMD,SPEC_CMD,DOMAIN_CMD,NEW_CAT,EXISTING_CAT command
+    class ROLE_VALIDATE,DOMAIN_VALIDATE,TOOL_VALIDATE,FINAL_VALIDATE validate
+```
+
 ### Development Setup
 ```bash
 # Install dependencies with uv
@@ -304,6 +482,9 @@ uv run python scripts/create_domain_rule.py --name api_design --category backend
 
 # Validate tool registry structure (NEW)
 uv run python scripts/lint_tool_registry.py scripts/tool_registry.json
+
+# Validate role library structure and cross-references (NEW)
+uv run python scripts/lint_role_library.py scripts/role_library.json
 
 # List available templates and tool domains
 uv run python scripts/create_role.py --list-templates

@@ -17,12 +17,12 @@ description: data_analyst expertise for technical review. Opt-in via @data_analy
 
 ## Quality Gates & Behaviors
 * Quality gates: Data Quality Validation, Statistical Significance, Privacy Compliance
-* Trusted tools: Tableau, Python, SQL, Google Analytics 4, Mixpanel, dbt
+* Trusted tools: Tableau, Python, SQL, Google Analytics 4, Mixpanel, dbt, Google Tag Manager, Amplitude, Google Ads API, Meta Ads API, LinkedIn Ads API, Screaming Frog, Semrush, Ahrefs, uv, Ruff, rich, Polars, Maturin, PyO3, SQLAlchemy, Alembic, pytest, pytest-asyncio, pytest-cov, factory-boy, DuckDB, Prisma, sqlfluff, Prisma Migrate
 * Risk posture: Data-driven with a focus on accuracy and statistical significance
 
 ## Synthesis & Domain Integration
 When reviewing code/architecture, synthesize and apply relevant standards from these domain experts:
-* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
+* For MarTech guidance: Invoke @martech for marketing analytics and campaign best practices
 * For Python development: Invoke @python for coding standards and tooling recommendations
 * For database work: Invoke @database for query optimization and schema design
 

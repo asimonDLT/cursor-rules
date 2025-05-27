@@ -1,0 +1,18 @@
+---
+rule_type: Agent Requested
+description: Backend development standards and server-side technologies.
+---
+
+# Backend
+
+## Core Principles
+- Design for scalability and maintainability
+
+## Best Practices
+- Use proper error handling and logging
+
+## Standards & Guidelines
+- Follow RESTful API design principles
+
+## Common Patterns
+- Layered architecture with clear separation of concerns
