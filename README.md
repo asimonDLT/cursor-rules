@@ -25,7 +25,10 @@ cursor_rules/
         ├── frontend/                # 🎨 Frontend Rules
         │   └── typescript.mdc       # TypeScript/web development standards
         └── roles/                   # 👥 Role-Based Rules
-            └── cto.mdc              # Chief Technology Officer perspective
+            ├── cmo.mdc              # Chief Marketing Officer perspective  
+            ├── cto.mdc              # Chief Technology Officer perspective
+            ├── qa_lead.mdc          # QA Lead specialist perspective
+            └── security.mdc         # Security specialist perspective
 ```
 
 ## How It Works
@@ -82,7 +85,10 @@ Documentation and specification standards:
 
 ### 👥 Role-Based Rules (`roles/`)
 Executive and specialist personas for strategic guidance:
-- **CTO**: Chief Technology Officer perspective for architecture decisions and technical strategy
+- **CMO**: Chief Marketing Officer perspective for growth strategy and market positioning
+- **CTO**: Chief Technology Officer perspective for architecture decisions and technical strategy  
+- **QA Lead**: Quality assurance specialist for testing strategy and release management
+- **Security**: Security specialist for threat assessment and compliance review
 
 ## Best Practices
 
@@ -140,39 +146,71 @@ The structure easily accommodates growth:
 └── integrations/    # Third-party service integrations
 ```
 
-## Development Tools
+## Automated Role Factory
 
-This repository includes automated quality assurance tools to maintain rule consistency:
+This repository includes a complete role automation system for generating standardized executive and specialist personas:
 
-### Pre-commit Hooks
-- **Line limit enforcement**: Automatically checks `.mdc` files don't exceed 150 lines
-- **Cross-platform compatibility**: Python-based linter works on Windows, macOS, and Linux
-- **Rich output**: Colorful terminal output with detailed validation summaries
-
-### MDC Linter (`scripts/lint_mdc.py`)
-A Python script that validates `.mdc` files with features like:
-- Progress indicators and spinner animations
-- Detailed pass/fail summaries with file names and line counts
-- Colorful categorized output using the Rich library
-- Unicode encoding support for cross-platform compatibility
-
-### Setup
+### Role Generator (`scripts/create_role.py`)
+Automated role creation with three-tier override system:
 ```bash
-# Install dependencies
+# Generate a new executive role
+uv run python scripts/create_role.py --name cfo --type executive
+
+# Generate with CLI overrides (highest precedence)
+uv run python scripts/create_role.py --name cto --type executive \
+  --trusted-tools "Kubernetes, Terraform" \
+  --kpis "MTTR, Lead Time, Change Failure Rate"
+
+# Generate with JSON override file (middle precedence)  
+uv run python scripts/create_role.py --name cmo --type executive \
+  --json-override custom_overrides.json
+
+# Generate specialist role
+uv run python scripts/create_role.py --name devops --type specialist
+```
+
+### Features
+- **Three-tier precedence**: CLI flags > JSON override > role library defaults
+- **Industry frameworks**: Pre-populated KPIs, tools, and objectives from `role_library.json`
+- **Template validation**: Ensures five-bucket structure for executives, three-bucket for specialists
+- **Input sanitization**: Prevents template injection and validates against library data
+
+### Role Library (`scripts/role_library.json`)
+Comprehensive database of industry-standard role data:
+- **Executive roles**: CMO, CTO, CFO, CPO with complete five-bucket profiles
+- **Specialist roles**: Security, QA, DevOps with technical focus areas
+- **Framework mappings**: AARRR metrics, NIST standards, DORA metrics, growth frameworks
+
+### Enhanced MDC Linter (`scripts/lint_mdc.py`)
+Advanced validation with structure checking:
+- **Line limit enforcement**: 150-line maximum with rich terminal output
+- **Structure validation**: Five-bucket compliance for executives, three-bucket for specialists
+- **Template checking**: Warns about unresolved `{{placeholders}}`
+- **YAML validation**: Ensures proper front-matter and `rule_type` fields
+
+### Development Setup
+```bash
+# Install dependencies with uv
 uv sync
 
-# Install pre-commit hooks
+# Install pre-commit hooks  
 pre-commit install
 
-# Run linter manually
-python scripts/lint_mdc.py path/to/file.mdc
+# Generate a new role
+uv run python scripts/create_role.py --name analyst --type specialist
+
+# Validate all roles
+uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
+
+# Migrate existing roles to new format
+uv run python scripts/migrate_roles.py
 ```
 
 ## Documentation
 
-- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete framework for creating standardized executive/specialist personas
-- **Governance**: File naming conventions, content guidelines, and maintenance procedures
-- **Templates**: Reusable role templates with proper YAML front-matter
+- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete automation framework with templates, override system, and maintenance procedures
+- **Five-bucket standard**: Identity, Objectives, Influence, Behaviors, Motivations for executives
+- **Three-bucket standard**: Identity, Objectives, Standards/Behaviors for specialists
 
 ## Dependencies
 

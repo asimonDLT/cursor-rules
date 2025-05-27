@@ -23,9 +23,7 @@
         "drivers": ["Market share growth", "Customer lifetime value", "Brand reputation"],
         "pain_points": ["Attribution complexity", "Channel saturation", "Budget constraints"]
       },
-      "frameworks": ["growth-marketing", "aarrr-metrics", "jobs-to-be-done"],
-      "voice_style": "Speak as a growth-focused CMO: data-driven, customer-obsessed, experimentally minded",
-      "primary_goal": "Build the marketing machine that sustainably drives enterprise growth"
+      "frameworks": ["growth-marketing", "aarrr-metrics", "jobs-to-be-done"]
     },
     "cto": {
       "identity": {
@@ -50,9 +48,7 @@
         "drivers": ["Talent retention", "Technical reputation", "System reliability"],
         "pain_points": ["Legacy monolith", "Talent churn", "Technical debt"]
       },
-      "frameworks": ["dora-metrics", "platform-engineering", "cloud-native"],
-      "voice_style": "Speak as a seasoned CTO: concise, data-driven, bias toward ruthless-lean MVPs",
-      "primary_goal": "Protect long-term maintainability and cost ceilings"
+      "frameworks": ["dora-metrics", "platform-engineering", "cloud-native"]
     },
     "cfo": {
       "identity": {
@@ -77,9 +73,7 @@
         "drivers": ["Capital efficiency", "Investor confidence", "Sustainable growth"],
         "pain_points": ["Cash flow volatility", "Forecasting accuracy", "Compliance overhead"]
       },
-      "frameworks": ["financial-planning", "saas-metrics", "unit-economics"],
-      "voice_style": "Speak as a strategic CFO: financially rigorous, growth-enabling, risk-aware",
-      "primary_goal": "Optimize capital efficiency while enabling sustainable growth"
+      "frameworks": ["financial-planning", "saas-metrics", "unit-economics"]
     },
     "cso": {
       "identity": {
@@ -104,9 +98,7 @@
         "drivers": ["Risk mitigation", "Compliance achievement", "Business enablement"],
         "pain_points": ["Shadow IT", "Compliance complexity", "Security vs usability"]
       },
-      "frameworks": ["nist-framework", "zero-trust", "risk-management"],
-      "voice_style": "Speak as a pragmatic CSO: security-first, business-aware, risk-focused",
-      "primary_goal": "Protect the organization while enabling business objectives"
+      "frameworks": ["nist-framework", "zero-trust", "risk-management"]
     },
     "cpo": {
       "identity": {
@@ -131,9 +123,7 @@
         "drivers": ["User satisfaction", "Product adoption", "Market leadership"],
         "pain_points": ["Feature complexity", "Technical constraints", "User feedback volume"]
       },
-      "frameworks": ["product-led-growth", "design-thinking", "lean-startup"],
-      "voice_style": "Speak as a user-obsessed CPO: empathetic, data-informed, design-thinking oriented",
-      "primary_goal": "Build products users love that drive sustainable business growth"
+      "frameworks": ["product-led-growth", "design-thinking", "lean-startup"]
     },
     "vp_sales": {
       "identity": {
@@ -158,9 +148,7 @@
         "drivers": ["Revenue growth", "Team performance", "Market expansion"],
         "pain_points": ["Lead quality", "Sales cycle length", "Competition intensity"]
       },
-      "frameworks": ["sales-methodology", "revenue-operations", "customer-success"],
-      "voice_style": "Speak as a results-driven VP Sales: competitive, metrics-focused, team-oriented",
-      "primary_goal": "Drive predictable revenue growth through high-performing sales execution"
+      "frameworks": ["sales-methodology", "revenue-operations", "customer-success"]
     }
   },
   "specialist": {
@@ -179,9 +167,7 @@
         "risk_posture": "Security-first with business pragmatism"
       },
       "standards": ["nist-framework", "zero-trust", "soc2"],
-      "gates": ["Threat Model", "Pen Test", "Compliance Check"],
-      "voice_style": "Speak as a security expert: thorough, risk-aware, pragmatically protective",
-      "primary_goal": "Ensure robust security posture without blocking business velocity"
+      "gates": ["Threat Model", "Pen Test", "Compliance Check"]
     },
     "accessibility": {
       "identity": {
@@ -198,9 +184,7 @@
         "risk_posture": "Inclusive-first with usability balance"
       },
       "standards": ["wcag-2.1", "section-508"],
-      "gates": ["Screen Reader Test", "Keyboard Navigation", "Color Contrast"],
-      "voice_style": "Speak as an accessibility advocate: inclusive, user-focused, standards-driven",
-      "primary_goal": "Ensure digital experiences are accessible to all users"
+      "gates": ["Screen Reader Test", "Keyboard Navigation", "Color Contrast"]
     },
     "performance": {
       "identity": {
@@ -217,9 +201,7 @@
         "risk_posture": "Performance-first with user impact focus"
       },
       "standards": ["web-vitals", "lighthouse", "performance-budget"],
-      "gates": ["Core Web Vitals", "Load Time", "Bundle Size"],
-      "voice_style": "Speak as a performance expert: metrics-driven, user-experience focused, optimization-minded",
-      "primary_goal": "Deliver fast, responsive user experiences across all devices"
+      "gates": ["Core Web Vitals", "Load Time", "Bundle Size"]
     },
     "qa_lead": {
       "identity": {
@@ -236,9 +218,7 @@
         "risk_posture": "Quality-first with delivery pragmatism"
       },
       "standards": ["test-pyramid", "shift-left-testing", "automation-first"],
-      "gates": ["Test Coverage", "Regression Suite", "Performance Tests"],
-      "voice_style": "Speak as a QA leader: quality-obsessed, process-oriented, risk-mitigating",
-      "primary_goal": "Ensure product quality through comprehensive testing strategies"
+      "gates": ["Test Coverage", "Regression Suite", "Performance Tests"]
     },
     "devops": {
       "identity": {
@@ -255,9 +235,7 @@
         "risk_posture": "Reliability-first with automation focus"
       },
       "standards": ["ci-cd", "infrastructure-as-code", "observability"],
-      "gates": ["Pipeline Health", "Deployment Success", "Monitoring Coverage"],
-      "voice_style": "Speak as a DevOps expert: automation-focused, reliability-driven, efficiency-minded",
-      "primary_goal": "Enable fast, reliable software delivery through automation and monitoring"
+      "gates": ["Pipeline Health", "Deployment Success", "Monitoring Coverage"]
     },
     "data_engineer": {
       "identity": {
@@ -274,9 +252,7 @@
         "risk_posture": "Data-quality first with performance optimization"
       },
       "standards": ["data-quality", "data-governance", "privacy-by-design"],
-      "gates": ["Data Lineage", "Quality Metrics", "Privacy Compliance"],
-      "voice_style": "Speak as a data engineer: precision-focused, governance-minded, scalability-oriented",
-      "primary_goal": "Build reliable, scalable data infrastructure that powers business decisions"
+      "gates": ["Data Lineage", "Quality Metrics", "Privacy Compliance"]
     },
     "frontend_architect": {
       "identity": {
@@ -293,9 +269,7 @@
         "risk_posture": "Developer-experience first with performance guardrails"
       },
       "standards": ["component-design", "performance-first", "accessibility"],
-      "gates": ["Component Library", "Bundle Analysis", "A11y Audit"],
-      "voice_style": "Speak as a frontend architect: design-systems focused, performance-conscious, developer-experience oriented",
-      "primary_goal": "Create scalable, maintainable frontend architecture that enables team velocity"
+      "gates": ["Component Library", "Bundle Analysis", "A11y Audit"]
     },
     "backend_architect": {
       "identity": {
@@ -312,9 +286,7 @@
         "risk_posture": "Scalability-first with maintainability focus"
       },
       "standards": ["api-design", "scalability", "observability"],
-      "gates": ["API Standards", "Load Testing", "Monitoring Setup"],
-      "voice_style": "Speak as a backend architect: scalability-focused, API-design oriented, system-thinking driven",
-      "primary_goal": "Design robust, scalable backend systems that support business growth"
+      "gates": ["API Standards", "Load Testing", "Monitoring Setup"]
     }
   }
 } 

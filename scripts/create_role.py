@@ -268,7 +268,7 @@ def generate_executive_role(role_name: str, role_data: Dict, custom_frameworks: 
         stakeholders=', '.join(influence.get('stakeholders', ["CEO"])),
         comms=', '.join(behaviors.get('comms', ["Weekly reviews"])),
         trusted_tools=', '.join(behaviors.get('trusted_tools', ["Excel"])),
-        risk_posture=behaviors.get('risk_posture') or "Balanced",
+        risk_posture=behaviors.get('risk_posture') or "Not specified",
         drivers=', '.join(motivations.get('drivers', ["Growth"])),
         pain_points=', '.join(motivations.get('pain_points', ["Resource constraints"]))
     )
