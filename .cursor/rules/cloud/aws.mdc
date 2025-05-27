@@ -1,10 +1,6 @@
 ---
-rule_type: Auto Attached
-globs:
-  - "aws/**"
-  - "*.cfn.yml"
-  - "cloudformation.yml"
-description: "AWS-Focused Infrastructure Standards"
+rule_type: Agent Requested
+description: "AWS infrastructure expert. Opt-in via @aws."
 ---
 
 # AWS-Focused Infrastructure Standards

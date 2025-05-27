@@ -1,0 +1,46 @@
+{
+  "tool_categories": {
+    "aws_core": {
+      "description": "Core AWS cloud infrastructure tools",
+      "tools": ["AWS CLI", "CloudFormation", "boto3", "CloudWatch", "CloudTrail", "GuardDuty"]
+    },
+    "aws_security": {
+      "description": "AWS security and secrets management",
+      "tools": ["AWS Secrets Manager", "Parameter Store", "IAM"]
+    },
+    "aws_compute": {
+      "description": "AWS compute and deployment services",
+      "tools": ["AWS Lambda", "AWS ECS", "AWS Fargate"]
+    },
+    "python_dev": {
+      "description": "Python development and package management",
+      "tools": ["uv", "Ruff", "rich", "Polars", "Maturin", "PyO3"]
+    },
+    "python_data": {
+      "description": "Python data manipulation and analysis",
+      "tools": ["Polars", "SQLAlchemy", "Alembic"]
+    },
+    "python_testing": {
+      "description": "Python testing framework and tools",
+      "tools": ["pytest", "pytest-asyncio", "pytest-cov", "factory-boy"]
+    },
+    "database_core": {
+      "description": "Database engines and analysis tools",
+      "tools": ["DuckDB", "SQLAlchemy", "Alembic", "Prisma"]
+    },
+    "database_tooling": {
+      "description": "Database development and migration tools",
+      "tools": ["sqlfluff", "Prisma Migrate"]
+    },
+    "data_engineering": {
+      "description": "Data pipeline and quality tools",
+      "tools": ["Glue", "Athena", "Redshift", "dbt", "Great Expectations", "Snowflake"]
+    }
+  },
+  "domain_mappings": {
+    "aws": ["aws_core", "aws_security", "aws_compute"],
+    "python": ["python_dev", "python_data", "python_testing"],
+    "database": ["database_core", "database_tooling"],
+    "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"]
+  }
+}

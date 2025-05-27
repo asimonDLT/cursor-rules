@@ -41,6 +41,55 @@ REQUIRED_EXECUTIVE_BUCKETS = [
 REQUIRED_SPECIALIST_BUCKETS = ["identity", "objectives"]
 
 
+# Tool registry functions
+def load_tool_registry() -> Dict[str, Any]:
+    """Load the tool registry with error handling."""
+    registry_path = Path(__file__).parent / "tool_registry.json"
+
+    if not registry_path.exists():
+        logger.warning(f"Tool registry not found at {registry_path}")
+        return {}
+
+    try:
+        with open(registry_path, "r", encoding="utf-8") as f:
+            registry = json.load(f)
+            logger.debug(
+                f"Loaded tool registry with {len(registry.get('tool_categories', {}))} categories"
+            )
+            return registry
+    except json.JSONDecodeError as e:
+        logger.warning(f"Invalid JSON in tool_registry.json: {e}")
+        return {}
+
+
+def resolve_tools_from_registry(
+    domain_or_categories: List[str], registry: Dict[str, Any]
+) -> List[str]:
+    """Resolve tools from registry based on domain mappings or direct categories."""
+    if not registry:
+        return []
+
+    tool_categories = registry.get("tool_categories", {})
+    domain_mappings = registry.get("domain_mappings", {})
+    resolved_tools = []
+
+    for item in domain_or_categories:
+        # First check if it's a domain mapping
+        if item in domain_mappings:
+            categories = domain_mappings[item]
+            for category in categories:
+                if category in tool_categories:
+                    resolved_tools.extend(tool_categories[category].get("tools", []))
+        # Otherwise check if it's a direct category
+        elif item in tool_categories:
+            resolved_tools.extend(tool_categories[item].get("tools", []))
+        else:
+            logger.warning(f"Unknown tool domain/category: {item}")
+
+    # Remove duplicates while preserving order
+    return list(dict.fromkeys(resolved_tools))
+
+
 # Utility functions for overrides
 def coerce_csv(text: Optional[str]) -> Optional[List[str]]:
     """Convert comma-separated string to list, handling None gracefully."""
@@ -170,18 +219,24 @@ description: {role} perspective for {domain}. Opt-in via @{role}.
 * Drivers: {drivers}
 * Pain points: {pain_points}
 
+## Synthesis & Domain Integration
+When providing guidance, synthesize and apply relevant standards from these domain experts:
+* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
+* For Python development: Invoke @python for coding standards and tooling recommendations
+* For database work: Invoke @database for query optimization and schema design
+
 > Project rules override this Role if they conflict.
 
 ## Output Template
 
 **{title} Assessment:**
-- {{finding_1}}
-- {{finding_2}}
+- {{{{finding_1}}}}
+- {{{{finding_2}}}}
 
 **Decision:** <GO / NO-GO / REVISE>
 **Next steps:**
-- {{action_1}}
-- {{action_2}}
+- {{{{action_1}}}}
+- {{{{action_2}}}}
 """
 
 SPECIALIST_TEMPLATE = """---
@@ -206,17 +261,23 @@ description: {role} expertise for {domain}. Opt-in via @{role}.
 * Trusted tools: {trusted_tools}
 * Risk posture: {risk_posture}
 
+## Synthesis & Domain Integration
+When reviewing code/architecture, synthesize and apply relevant standards from these domain experts:
+* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
+* For Python development: Invoke @python for coding standards and tooling recommendations
+* For database work: Invoke @database for query optimization and schema design
+
 > Project rules override this Role if they conflict.
 
 ## Output Template
 
 **{title} Review:**
-- {{technical_finding}}
-- {{recommendation}}
+- {{{{technical_finding}}}}
+- {{{{recommendation}}}}
 
 **Status:** <APPROVED / BLOCKED / NEEDS_REVISION>
 **Next steps:**
-- {{action}}
+- {{{{action}}}}
 """
 
 
@@ -563,6 +624,10 @@ def main() -> None:
 
     # Override flags for common fields
     parser.add_argument("--trusted-tools", help="Comma-separated list of trusted tools")
+    parser.add_argument(
+        "--tool-domains",
+        help="Comma-separated list of tool domains from registry (e.g., aws,python,database)",
+    )
     parser.add_argument("--comms", help="Comma-separated list of communication styles")
     parser.add_argument(
         "--kpis", help="Comma-separated list of key performance indicators"
@@ -608,8 +673,9 @@ def main() -> None:
         logging.getLogger("role_factory").setLevel(logging.DEBUG)
         logger.debug("Verbose logging enabled")
 
-    # Load role library
+    # Load role library and tool registry
     library = load_role_library()
+    tool_registry = load_tool_registry()
 
     # Handle list templates
     if args.list_templates:
@@ -637,6 +703,25 @@ def main() -> None:
 
     # Apply overrides in precedence order: CLI flags > JSON override > base data
     role_data = apply_overrides(role_data, args, args.json_override)
+
+    # Apply tool domain resolution from registry
+    if args.tool_domains:
+        domains = coerce_csv(args.tool_domains)
+        if domains:
+            resolved_tools = resolve_tools_from_registry(domains, tool_registry)
+            if resolved_tools:
+                # Ensure behaviors bucket exists
+                if "behaviors" not in role_data:
+                    role_data["behaviors"] = {}
+                # Merge with existing trusted tools
+                existing_tools = role_data["behaviors"].get("trusted_tools", [])
+                all_tools = existing_tools + resolved_tools
+                role_data["behaviors"]["trusted_tools"] = list(
+                    dict.fromkeys(all_tools)
+                )  # Remove duplicates
+                logger.info(
+                    f"Applied tool domains {domains}, resolved {len(resolved_tools)} tools"
+                )
 
     # Generate role content
     console.print(f"\n[blue]Generating {args.type} role: {role_name}[/blue]")

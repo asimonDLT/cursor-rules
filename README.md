@@ -1,6 +1,6 @@
 # Cursor Rules Organization
 
-A comprehensive framework for organizing Cursor AI rules in large projects with automated role factory and quality assurance tools. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling with enterprise-grade automation.
+A comprehensive framework for organizing Cursor AI rules in large projects with **hybrid modular tool system** and automated role factory. This repository provides a scalable structure for domain-specific rules, role-based personas, and development tooling with enterprise-grade automation and intelligent tool synchronization.
 
 ## Structure
 
@@ -24,32 +24,35 @@ cursor_rules/
         │   └── prd.mdc              # Project requirements standards
         ├── frontend/                # 🎨 Frontend Rules
         │   └── typescript.mdc       # TypeScript/web development standards
-        └── roles/                   # 👥 Role-Based Rules
-            ├── cmo.mdc              # Chief Marketing Officer perspective  
-            ├── cto.mdc              # Chief Technology Officer perspective
-            ├── qa_lead.mdc          # QA Lead specialist perspective
-            ├── security.mdc         # Security specialist perspective
-            └── ... (11 total roles) # Complete executive & specialist library
+        └── roles/                   # 👥 Executive & Specialist Personas
+            ├── cmo.mdc              # Chief Marketing Officer (Executive)
+            ├── cto.mdc              # Chief Technology Officer (Executive)
+            ├── qa_lead.mdc          # QA Lead (Specialist)
+            ├── security.mdc         # Security Specialist
+            └── ... (17 total roles) # Complete executive & specialist library
 ```
 
 ## How It Works
 
-- **Centralized Organization**: All rules organized under `.cursor/rules/` with logical domain folders
-- **Auto-Attachment**: Rules automatically attach based on glob patterns defined in each file
+- **Hybrid Modular Architecture**: Dual-layer system combining build-time tool composition with runtime behavioral synthesis
+- **Centralized Tool Registry**: Single source of truth for tool standards across all domains and roles
+- **Agent-Based Composition**: Domain experts (@aws, @python, @database) provide dynamic cross-referencing
+- **Automated Synchronization**: Tool updates propagate automatically to all relevant roles
 - **Domain-Specific Guidance**: Targeted rules load based on file types and project context
 - **Scalable Structure**: Easy to add new domains or technologies as projects grow
-- **Clean Separation**: Related rules grouped together for better maintainability
 
-### Auto-Attachment Patterns
+### Agent-Based Rule System
 
-Rules automatically attach based on file types:
+**Domain Expert Agents** (invoke via @agent_name):
+- **@aws** → AWS infrastructure standards and best practices
+- **@python** → Python development standards and tooling recommendations  
+- **@database** → Database query optimization and schema design
+- **@data_engineer** → Data platform expertise with cross-domain synthesis
 
-- **Python files** (`*.py`, `pyproject.toml`) → Backend Python rules
-- **TypeScript files** (`*.ts`, `*.tsx`, `package.json`) → Frontend TypeScript rules  
-- **SQL files** (`*.sql`, `alembic/**`) → Backend database rules
-- **AWS files** (`*.cfn.yml`, `aws/**`) → Cloud AWS rules
-- **Markdown files** (`*.md`, `docs/**`) → Documentation markdown rules
-- **MCP files** (`*mcp*`, `mcp-config.json`) → Backend MCP rules
+**Auto-Attachment Patterns** (for specific file types):
+- **Core files** (`*.md`, `.gitignore`) → Universal development standards
+- **Container files** (`Dockerfile`, `docker-compose.yml`) → Containerization rules
+- **MCP files** (`*mcp*`, `mcp-config.json`) → Model Context Protocol standards
 
 ## Rule Categories
 
@@ -102,7 +105,8 @@ Executive and specialist personas for strategic guidance:
 - **Frontend/Backend Architects**: Component design, API standards, scalability
 - **ML Engineer**: MLOps, model governance, data quality (new)
 - **Platform Engineer**: Developer experience, self-service, golden path (new)
-- **Persona Creator**: User-centered design, evidence-based research (new)
+- **Persona Creator**: User-centered design, evidence-based research, persona governance
+
 
 ## Best Practices
 
@@ -124,7 +128,7 @@ Executive and specialist personas for strategic guidance:
 - **Composable Design**: Rules work together without conflicts
 - **Specific Guidance**: Actionable patterns and examples, not vague principles
 - **Context Awareness**: Rules provide relevant guidance for the current task
-- Keep rules under 500 lines for maintainability
+- Keep rules under 150 lines for maintainability (enforced by `lint_mdc.py`)
 
 ## Context Loading
 
@@ -140,7 +144,7 @@ Building MCP server → Core + Backend (Python + MCP + Database)
 
 ## Maintenance
 
-- Keep rules under 500 lines for readability
+- Keep rules under 150 lines for maintainability (enforced by `lint_mdc.py`)
 - Use kebab-case filenames with `.mdc` extensions
 - Test rule interactions to avoid conflicts
 - Update glob patterns when adding new file types
@@ -160,71 +164,61 @@ The structure easily accommodates growth:
 └── integrations/    # Third-party service integrations
 ```
 
-## Automated Role Factory (v2.1)
+## Hybrid Modular Tool System
 
-Enterprise-grade role automation system for generating standardized executive and specialist personas with enhanced security and validation.
+**Revolutionary dual-layer architecture** that solves tool synchronization through build-time data composition + runtime behavioral synthesis.
 
-### Quick Start
+### Tool Registry System
 ```bash
-# Get help
-uv run python scripts/create_role.py --help
+# Create role with registry-based tool resolution
+uv run python scripts/create_role.py --name data_engineer --type specialist \
+  --tool-domains data_engineer  # Expands to 20+ tools automatically
 
+# Mix domains for custom roles
+uv run python scripts/create_role.py --name ml_engineer --type specialist \
+  --tool-domains aws,python,data_engineering
+
+# Override with custom tools
+uv run python scripts/create_role.py --name custom_role --type specialist \
+  --tool-domains python --trusted-tools "Custom Tool,Special Framework"
+```
+
+### Legacy Role Generation
+```bash
 # Generate executive role
 uv run python scripts/create_role.py --name cfo --type executive
 
-# Generate with CLI overrides (highest precedence)
+# Generate with CLI overrides
 uv run python scripts/create_role.py --name cto --type executive \
-  --trusted-tools "AWS CloudWatch, GitHub" \
-  --kpis "MTTR, Data Quality Score" \
+  --trusted-tools "New Relic, PagerDuty" \
+  --kpis "MTTR, Deployment Frequency, Lead Time" \
   --scope "Global" --span-of-control "250"
 
-# Generate with JSON override file (middle precedence)  
-uv run python scripts/create_role.py --name cmo --type executive \
-  --json-override custom_overrides.json
-
-# List all available templates
+# List available templates (17 total: 6 executive + 11 specialist)
 uv run python scripts/create_role.py --list-templates
-
-# Validate existing roles
-uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
 ```
 
-### Key Features
-- **Three-tier precedence**: CLI flags > JSON override > role library defaults
-- **Enhanced CLI**: 11 override flags including scope, seniority, span-of-control
-- **Security hardened**: Input validation, injection prevention, 500-char limits
-- **17 role templates**: 6 executive + 11 specialist roles with industry frameworks
-- **Auto-validation**: Real-time linting with five-bucket compliance checking
-- **Span of control guidelines**: Realistic organizational modeling (0-500+ range)
+**📖 Complete CLI reference and examples provided below in the Hybrid Modular Tool System section**
 
-### Available Role Templates
+### System Architecture
 
-**Executive Roles (6):**
-- `cmo` - Growth marketing with AARRR metrics
-- `cto` - Data governance, cloud optimization, platform engineering
-- `cfo` - SaaS metrics, financial planning, unit economics
-- `cso` - NIST framework, zero-trust security
-- `cpo` - Product-led growth, design thinking
-- `vp_sales` - Revenue operations, sales methodology
+**Build-time Data Composition:**
+- `tool_registry.json` → Centralized tool categorization and domain mappings
+- `--tool-domains` flag → Automatic tool resolution from registry
+- Domain abstractions → Mix and match tool categories (aws + python + database)
 
-**Specialist Roles (11):**
-- `security` - NIST framework, zero-trust, SOC2
-- `qa_lead` - Test pyramid, shift-left testing
-- `devops` - CI/CD, infrastructure-as-code
-- `accessibility` - WCAG 2.1, Section 508
-- `performance` - Core Web Vitals, performance budgets
-- `data_engineer` - Data quality, governance, privacy
-- `frontend_architect` - Component design, performance-first
-- `backend_architect` - API design, scalability
-- `ml_engineer` - MLOps, model governance (new)
-- `platform_engineer` - Developer experience, golden path (new)
-- `persona_creator` - User research, evidence-based design (new)
+**Runtime Behavioral Composition:**
+- Domain expert agents (@aws, @python, @database) provide dynamic cross-referencing  
+- Generated roles include synthesis instructions for current guidance
+- No conflicts - roles invoke experts explicitly when needed
 
-### Enhanced Security & Validation
-- **Input sanitization**: Blocks injection patterns, enforces character limits
-- **Role library validation**: Startup checks for five-bucket compliance
-- **Template security**: Fixed placeholder format prevents rendering issues
-- **Real-time feedback**: Immediate validation with detailed error messages
+**Synthesis & Domain Integration:**
+All generated roles include a synthesis section that instructs them to invoke domain experts:
+- For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices
+- For Python development: Invoke @python for coding standards and tooling recommendations  
+- For database work: Invoke @database for query optimization and schema design
+
+This ensures roles always access the most current domain expertise without hardcoding outdated guidance.
 
 ### Development Setup
 ```bash
@@ -234,16 +228,19 @@ uv sync
 # Install pre-commit hooks  
 pre-commit install
 
-# Generate a new role with full customization
+# Generate a new role with tool registry integration
 uv run python scripts/create_role.py --name data_scientist --type specialist \
-  --trusted-tools "Python, Jupyter, MLflow" \
+  --tool-domains python,data_engineering \
   --kpis "Model accuracy, Data quality" \
   --scope "Data platform" --seniority "Senior specialist"
 
 # Validate all roles with detailed output
 uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
 
-# List available templates by category
+# Validate with custom line limit
+MDC_LINE_LIMIT=200 uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
+
+# List available templates and tool domains
 uv run python scripts/create_role.py --list-templates
 
 # Generate with verbose logging for debugging
@@ -252,10 +249,21 @@ uv run python scripts/create_role.py --name analyst --type specialist --verbose
 
 ## Documentation
 
-- **[Role Creation Guide](docs/role_creation_guide.md)**: Complete v2.1 automation framework with CLI reference, span of control guidelines, security features, and maintenance procedures
+- **Hybrid Modular System**: Complete v2.2 architecture with tool registry, domain composition, and agent synthesis (documented in this README)
+- **Tool Registry**: Centralized categorization with domain mappings for automatic tool resolution
+- **Agent Composition**: Runtime synthesis via @aws, @python, @database expert agents  
 - **Five-bucket standard**: Identity, Objectives, Influence, Behaviors, Motivations for executives
 - **Three-bucket standard**: Identity, Objectives, Standards/Behaviors for specialists
 - **Security & validation**: Input sanitization, role library validation, template security
+
+## Key Features
+
+- **🏗️ Hybrid Architecture**: Build-time tool composition + runtime behavioral synthesis
+- **📋 Tool Registry**: Single source of truth with domain mappings and category resolution
+- **🤖 Agent Synthesis**: Cross-domain expertise via @aws, @python, @database agents
+- **🔄 Auto-Synchronization**: Tool updates propagate to all roles automatically
+- **🛡️ Enterprise Security**: Input validation, sanitization, automated testing
+- **📊 Rich CLI**: Color-coded output, verbose logging, progress indicators
 
 ## Dependencies
 
@@ -263,6 +271,7 @@ uv run python scripts/create_role.py --name analyst --type specialist --verbose
 - **Runtime**: Rich library for enhanced terminal output and colorful validation
 - **Development**: pre-commit hooks, ruff linting, pytest with coverage and async support
 - **Security**: Input validation, template sanitization, role library validation
+- **Architecture**: Dual-layer composition system with centralized tool registry
 
 ## References
 - [Cursor Rules Documentation](https://docs.cursor.com/customization/rules-for-ai)

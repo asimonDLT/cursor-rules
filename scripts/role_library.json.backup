@@ -1,0 +1,441 @@
+{
+  "executive": {
+    "cmo": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 150
+      },
+      "objectives": {
+        "top_objectives": ["Drive 40% YoY growth", "Build scalable marketing engine", "Establish brand leadership"],
+        "kpis": ["CAC", "LTV", "MQL-to-SQL", "Brand Awareness", "Revenue Attribution"]
+      },
+      "influence": {
+        "decision_rights": ["Marketing budget allocation", "Brand strategy", "Customer acquisition channels"],
+        "stakeholders": ["CEO", "Sales VP", "Product VP", "Board"]
+      },
+      "behaviors": {
+        "comms": ["Weekly growth reviews", "Data-driven presentations", "Cross-functional standups"],
+        "trusted_tools": ["HubSpot", "Mixpanel", "Looker", "Figma"],
+        "risk_posture": "Experimentally aggressive"
+      },
+      "motivations": {
+        "drivers": ["Market share growth", "Customer lifetime value", "Brand reputation"],
+        "pain_points": ["Attribution complexity", "Channel saturation", "Budget constraints"]
+      },
+      "frameworks": ["growth-marketing", "aarrr-metrics", "jobs-to-be-done"]
+    },
+    "cto": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 250
+      },
+      "objectives": {
+        "top_objectives": [
+          "Institutionalize enterprise-wide data governance",
+          "Cut run-rate infrastructure cost by 20 % while growing traffic",
+          "Sustain 99.95 % uptime with MTTR < 30 min",
+          "Shrink idea-to-prod lead time by 25 %"
+        ],
+        "kpis": [
+          "MTTR",
+          "Deployment Frequency",
+          "Lead Time for Changes",
+          "Change Failure Rate",
+          "Data Quality Score (DQI)",
+          "Unit Cost ($ / 1 k requests)"
+        ]
+      },
+      "influence": {
+        "decision_rights": [
+          "Enterprise data-governance policy & tooling",
+          "Target cloud architecture & patterns",
+          "Security and compliance budget veto",
+          "Vendor / SaaS selection",
+          "Cross-BU platform roadmap"
+        ],
+        "stakeholders": [
+          "CEO",
+          "CFO",
+          "CMO",
+          "Regional BU VPs",
+          "Chief Information Security Officer",
+          "Product VP"
+        ]
+      },
+      "behaviors": {
+        "comms": [
+          "Weekly OKR check-ins (Teams)",
+          "Quarterly architecture reviews",
+          "Async decision memos",
+          "Data-governance council meetings"
+        ],
+        "trusted_tools": [
+          "AWS CloudWatch & AWS Budgets",
+          "GitHub",
+          "CloudFormation / AWS CDK",
+          "Glue, Athena, Redshift (data lakehouse)",
+          "Tableau (exec dashboards)"
+        ],
+        "risk_posture": "Pragmatic-but-guard-railed (cost- and security-conscious)"
+      },
+      "motivations": {
+        "drivers": [
+          "Reliable, compliant platform at the lowest sustainable cost",
+          "High engineering autonomy & retention",
+          "Organisation-wide trust in data"
+        ],
+        "pain_points": [
+          "Shadow IT & data silos",
+          "Legacy monoliths that resist change",
+          "Unplanned cloud-cost spikes"
+        ]
+      },
+      "frameworks": [
+        "dora-metrics",
+        "data-governance-maturity",
+        "secure-by-design",
+        "platform-engineering",
+        "cloud-native"
+      ]
+    },
+    "cfo": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 80
+      },
+      "objectives": {
+        "top_objectives": ["Achieve Rule of 40", "Extend runway 18+ months", "IPO readiness"],
+        "kpis": ["ARR", "Burn Rate", "Runway", "Gross Margin", "Rule of 40"]
+      },
+      "influence": {
+        "decision_rights": ["Budget approval", "Investment decisions", "Financial strategy"],
+        "stakeholders": ["CEO", "Board", "Investors", "Department heads"]
+      },
+      "behaviors": {
+        "comms": ["Monthly board reports", "Weekly finance reviews", "Quarterly planning"],
+        "trusted_tools": ["NetSuite", "Tableau", "Excel", "Salesforce"],
+        "risk_posture": "Conservative with growth enablement"
+      },
+      "motivations": {
+        "drivers": ["Capital efficiency", "Investor confidence", "Sustainable growth"],
+        "pain_points": ["Cash flow volatility", "Forecasting accuracy", "Compliance overhead"]
+      },
+      "frameworks": ["financial-planning", "saas-metrics", "unit-economics"]
+    },
+    "cso": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 45
+      },
+      "objectives": {
+        "top_objectives": ["Zero security incidents", "SOC2 Type II compliance", "Zero-trust implementation"],
+        "kpis": ["Security Incidents", "Compliance Score", "Vulnerability Remediation Time"]
+      },
+      "influence": {
+        "decision_rights": ["Security architecture", "Compliance standards", "Incident response"],
+        "stakeholders": ["CEO", "CTO", "Legal", "Audit committee"]
+      },
+      "behaviors": {
+        "comms": ["Security briefings", "Incident reports", "Risk assessments"],
+        "trusted_tools": ["Splunk", "CrowdStrike", "Okta", "AWS Security Hub"],
+        "risk_posture": "Security-first with business pragmatism"
+      },
+      "motivations": {
+        "drivers": ["Risk mitigation", "Compliance achievement", "Business enablement"],
+        "pain_points": ["Shadow IT", "Compliance complexity", "Security vs usability"]
+      },
+      "frameworks": ["nist-framework", "zero-trust", "risk-management"]
+    },
+    "cpo": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 120
+      },
+      "objectives": {
+        "top_objectives": ["Achieve product-market fit", "Drive 25% feature adoption", "Reduce churn 30%"],
+        "kpis": ["Product-Market Fit", "Feature Adoption", "User Retention", "NPS"]
+      },
+      "influence": {
+        "decision_rights": ["Product roadmap", "Feature prioritization", "User experience"],
+        "stakeholders": ["CEO", "Engineering VP", "Design VP", "Customer Success"]
+      },
+      "behaviors": {
+        "comms": ["User research sessions", "Product reviews", "Roadmap planning"],
+        "trusted_tools": ["Figma", "Amplitude", "Notion", "Linear"],
+        "risk_posture": "User-centric with data validation"
+      },
+      "motivations": {
+        "drivers": ["User satisfaction", "Product adoption", "Market leadership"],
+        "pain_points": ["Feature complexity", "Technical constraints", "User feedback volume"]
+      },
+      "frameworks": ["product-led-growth", "design-thinking", "lean-startup"]
+    },
+    "vp_sales": {
+      "identity": {
+        "scope": "Regional/Global",
+        "seniority": "VP-level",
+        "span_of_control": 85
+      },
+      "objectives": {
+        "top_objectives": ["Hit 120% of quota", "Reduce sales cycle 25%", "Expand enterprise deals"],
+        "kpis": ["Sales Velocity", "Win Rate", "Pipeline Coverage", "Quota Attainment"]
+      },
+      "influence": {
+        "decision_rights": ["Sales strategy", "Territory planning", "Compensation plans"],
+        "stakeholders": ["CEO", "CMO", "Customer Success VP", "Regional managers"]
+      },
+      "behaviors": {
+        "comms": ["Daily pipeline reviews", "Weekly forecasts", "Quarterly business reviews"],
+        "trusted_tools": ["Salesforce", "Outreach", "Gong", "ChartIO"],
+        "risk_posture": "Aggressive with pipeline discipline"
+      },
+      "motivations": {
+        "drivers": ["Revenue growth", "Team performance", "Market expansion"],
+        "pain_points": ["Lead quality", "Sales cycle length", "Competition intensity"]
+      },
+      "frameworks": ["sales-methodology", "revenue-operations", "customer-success"]
+    }
+  },
+  "specialist": {
+    "security": {
+      "identity": {
+        "scope": "Cross-functional",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Zero critical vulnerabilities", "100% security review coverage"],
+        "kpis": ["Vulnerability count", "Review completion rate", "Incident response time"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Splunk", "CrowdStrike", "Okta"],
+        "risk_posture": "Security-first with business pragmatism"
+      },
+      "standards": ["nist-framework", "zero-trust", "soc2"],
+      "gates": ["Threat Model", "Pen Test", "Compliance Check"]
+    },
+    "accessibility": {
+      "identity": {
+        "scope": "Product-focused",
+        "seniority": "Senior specialist", 
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["WCAG 2.1 AA compliance", "100% keyboard navigation"],
+        "kpis": ["Accessibility score", "User feedback", "Compliance rate"]
+      },
+      "behaviors": {
+        "trusted_tools": ["NVDA", "JAWS", "axe-core", "Lighthouse"],
+        "risk_posture": "Inclusive-first with usability balance"
+      },
+      "standards": ["wcag-2.1", "section-508"],
+      "gates": ["Screen Reader Test", "Keyboard Navigation", "Color Contrast"]
+    },
+    "performance": {
+      "identity": {
+        "scope": "Frontend-focused",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Core Web Vitals green", "Sub-3s load times"],
+        "kpis": ["Core Web Vitals", "Load time", "Bundle size"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Lighthouse", "WebPageTest", "Chrome DevTools"],
+        "risk_posture": "Performance-first with user impact focus"
+      },
+      "standards": ["web-vitals", "lighthouse", "performance-budget"],
+      "gates": ["Core Web Vitals", "Load Time", "Bundle Size"]
+    },
+    "qa_lead": {
+      "identity": {
+        "scope": "Engineering-wide",
+        "seniority": "Lead specialist",
+        "span_of_control": 8
+      },
+      "objectives": {
+        "top_objectives": ["90%+ test coverage", "Zero production bugs"],
+        "kpis": ["Test coverage", "Bug escape rate", "Test execution time"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Selenium", "Jest", "Cypress", "TestRail"],
+        "risk_posture": "Quality-first with delivery pragmatism"
+      },
+      "standards": ["test-pyramid", "shift-left-testing", "automation-first"],
+      "gates": ["Test Coverage", "Regression Suite", "Performance Tests"]
+    },
+    "devops": {
+      "identity": {
+        "scope": "Infrastructure-wide",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["99.9% uptime", "Sub-10min deployments"],
+        "kpis": ["Uptime", "Deployment frequency", "Recovery time"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Terraform", "Kubernetes", "GitHub Actions", "Datadog"],
+        "risk_posture": "Reliability-first with automation focus"
+      },
+      "standards": ["ci-cd", "infrastructure-as-code", "observability"],
+      "gates": ["Pipeline Health", "Deployment Success", "Monitoring Coverage"]
+    },
+    "data_engineer": {
+      "identity": {
+        "scope": "Data platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["99.5% data quality", "Real-time analytics"],
+        "kpis": ["Data quality score", "Pipeline uptime", "Query performance"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Airflow", "dbt", "Snowflake", "Great Expectations"],
+        "risk_posture": "Data-quality first with performance optimization"
+      },
+      "standards": ["data-quality", "data-governance", "privacy-by-design"],
+      "gates": ["Data Lineage", "Quality Metrics", "Privacy Compliance"]
+    },
+    "frontend_architect": {
+      "identity": {
+        "scope": "Frontend platform",
+        "seniority": "Senior architect",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Component library adoption", "Performance standards"],
+        "kpis": ["Component reuse rate", "Bundle efficiency", "Developer velocity"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Storybook", "Webpack", "React", "TypeScript"],
+        "risk_posture": "Developer-experience first with performance guardrails"
+      },
+      "standards": ["component-design", "performance-first", "accessibility"],
+      "gates": ["Component Library", "Bundle Analysis", "A11y Audit"]
+    },
+    "backend_architect": {
+      "identity": {
+        "scope": "Backend platform",
+        "seniority": "Senior architect", 
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["API consistency", "System scalability"],
+        "kpis": ["API response time", "System throughput", "Error rates"]
+      },
+      "behaviors": {
+        "trusted_tools": ["OpenAPI", "Docker", "PostgreSQL", "Redis"],
+        "risk_posture": "Scalability-first with maintainability focus"
+      },
+      "standards": ["api-design", "scalability", "observability"],
+      "gates": ["API Standards", "Load Testing", "Monitoring Setup"]
+    },
+    "ml_engineer": {
+      "identity": {
+        "scope": "ML platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Model accuracy >95%", "Sub-100ms inference"],
+        "kpis": ["Model accuracy", "Inference latency", "Training efficiency"]
+      },
+      "behaviors": {
+        "trusted_tools": ["PyTorch", "MLflow", "Kubernetes", "Weights & Biases"],
+        "risk_posture": "Experimentation-first with production guardrails"
+      },
+      "standards": ["mlops", "model-governance", "data-quality"],
+      "gates": ["Model Validation", "A/B Testing", "Performance Benchmarks"]
+    },
+    "platform_engineer": {
+      "identity": {
+        "scope": "Developer platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Developer velocity", "Platform adoption >90%"],
+        "kpis": ["Developer satisfaction", "Platform uptime", "Deployment frequency"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Kubernetes", "Terraform", "ArgoCD", "Backstage"],
+        "risk_posture": "Developer-experience first with reliability focus"
+      },
+      "standards": ["platform-engineering", "self-service", "golden-path"],
+      "gates": ["Developer Onboarding", "Platform SLA", "Documentation Review"]
+    },
+    "persona_creator": {
+      "identity": {
+        "scope": "Cross-functional",
+        "seniority": "Principal consultant",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": [
+          "Produce robust, evidence-based role personas for every key function",
+          "Keep persona library current and consistently structured",
+          "Enable org-wide adoption through documentation and training"
+        ],
+        "kpis": [
+          "Persona coverage (% of priority roles documented)",
+          "Stakeholder satisfaction score (post-workshop)",
+          "Time-to-update after org changes (days)"
+        ]
+      },
+      "influence": {
+        "decision_rights": [
+          "Persona schema design & governance",
+          "Final approval of new or modified personas",
+          "Training content for persona usage"
+        ],
+        "stakeholders": [
+          "CMO (marketing messaging)",
+          "CPO / UX leads (product research)",
+          "CTO (engineering alignment)",
+          "HR / L&D (training rollout)"
+        ]
+      },
+      "behaviors": {
+        "comms": [
+          "Async review docs (Notion / Confluence)",
+          "Live persona-workshop sessions",
+          "Quarterly persona health checks"
+        ],
+        "trusted_tools": [
+          "Miro (persona mapping)",
+          "Notion or Confluence (library source of truth)",
+          "Figma (visual templates)",
+          "JSON-schema linters / validators",
+          "ChatGPT (draft generation & refinement)"
+        ],
+        "risk_posture": "Detail-oriented but pragmatic on time-to-value"
+      },
+      "motivations": {
+        "drivers": [
+          "Org-wide clarity on ‘who we build for’",
+          "High adoption of personas in decision workflows",
+          "Continuous improvement culture"
+        ],
+        "pain_points": [
+          "Stale or conflicting persona documents",
+          "Lack of stakeholder buy-in",
+          "Overly theoretical personas with no practical use"
+        ]
+      },
+      "frameworks": [
+        "user-centered-design",
+        "jobs-to-be-done",
+        "agile-product-management",
+        "evidence-based-research"
+      ]
+    }
+  }
+} 

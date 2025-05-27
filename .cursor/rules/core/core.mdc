@@ -55,7 +55,7 @@ alwaysApply: false
 - **Conflict Resolution:** When directives clash, Project Rules take precedence over User Rules.
 - **Use the Generate Command:** When proposing a new rule, state that you can create it using the `/Generate Cursor Rules` command.
 - **Focused & Actionable:** Generated rules must be focused on a single responsibility, be actionable, and have a clear scope.
-- **Conciseness:** Ensure the generated rule file is concise, targeting under 500 lines.
+- **Conciseness:** Ensure the generated rule file is concise, targeting under 150 lines.
 - **Composability:** For complex topics, propose splitting the rules into multiple, composable files that can be attached based on different triggers.
 - **Provide Concrete Examples:** Include specific, correct code examples or `@` mentions of relevant files within the generated rule to avoid ambiguity.
 - **Clear & Unambiguous:** Write the rule's content using clear, unambiguous directives, as if you were writing a high-quality internal technical document.

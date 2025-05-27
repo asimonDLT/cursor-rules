@@ -1,10 +1,6 @@
 ---
-rule_type: Auto Attached
-globs:
-  - "*.py"
-  - "pyproject.toml"
-  - "poetry.lock"
-description: "Python-First Development Standards"
+rule_type: Agent Requested
+description: "Python development expert. Opt-in via @python."
 ---
 
 # Python-First Development Standards

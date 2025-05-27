@@ -1,10 +1,6 @@
 ---
-rule_type: Auto Attached
-globs:
-  - "*.sql"
-  - "alembic/**"
-  - "prisma/schema.prisma"
-description: "Database & SQL Standards"
+rule_type: Agent Requested
+description: "Database and SQL expert. Opt-in via @database."
 ---
 
 # Database & SQL Standards
