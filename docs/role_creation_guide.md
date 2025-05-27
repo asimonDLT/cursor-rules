@@ -1,105 +1,263 @@
-# Cursor Persona Creation Kit (v1.0)
+# Cursor Role Factory (v2.0)
 
-This document provides a standardized framework for creating new executive or specialist personas in Cursor. By following this guidance, your team can develop clean, lightweight, and scalable roles that enhance AI collaboration without bloating prompts or creating conflicts.
-
----
-
-## A. Governance Checklist
-
-To ensure consistency and efficiency, please adhere to the following rules when creating a new role file.
-
-1.  **File Name:** Choose a short, unique, and descriptive name for the role (e.g., `cso`, `frontend_designer`, `qa_lead`). This name will be used to invoke the persona. Start at `v1.0`; bump minor (`v1.1`) for wording tweaks, major (`v2.0`) for changed mandates.
-2.  **Define Its Logic:** The file should exclusively contain the persona's perspective, decision-making logic, and guiding principles. Rules related to tooling (e.g., linters, compilers) or cloud environments should be defined in separate, appropriate rule files.
-3.  **Use Essential Front-Matter:** Every role file must begin with the following YAML front-matter to be recognized by Cursor as an on-demand agent.
-    ```yaml
-    ---
-    rule_type: Agent Requested
-    description: <A one-sentence summary of the role's purpose and scope.>
-    # Example: description: Senior security perspective for risk & compliance.
-    ---
-    ```
-    > **Important:** Project-level rules override persona rules if directives clash.
-
-    Save the file under `.cursor/rules/roles/`.
-4.  **Avoid Globs (Usually):** Do not include file `glob` patterns unless the role should automatically attach to specific file types. This is a rare requirement for persona-based rules.
-5.  **Keep It Lean:** To protect your token budget and ensure fast performance, limit the file to under 150 lines (~3 KB / <150 lines). A pre-commit hook will enforce this limit.
-6.  **Add a Precedence Note:** To prevent ambiguity, explicitly state that project-level rules will override the persona's rules if they conflict.
-7.  **End with an Output Template:** Conclude the file with a short, standardized output template to ensure the persona's responses are predictable and actionable.
-8.  **No Undocumented Fields:** Do not use internal or undocumented fields like `alwaysApply` or `@context`, as these can break with future updates.
+Automated framework for creating standardized executive personas at scale.
 
 ---
 
-## B. Reusable Role Template
+## Quick Start
 
-Copy the contents of this template to create a new role. Save the new file as `<role_name>.mdc` in your repository's `.cursor/rules/roles/` directory.
+```bash
+# Generate a new role
+uv run python scripts/create_role.py --name cmo --type executive
 
-```markdown
+# Generate with CLI overrides (highest precedence)
+uv run python scripts/create_role.py --name cto --type executive \
+  --trusted-tools "New Relic, PagerDuty" \
+  --comms "Slack daily stand-up, Monthly arch review" \
+  --kpis "MTTR, Deployment Frequency, Lead Time"
+
+# Generate with JSON override file (middle precedence)
+uv run python scripts/create_role.py --name cto --type executive \
+  --json-override custom_cto.json
+
+# Generate with mixed overrides (CLI overrides JSON)
+uv run python scripts/create_role.py --name cto --type executive \
+  --json-override custom_cto.json \
+  --comms "Weekly all-hands"  # This will override JSON comms
+
+# Validate existing roles
+uv run python scripts/lint_mdc.py .cursor/rules/roles/*.mdc
+
+# List available role templates
+uv run python scripts/create_role.py --list-templates
+
+# Enable verbose logging for debugging
+uv run python scripts/create_role.py --name cmo --type executive --verbose
+```
+
+**Requirements:** Python 3.12+ with uv package manager
+
 ---
-rule_type: Agent Requested              # ← Do not change this value.
-description: |-
-  {{ROLE_NAME}} perspective for {{PRIMARY_SCOPE}}. Opt-in via @{{ROLE_NAME}}.
+
+## A. Role Creation Rules
+
+1. **Naming:** `{role}.mdc` in `.cursor/rules/roles/` (e.g., `cmo.mdc`, `qa_lead.mdc`)
+2. **Size Limit:** 150 lines max (enforced by `lint_mdc.py`)
+3. **Versioning:** Semantic versioning in file header
+4. **Five-Bucket Standard:** Executive personas **must** populate ≥ 1 attribute in each of the five buckets (Identity, Objectives, Influence, Behaviors, Motivations). Specialists must cover Identity, Objectives and either Standards *or* Behaviors.
+5. **Output:** Standardized decision template required
+
 ---
 
-# {{ROLE_DISPLAY_TITLE}} (v{{VERSION}})
+## B. Role Templates by Type
 
-**Purpose**
-{{PURPOSE_1_SENTENCE}}
+### Executive Template (`--type executive`)
+Generated as `.mdc` file with front-matter:
 
-**Decision charter**
-1.  **Primary mandate** – {{MANDATE_LINE}}
-2.  **Scope boundaries** – *In:* {{IN_SCOPE}} / *Out:* {{OUT_OF_SCOPE}}
-3.  **Success =** {{SUCCESS_METRIC_OR_EXIT_CRITERIA}}
+```
+---
+rule_type: Agent Requested
+description: {{ROLE}} perspective for {{DOMAIN}}. Opt-in via @{{ROLE}}.
+---
 
-**Guiding principles**
-- {{PRINCIPLE_1}}
-- {{PRINCIPLE_2}}
-- {{PRINCIPLE_3}}
+# {{TITLE}} (v1.0)
 
-**Preferred evidence & inputs**
-- {{EVIDENCE_TYPE_1}} (e.g., threat model, Figma mockup, ROI calculation)
-- {{EVIDENCE_TYPE_2}}
+## Identity & Context
+* Scope / region: {{SCOPE}}
+* Seniority: {{SENIORITY}}
+* Span of control: {{SPAN_OF_CONTROL}}
 
-> *Project Rules override this Role if they conflict.*
-> *Last reviewed: YYYY-MM-DD; next scheduled review in 90 days.*
+## Objectives, KPIs & Mandate
+* Top objectives: {{TOP_OBJECTIVES}}
+* Success metrics: {{KPIS}}
+
+## Influence & Decision Power
+* Decision rights: {{DECISION_RIGHTS}}
+* Key stakeholders: {{STAKEHOLDERS}}
+
+## Behaviors, Tools & Preferences
+* Comms style: {{COMMS}}
+* Trusted tools: {{TRUSTED_TOOLS}}
+* Risk posture: {{RISK_POSTURE}}
+
+## Motivations, Pain Points & Constraints
+* Drivers: {{DRIVERS}}
+* Pain points: {{PAIN_POINTS}}
+
+> Project rules override this Role if they conflict.
 
 ## Output Template
 
-{{ROLE_DISPLAY_TITLE}} feedback:
+**{{TITLE}} Assessment:**
+- {{FINDING_1}}
+- {{FINDING_2}}
 
-{{POINT_1}}
-{{POINT_2}}
-
----
-Decision: <GO / NO-GO / REVISE>
-Next Steps:
-
-{{NEXT_STEP_1}}
-{{NEXT_STEP_2}}
-
-| Placeholder         | Example             |
-| ------------------- | ------------------- |
-| `{{ROLE_NAME}}`     | `cso`               |
-| `{{PRIMARY_SCOPE}}` | "risk & compliance" |
-
----
-
-## C. Maintenance
-
-- **Review Quarterly:** Add a "Last reviewed" note to each persona. Schedule a quarterly review to keep personas relevant as team strategies evolve.
-
----
-
-## D. Pre-commit Hook
-
-Add the following script to your repository as `.lint-mdc.sh`:
-
-```bash
-# .lint-mdc.sh
-lines=$(wc -l < "$1")
-if [ "$lines" -gt 150 ]; then
-  echo "❌ $1 exceeds 150 lines."
-  exit 1
-fi
+**Decision:** <GO / NO-GO / REVISE>
+**Next steps:**
+- {{ACTION_1}}
+- {{ACTION_2}}
 ```
 
-Then, reference it in your `.pre-commit-config.yaml`.
+### Specialist Template (`--type specialist`)
+Generated as `.mdc` file with front-matter:
+
+```
+---
+rule_type: Agent Requested
+description: {{ROLE}} expertise for {{DOMAIN}}. Opt-in via @{{ROLE}}.
+---
+
+# {{TITLE}} (v1.0)
+
+## Identity & Context
+* Scope / focus: {{SCOPE}}
+* Seniority: {{SENIORITY}}
+* Span of control: {{SPAN_OF_CONTROL}}
+
+## Objectives & Quality Standards
+* Top objectives: {{TOP_OBJECTIVES}}
+* Success metrics: {{KPIS}}
+* Standards: {{STANDARDS}}
+
+## Quality Gates & Behaviors
+* Quality gates: {{GATES}}
+* Trusted tools: {{TRUSTED_TOOLS}}
+* Risk posture: {{RISK_POSTURE}}
+
+> Project rules override this Role if they conflict.
+
+## Output Template
+
+**{{TITLE}} Review:**
+- {{TECHNICAL_FINDING}}
+- {{RECOMMENDATION}}
+
+**Status:** <APPROVED / BLOCKED / NEEDS_REVISION>
+**Next steps:**
+- {{ACTION}}
+```
+
+---
+
+## C. Override System
+
+### Three-Tier Precedence
+The role generator supports flexible customization through a three-tier precedence system:
+
+1. **CLI Flags (Highest)** - Override specific fields for quick customization
+2. **JSON Override File (Middle)** - Power-user bulk overrides
+3. **Role Library (Lowest)** - Default values from `role_library.json`
+
+### CLI Override Flags
+```bash
+--trusted-tools "Tool1, Tool2, Tool3"     # behaviors.trusted_tools
+--comms "Style1, Style2"                  # behaviors.comms  
+--kpis "KPI1, KPI2, KPI3"                 # objectives.kpis
+--drivers "Driver1, Driver2"              # motivations.drivers
+--pain-points "Pain1, Pain2"              # motivations.pain_points
+--top-objectives "Obj1, Obj2"             # objectives.top_objectives
+--decision-rights "Right1, Right2"        # influence.decision_rights
+--stakeholders "Stakeholder1, Stakeholder2" # influence.stakeholders
+```
+
+### JSON Override Example
+```json
+{
+  "identity": {
+    "scope": "Regional EMEA",
+    "span_of_control": 180
+  },
+  "behaviors": {
+    "trusted_tools": ["Kubernetes", "Terraform"],
+    "risk_posture": "Innovation-focused"
+  },
+  "motivations": {
+    "drivers": ["Technical excellence", "Team growth"],
+    "pain_points": ["Legacy systems", "Skills gap"]
+  }
+}
+```
+
+### Precedence Example
+```bash
+# CLI flag overrides JSON which overrides library
+uv run python scripts/create_role.py --name cto --type executive \
+  --json-override custom.json \
+  --comms "Daily standups"  # This overrides JSON comms
+```
+
+---
+
+## D. Automation Scripts
+
+### Role Generator (`scripts/create_role.py`)
+- **Three-tier override system:** CLI flags > JSON override > role_library.json
+- **CLI overrides:** `--trusted-tools`, `--comms`, `--kpis`, `--drivers`, `--pain-points`, `--top-objectives`, `--decision-rights`, `--stakeholders`
+- **JSON override:** `--json-override path/to/file.json` for power users
+- **Strict validation:** `--strict` fails if required five-bucket data is missing
+- **Auto-populates** templates with industry frameworks from `role_library.json`
+- **Generates** proper `.mdc` files with YAML front-matter
+- **Sanitizes** input to prevent template injection
+
+### Validator (`scripts/lint_mdc.py`)
+- Enforces 150-line limit (includes front-matter and comments)
+- Validates YAML structure
+- Checks for required five-bucket sections (Identity, Objectives, Influence/Standards, Behaviors, Motivations)
+- Warns if `{{placeholders}}` remain after generation
+
+### Role Library (`scripts/role_library.json`)
+```json
+{
+  "executive": {
+    "cmo": {
+      "identity": {"scope": "Global", "seniority": "C-level", "span_of_control": 150},
+      "objectives": {"top_objectives": ["Drive 40% YoY growth"], "kpis": ["CAC", "LTV"]},
+      "influence": {"decision_rights": ["Marketing budget"], "stakeholders": ["CEO"]},
+      "behaviors": {"comms": ["Weekly reviews"], "trusted_tools": ["HubSpot"]},
+      "motivations": {"drivers": ["Growth"], "pain_points": ["Attribution complexity"]},
+      "frameworks": ["growth-marketing", "aarrr-metrics"]
+    }
+  },
+  "specialist": {
+    "security": {
+      "identity": {"scope": "Cross-functional", "seniority": "Senior specialist"},
+      "objectives": {"top_objectives": ["Zero vulnerabilities"], "kpis": ["Vulnerability count"]},
+      "standards": ["nist-framework", "zero-trust", "soc2"],
+      "gates": ["Threat Model", "Pen Test", "Compliance Check"]
+    }
+  }
+}
+```
+
+---
+
+## E. Maintenance & Security
+
+- **Auto-validation:** Pre-commit hook runs `lint_mdc.py`
+- **Quarterly review:** GitHub Action opens `role-review` issue every 90 days
+- **Deprecation:** Move to `archived/` with sunset date
+- **Input sanitization:** `create_role.py` only accepts values from `role_library.json`
+- **Template validation:** Lint check ensures no `{{placeholders}}` remain
+
+---
+
+## F. Pre-commit Integration
+
+```yaml:.pre-commit-config.yaml
+- repo: local
+  hooks:
+    - id: lint-mdc
+      name: MDC Line Count Check
+      entry: uv run python scripts/lint_mdc.py
+      language: system
+      files: '\.mdc$'
+```
+
+---
+
+## G. Testing Requirements
+
+Add to `tests/test_role_factory.py`:
+- Smoke test: Generate role → validate structure
+- Lint test: Ensure generated files pass `lint_mdc.py`
+- Security test: Verify input sanitization prevents injection

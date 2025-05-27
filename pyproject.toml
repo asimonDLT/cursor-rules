@@ -1,7 +1,7 @@
 [project]
 name = "cursor-rules"
 version = "0.1.0"
-description = "Add your description here"
+description = "Cursor Rules and Role Factory for AI-powered development"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
