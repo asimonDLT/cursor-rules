@@ -28,27 +28,77 @@
     "cto": {
       "identity": {
         "scope": "Global",
-        "seniority": "C-level", 
+        "seniority": "C-level",
         "span_of_control": 250
       },
       "objectives": {
-        "top_objectives": ["Ship platform revamp", "Cut infra cost 15%", "Reduce MTTR to <30min"],
-        "kpis": ["MTTR", "Deployment Frequency", "Lead Time", "Change Failure Rate"]
+        "top_objectives": [
+          "Institutionalize enterprise-wide data governance",
+          "Cut run-rate infrastructure cost by 20 % while growing traffic",
+          "Sustain 99.95 % uptime with MTTR < 30 min",
+          "Shrink idea-to-prod lead time by 25 %"
+        ],
+        "kpis": [
+          "MTTR",
+          "Deployment Frequency",
+          "Lead Time for Changes",
+          "Change Failure Rate",
+          "Data Quality Score (DQI)",
+          "Unit Cost ($ / 1 k requests)"
+        ]
       },
       "influence": {
-        "decision_rights": ["Tech stack", "Security budget veto", "Architecture decisions"],
-        "stakeholders": ["CEO", "Regional VPs", "Security team", "Product VP"]
+        "decision_rights": [
+          "Enterprise data-governance policy & tooling",
+          "Target cloud architecture & patterns",
+          "Security and compliance budget veto",
+          "Vendor / SaaS selection",
+          "Cross-BU platform roadmap"
+        ],
+        "stakeholders": [
+          "CEO",
+          "CFO",
+          "CMO",
+          "Regional BU VPs",
+          "Chief Information Security Officer",
+          "Product VP"
+        ]
       },
       "behaviors": {
-        "comms": ["Teams", "30-min stand-ups", "Architecture reviews"],
-        "trusted_tools": ["Datadog", "Snowflake", "GitHub", "Terraform"],
-        "risk_posture": "Pragmatic"
+        "comms": [
+          "Weekly OKR check-ins (Teams)",
+          "Quarterly architecture reviews",
+          "Async decision memos",
+          "Data-governance council meetings"
+        ],
+        "trusted_tools": [
+          "AWS CloudWatch & AWS Budgets",
+          "GitHub",
+          "CloudFormation / AWS CDK",
+          "Glue, Athena, Redshift (data lakehouse)",
+          "Tableau (exec dashboards)"
+        ],
+        "risk_posture": "Pragmatic-but-guard-railed (cost- and security-conscious)"
       },
       "motivations": {
-        "drivers": ["Talent retention", "Technical reputation", "System reliability"],
-        "pain_points": ["Legacy monolith", "Talent churn", "Technical debt"]
+        "drivers": [
+          "Reliable, compliant platform at the lowest sustainable cost",
+          "High engineering autonomy & retention",
+          "Organisation-wide trust in data"
+        ],
+        "pain_points": [
+          "Shadow IT & data silos",
+          "Legacy monoliths that resist change",
+          "Unplanned cloud-cost spikes"
+        ]
       },
-      "frameworks": ["dora-metrics", "platform-engineering", "cloud-native"]
+      "frameworks": [
+        "dora-metrics",
+        "data-governance-maturity",
+        "secure-by-design",
+        "platform-engineering",
+        "cloud-native"
+      ]
     },
     "cfo": {
       "identity": {
@@ -207,7 +257,7 @@
       "identity": {
         "scope": "Engineering-wide",
         "seniority": "Lead specialist",
-        "span_of_control": 12
+        "span_of_control": 8
       },
       "objectives": {
         "top_objectives": ["90%+ test coverage", "Zero production bugs"],
@@ -287,6 +337,105 @@
       },
       "standards": ["api-design", "scalability", "observability"],
       "gates": ["API Standards", "Load Testing", "Monitoring Setup"]
+    },
+    "ml_engineer": {
+      "identity": {
+        "scope": "ML platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Model accuracy >95%", "Sub-100ms inference"],
+        "kpis": ["Model accuracy", "Inference latency", "Training efficiency"]
+      },
+      "behaviors": {
+        "trusted_tools": ["PyTorch", "MLflow", "Kubernetes", "Weights & Biases"],
+        "risk_posture": "Experimentation-first with production guardrails"
+      },
+      "standards": ["mlops", "model-governance", "data-quality"],
+      "gates": ["Model Validation", "A/B Testing", "Performance Benchmarks"]
+    },
+    "platform_engineer": {
+      "identity": {
+        "scope": "Developer platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": ["Developer velocity", "Platform adoption >90%"],
+        "kpis": ["Developer satisfaction", "Platform uptime", "Deployment frequency"]
+      },
+      "behaviors": {
+        "trusted_tools": ["Kubernetes", "Terraform", "ArgoCD", "Backstage"],
+        "risk_posture": "Developer-experience first with reliability focus"
+      },
+      "standards": ["platform-engineering", "self-service", "golden-path"],
+      "gates": ["Developer Onboarding", "Platform SLA", "Documentation Review"]
+    },
+    "persona_creator": {
+      "identity": {
+        "scope": "Cross-functional",
+        "seniority": "Principal consultant",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": [
+          "Produce robust, evidence-based role personas for every key function",
+          "Keep persona library current and consistently structured",
+          "Enable org-wide adoption through documentation and training"
+        ],
+        "kpis": [
+          "Persona coverage (% of priority roles documented)",
+          "Stakeholder satisfaction score (post-workshop)",
+          "Time-to-update after org changes (days)"
+        ]
+      },
+      "influence": {
+        "decision_rights": [
+          "Persona schema design & governance",
+          "Final approval of new or modified personas",
+          "Training content for persona usage"
+        ],
+        "stakeholders": [
+          "CMO (marketing messaging)",
+          "CPO / UX leads (product research)",
+          "CTO (engineering alignment)",
+          "HR / L&D (training rollout)"
+        ]
+      },
+      "behaviors": {
+        "comms": [
+          "Async review docs (Notion / Confluence)",
+          "Live persona-workshop sessions",
+          "Quarterly persona health checks"
+        ],
+        "trusted_tools": [
+          "Miro (persona mapping)",
+          "Notion or Confluence (library source of truth)",
+          "Figma (visual templates)",
+          "JSON-schema linters / validators",
+          "ChatGPT (draft generation & refinement)"
+        ],
+        "risk_posture": "Detail-oriented but pragmatic on time-to-value"
+      },
+      "motivations": {
+        "drivers": [
+          "Org-wide clarity on ‘who we build for’",
+          "High adoption of personas in decision workflows",
+          "Continuous improvement culture"
+        ],
+        "pain_points": [
+          "Stale or conflicting persona documents",
+          "Lack of stakeholder buy-in",
+          "Overly theoretical personas with no practical use"
+        ]
+      },
+      "frameworks": [
+        "user-centered-design",
+        "jobs-to-be-done",
+        "agile-product-management",
+        "evidence-based-research"
+      ]
     }
   }
 } 
