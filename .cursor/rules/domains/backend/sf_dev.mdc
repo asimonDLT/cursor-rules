@@ -1,0 +1,129 @@
+---
+description: Salesforce backend development standards for Sales Cloud, Service Cloud, and Marketing Cloud
+globs: 
+alwaysApply: false
+---
+
+# Salesforce Backend Development (sf_dev)
+
+## Core Principles
+
+- **Business-First Architecture**: Every solution must support measurable business outcomes
+- **Flows for Process, Apex for Complexity**: Prioritize the most maintainable, scalable, and secure tool for the requirement.
+    - Leverage Flows for record-triggered automation, user-facing screen flows, and linear business processes that are easy to visualize and maintain declaratively.
+    - Utilize Apex when requirements involve complex business logic, high-performance bulk processing (e.g., Batch Apex), sophisticated transaction control (e.g., savepoints), or complex integrations that are difficult to debug and manage in a declarative tool.
+- **Retire Legacy Automation**: Do not create new Workflow Rules or Process Builders. Prioritize the migration of existing legacy automation to Flow to reduce technical debt and streamline processes.
+- **Scalable Design**: Build for enterprise scale with proper governor limit management
+- **Security by Design**: Implement sharing rules, FLS, and data access controls from start
+- **Maintainability**: Write self-documenting code with clear separation of concerns
+- **Observability by Design:** Implement robust logging and monitoring to ensure system health, track performance, and facilitate rapid troubleshooting.
+
+## Apex Development Standards
+
+### Code Organization
+- **Trigger Framework**: Single trigger per object with handler classes
+- **Separation of Concerns**: Business logic in service classes, data access separate
+- **Bulkification**: Design for 200+ record operations
+- **Error Handling**: Comprehensive exception handling and logging
+
+### Governor Limits Management
+- **SOQL Queries**: Max 100 per transaction - use selective queries and indexing
+- **DML Operations**: Max 150 per transaction - bulkify all operations
+- **CPU Time**: Keep under 10 seconds - optimize loops and calculations
+- **Testing**: Maintain 75% org-wide minimum, aiming for 90%+ on all **new** logic. Focus on asserting critical business outcomes and failure scenarios, not just code execution.
+
+## Integration Patterns
+
+### API Design
+- **REST APIs**: Use proper HTTP methods and status codes
+- **Authentication**: OAuth 2.0 or Named Credentials for external systems
+- **Rate Limiting**: Handle API limits with exponential backoff
+- **Idempotency**: Design APIs to handle duplicate requests safely
+
+### Platform Events & Change Data Capture
+- **Event-Driven Architecture**: Use Platform Events for real-time integrations
+- **Change Data Capture**: Monitor critical object changes for downstream systems
+- **Retry Logic**: Robust error handling for event processing
+
+## Cloud-Specific Standards
+
+### Sales Cloud Backend
+- **Lead Management**: Lead scoring, lead grading, routing, and conversion processes
+- **Opportunity Management**: Pipeline management and forecasting logic
+- **Account Hierarchy**: Complex account relationships and territory management
+
+### Service Cloud Backend
+- **Case Management**: Automated routing, escalation, and SLA management
+- **Knowledge Base**: Article management and search functionality
+- **Omni-Channel**: Intelligent work distribution and agent productivity
+
+### Marketing Cloud Integration
+- **Journey Builder**: Integrate customer journey data with Sales/Service
+- **Data Sync**: Bidirectional contact and engagement data synchronization
+- **Analytics**: Marketing attribution and ROI tracking
+
+## Security & Performance
+
+### Security Considerations
+- **Field-Level Security**: Implement proper FLS for sensitive data
+- **Sharing Rules**: Design appropriate org-wide defaults and sharing rules
+- **Permission Sets**: Use permission sets over profiles for granular access
+- **Data Classification**: Identify and protect PII, PHI, and sensitive data
+- **Enforce User Context**: Use WITH USER_MODE in SOQL queries to enforce FLS and sharing rules by default in classes that don't need to operate in system mode.
+
+### Performance Optimization
+- **Query Optimization**: Use indexed fields, aim for <10% selectivity
+- **Async Processing**: Queueable Apex, Batch Apex, Future Methods
+- **Monitoring**: Track execution times, resource usage, error patterns
+
+## Testing & Deployment
+
+### Testing Standards
+- **Test Data**: Use @TestSetup and Test.createTestRecords()
+- **Mock Services**: Mock external callouts and complex dependencies
+- **Edge Cases**: Test bulk operations, negative scenarios, boundaries
+- **CI/CD**: Automated testing in pipeline before deployment
+
+### Release Management
+- **Metadata Management**: Source control with proper branching strategies
+- **Feature Flags**: Custom settings for feature toggles
+- **Rollback Plans**: Ability to quickly revert problematic changes
+- **Performance Monitoring**: Track system performance before/after deployments
+
+## Common Anti-Patterns to Avoid
+
+### Performance Anti-Patterns
+- ❌ SOQL/DML in loops
+- ❌ Hard-coded IDs in code
+- ❌ Recursive triggers without exit conditions
+- ❌ Non-bulkified trigger logic
+
+### Security Anti-Patterns
+- ❌ Without SECURITY_ENFORCED in dynamic SOQL
+- ❌ Hard-coded credentials in code
+- ❌ Overly permissive sharing rules
+- ❌ Assuming user permissions are enforced without using WITH USER_MODE or manual checks.
+
+### Integration Anti-Patterns
+- ❌ Synchronous callouts in triggers
+- ❌ Missing error handling in integrations
+- ❌ Poor data mapping and validation
+
+## Tools & Resources
+
+### Development Tools
+- **Visual Studio Code** with Salesforce Extension Pack
+- **Salesforce CLI** for metadata management
+- **Postman** for API testing
+- **Workbench** for ad-hoc queries
+
+### Testing & Quality
+- **Static Code Analysis Tools** (e.g., PMD, SonarLint) for identifying issues early
+- **Apex Test Framework** for unit testing
+- **Salesforce Optimizer** for performance analysis
+- **Salesforce DevOps Center** for release management
+
+### Documentation & Learning
+- **Salesforce Well-Architected Framework** for architectural guidance
+- **Trailhead** for continuous learning
+- **Salesforce Diagram Framework** for technical documentation

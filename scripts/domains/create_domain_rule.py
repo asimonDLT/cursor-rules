@@ -49,7 +49,7 @@ def load_domain_rule_template() -> str:
     Raises:
         SystemExit: If template file is not found or cannot be read
     """
-    template_path = Path(__file__).parent / "templates" / "domain_rule.mdc.template"
+    template_path = Path(__file__).parent.parent.parent / "templates" / "domains" / "domain_rule.mdc.template"
     
     try:
         with open(template_path, "r", encoding="utf-8") as f:
@@ -422,7 +422,7 @@ def main() -> None:
 
     try:
         result = subprocess.run(
-            ["uv", "run", "python", "scripts/lint_mdc.py", str(file_path)],
+            ["uv", "run", "python", "scripts/validation/lint_mdc.py", str(file_path)],
             capture_output=True,
             text=True,
         )
@@ -434,8 +434,8 @@ def main() -> None:
             logger.warning(f"Validation warnings: {result.stdout}")
             console.print(f"[yellow]⚠ Validation warnings:[/yellow]\n{result.stdout}")
     except FileNotFoundError:
-        logger.warning("lint_mdc.py not found - skipping validation")
-        console.print("[yellow]⚠ lint_mdc.py not found - skipping validation[/yellow]")
+        logger.warning("scripts/validation/lint_mdc.py not found - skipping validation")
+        console.print("[yellow]⚠ scripts/validation/lint_mdc.py not found - skipping validation[/yellow]")
 
 
 if __name__ == "__main__":

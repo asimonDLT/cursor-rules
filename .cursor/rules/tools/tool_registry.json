@@ -18,7 +18,7 @@
     },
     "python_data": {
       "description": "Python data manipulation and analysis",
-      "tools": ["Polars", "SQLAlchemy", "Alembic"]
+      "tools": ["Polars", "Glue", "Parquet", "OLAP"]
     },
     "python_testing": {
       "description": "Python testing framework and tools",
@@ -26,7 +26,7 @@
     },
     "database_core": {
       "description": "Database engines and analysis tools",
-      "tools": ["DuckDB", "SQLAlchemy", "Alembic", "Prisma"]
+      "tools": ["DuckDB", "PostgreSQL", "Redshift", "S3", "DynamoDB"]
     },
     "database_tooling": {
       "description": "Database development and migration tools",
@@ -34,35 +34,115 @@
     },
     "data_engineering": {
       "description": "Data pipeline and quality tools",
-      "tools": ["Glue", "Athena", "Redshift", "dbt", "Great Expectations", "Snowflake"]
+      "tools": ["Glue", "Athena", "Redshift", "dbt", "Great Expectations"]
     },
     "martech_analytics": {
       "description": "Web and product analytics platforms",
-      "tools": ["Google Analytics 4", "Google Tag Manager", "Mixpanel", "Amplitude"]
+      "tools": ["Google Analytics 4", "Google Tag Manager", "Google Search Console", "Hotjar"]
     },
     "martech_ads": {
       "description": "Paid advertising platforms and APIs",
-      "tools": ["Google Ads API", "Meta Ads API", "LinkedIn Ads API"]
+      "tools": ["Google Ads API", "Meta Ads API", "LinkedIn Ads API", "Reddit Ads API", "Pinterest Ads API", "TikTok Ads API", "Campaign Manager 360"]
     },
     "martech_seo": {
       "description": "Search Engine Optimization tools",
       "tools": ["Screaming Frog", "Semrush", "Ahrefs"]
+    },
+    "salesforce_platform": {
+      "description": "Core Salesforce platform tools, frameworks, and native capabilities for architecture and development",
+      "tools": [
+        "Salesforce Well-Architected Framework",
+        "Salesforce Diagram Framework", 
+        "Roadmap Explorer",
+        "Trailhead",
+        "Sales Cloud",
+        "Marketing Cloud",
+        "Service Cloud",
+        "Experience Cloud",
+        "Tableau CRM",
+        "Slack (Salesforce)"
+      ]
+    },
+    "diagramming": {
+      "description": "Visual design and architecture diagramming tools for creating system landscapes, data models, and process flows",
+      "tools": [
+        "Mermaid",
+        "Excalidraw",
+        "Miro",
+        "Figma"
+      ]
+    },
+    "metadata_governance": {
+      "description": "Salesforce org management, metadata analysis, and governance platforms",
+      "tools": [
+        "Salesforce Optimizer",
+        "Salesforce DevOps Center"
+      ]
+    },
+    "development": {
+      "description": "Integrated development environments and coding tools for Salesforce development",
+      "tools": [
+        "Visual Studio Code",
+        "Cursor",
+        "Salesforce Extension Pack",
+        "Salesforce CLI",
+        "Git",
+        "GitHub",
+        "Postman",
+        "Workbench",
+        "Developer Console"
+      ]
+    },
+    "collaboration": {
+      "description": "Project management, documentation, and team collaboration tools",
+      "tools": [
+        "Google Sheets",
+        "Microsoft Teams",
+        "Monday",
+        "Obsidian",
+        "Markdown"
+      ]
+    },
+    "analytics": {
+      "description": "Business intelligence, data analysis, and reporting tools integrated with Salesforce",
+      "tools": [
+        "Tableau",
+        "Dataloader",
+        "Salesforce Dashboards",
+        "Salesforce Reports"
+      ]
+    },
+    "integration": {
+      "description": "Data integration and middleware platforms for connecting Salesforce with external systems",
+      "tools": [
+        "AWS Glue",
+        "REST APIs",
+        "SOAP APIs"
+      ]
+    },
+    "testing": {
+      "description": "Quality assurance and testing tools for Salesforce applications and integrations",
+      "tools": [
+        "Salesforce Test Runner",
+        "Apex Test Framework"
+      ]
     }
   },
   "domain_mappings": {
     "aws": ["aws_core", "aws_security", "aws_compute"],
     "python": ["python_dev", "python_data", "python_testing"],
     "database": ["database_core", "database_tooling"],
-    "backend": ["python_dev", "database_core", "aws_core"],
-    "cloud": ["aws_core", "aws_security", "aws_compute"],
-    "core": [],
-    "data": ["python_data", "database_core", "data_engineering"],
-    "docs": [],
-    "frontend": [],
-    "martech": ["martech_analytics", "martech_ads", "martech_seo"],
-    "security": ["aws_security"],
+    "backend": ["python_dev", "database_core", "aws_core", "development"],
+    "cloud": ["aws_core", "aws_security", "aws_compute", "salesforce_platform"],
+    "core": ["collaboration", "development"],
+    "data": ["python_data", "database_core", "data_engineering", "analytics"],
+    "docs": ["collaboration", "diagramming"],
+    "frontend": ["development", "testing", "diagramming"],
+    "martech": ["martech_analytics", "martech_ads", "martech_seo", "salesforce_platform", "analytics", "integration", "diagramming", "metadata_governance"],
+    "security": ["aws_security", "metadata_governance", "testing"],
     "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"],
-    "data_analyst": ["python_data", "database_core", "data_engineering", "martech_analytics"]
+    "data_analyst": ["python_data", "database_core", "data_engineering", "martech_analytics", "analytics"],
+    "sf_dev": ["salesforce_platform", "development", "integration", "testing", "metadata_governance"]
   },
   "domain_metadata": {
     "backend": {
@@ -246,6 +326,20 @@
         "## Statistical Rigor"
       ],
       "compliance_requirements": ["Data governance", "Privacy regulations"]
+    },
+    "sf_dev": {
+      "description": "Salesforce backend development standards for Sales Cloud, Service Cloud, and Marketing Cloud.",
+      "owner": "@my-org/salesforce-dev-team",
+      "status": "active",
+      "last_reviewed": "2025-05-27",
+      "template_type": "salesforce_backend",
+      "required_sections": [
+        "## Core Principles",
+        "## Apex Development Standards",
+        "## Integration Patterns",
+        "## Testing & Deployment"
+      ],
+      "compliance_requirements": ["Salesforce security", "Data governance"]
     }
   }
 }

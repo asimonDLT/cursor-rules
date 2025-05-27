@@ -8,12 +8,11 @@ import json
 import tempfile
 import uuid
 from pathlib import Path
-from typing import Dict, Set
-from unittest.mock import patch
+from typing import Dict
 
 import pytest
 
-from scripts.validate_domains import (
+from scripts.domains.validate_domains import (
     get_filesystem_domains,
     get_registry_domains,
     load_tool_registry,

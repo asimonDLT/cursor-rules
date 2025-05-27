@@ -7,6 +7,7 @@ Generates standardized .mdc role files with proper validation and security.
 import argparse
 import json
 import logging
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Dict, Optional, List
@@ -204,7 +205,7 @@ def load_template(template_name: str) -> str:
     Raises:
         SystemExit: If template file is not found or cannot be read
     """
-    template_path = Path(__file__).parent / "templates" / f"{template_name}.mdc.template"
+    template_path = Path(__file__).parent.parent.parent / "templates" / "roles" / f"{template_name}.mdc.template"
     
     try:
         with open(template_path, "r", encoding="utf-8") as f:
@@ -752,24 +753,43 @@ def main() -> None:
     console.print("\n[blue]Running validation...[/blue]")
     logger.info("Running lint validation on generated file")
 
-    import subprocess
-
     try:
+        # Use uv run consistently and add Ruff validation
         result = subprocess.run(
-            ["uv", "run", "python", "scripts/lint_mdc.py", str(output_path)],
+            ["uv", "run", "ruff", "check", "--select", "E,W,F", str(output_path)],
             capture_output=True,
             text=True,
+            timeout=30
         )
 
         if result.returncode == 0:
-            logger.info("Validation passed successfully")
-            console.print("[green]✓ Validation passed[/green]")
+            logger.info("Ruff validation passed successfully")
+            console.print("[green]✓ Ruff validation passed[/green]")
         else:
-            logger.warning(f"Validation warnings: {result.stdout}")
-            console.print(f"[yellow]⚠ Validation warnings:[/yellow]\n{result.stdout}")
-    except FileNotFoundError:
-        logger.warning("lint_mdc.py not found - skipping validation")
-        console.print("[yellow]⚠ lint_mdc.py not found - skipping validation[/yellow]")
+            logger.warning(f"Ruff validation issues: {result.stdout}")
+            console.print(f"[yellow]⚠ Ruff validation issues:[/yellow]\n{result.stdout}")
+
+        # Also run the custom MDC linter if available
+        mdc_result = subprocess.run(
+            ["uv", "run", "python", "scripts/validation/lint_mdc.py", str(output_path)],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+
+        if mdc_result.returncode == 0:
+            logger.info("MDC validation passed successfully")
+            console.print("[green]✓ MDC validation passed[/green]")
+        else:
+            logger.warning(f"MDC validation warnings: {mdc_result.stdout}")
+            console.print(f"[yellow]⚠ MDC validation warnings:[/yellow]\n{mdc_result.stdout}")
+
+    except subprocess.TimeoutExpired:
+        logger.error("Validation timed out")
+        console.print("[red]✗ Validation timed out[/red]")
+    except FileNotFoundError as e:
+        logger.warning(f"Validation tool not found: {e}")
+        console.print(f"[yellow]⚠ Validation tool not found: {e}[/yellow]")
 
 
 if __name__ == "__main__":

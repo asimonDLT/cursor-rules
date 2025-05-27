@@ -8,11 +8,11 @@ import json
 import tempfile
 from pathlib import Path
 from typing import Dict
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import pytest
 
-from scripts.create_domain_rule import (
+from scripts.domains.create_domain_rule import (
     VALID_CATEGORIES,
     create_domain_rule_file,
     generate_domain_rule_content,
@@ -176,7 +176,7 @@ class TestLoadDomainMetadata:
                 result = load_domain_metadata(domain_name)
         
         # Assert
-        assert result == "Backend development standards"
+        assert result == {"description": "Backend development standards"}
     
     def test_load_nonexistent_domain_metadata(self, sample_tool_registry: Dict):
         """Test loading metadata for non-existent domain."""
@@ -301,7 +301,7 @@ class TestGenerateDomainRuleContent:
         
         # Assert
         assert "Test Domain" in result
-        assert "test domain best practices" in result
+        assert "Standards and best practices for test domain" in result
 
 
 class TestCreateDomainRuleFile:
@@ -336,7 +336,7 @@ class TestCreateDomainRuleFile:
         category = "invalid_category"
         
         # Act & Assert
-        with patch('scripts.create_domain_rule.Confirm.ask', return_value=False):
+        with patch('scripts.domains.create_domain_rule.Confirm.ask', return_value=False):
             with pytest.raises(SystemExit):
                 create_domain_rule_file(name, category, output_base_dir=str(temp_output_dir))
     
@@ -347,7 +347,7 @@ class TestCreateDomainRuleFile:
         category = "invalid_category"
         
         # Act
-        with patch('scripts.create_domain_rule.Confirm.ask', return_value=True):
+        with patch('scripts.domains.create_domain_rule.Confirm.ask', return_value=True):
             result_path = create_domain_rule_file(
                 name, category, output_base_dir=str(temp_output_dir)
             )
@@ -369,7 +369,7 @@ class TestCreateDomainRuleFile:
         existing_file.write_text("existing content")
         
         # Act & Assert
-        with patch('scripts.create_domain_rule.Confirm.ask', return_value=False):
+        with patch('scripts.domains.create_domain_rule.Confirm.ask', return_value=False):
             with pytest.raises(SystemExit):
                 create_domain_rule_file(name, category, output_base_dir=str(temp_output_dir))
     
@@ -386,7 +386,7 @@ class TestCreateDomainRuleFile:
         existing_file.write_text("existing content")
         
         # Act
-        with patch('scripts.create_domain_rule.Confirm.ask', return_value=True):
+        with patch('scripts.domains.create_domain_rule.Confirm.ask', return_value=True):
             result_path = create_domain_rule_file(
                 name, category, output_base_dir=str(temp_output_dir)
             )
@@ -444,7 +444,7 @@ class TestConstants:
     def test_dangerous_patterns_imported(self):
         """Test that dangerous input patterns are defined."""
         # Arrange & Act
-        from scripts.create_domain_rule import DANGEROUS_INPUT_PATTERNS
+        from scripts.domains.create_domain_rule import DANGEROUS_INPUT_PATTERNS
         
         # Assert
         assert len(DANGEROUS_INPUT_PATTERNS) > 0

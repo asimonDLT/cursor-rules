@@ -1,0 +1,211 @@
+{
+  "comment": "Domain Creation Template - Use this as a starting point for creating new domains",
+  "comment2": "Remove comments before using. All fields are optional unless marked as required.",
+  
+  "domain_name": "your_domain_name",
+  "category": "backend",
+  "comment_category": "Required. Choose from: frontend, backend, cloud, data, security, docs, martech",
+  
+  "tool_registry_additions": {
+    "comment": "Add new tool categories and domain mappings to tool_registry.json",
+    
+    "new_tool_categories": {
+      "your_tool_category": {
+        "description": "Description of what tools this category contains",
+        "tools": [
+          "Tool Name 1",
+          "Tool Name 2",
+          "Framework X",
+          "Library Y"
+        ]
+      }
+    },
+    
+    "domain_mapping": {
+      "comment": "Map your domain to existing or new tool categories",
+      "your_domain_name": [
+        "existing_category_1",
+        "existing_category_2", 
+        "your_new_category"
+      ]
+    },
+    
+    "domain_metadata": {
+      "comment": "Define governance and structure for your domain",
+      "your_domain_name": {
+        "description": "Clear description of what this domain covers and its boundaries",
+        "owner": "@my-org/your-team-name",
+        "status": "active",
+        "comment_status": "Options: active, deprecated, draft, archived",
+        "last_reviewed": "2025-05-27",
+        "template_type": "your_template_type",
+        "comment_template_type": "Examples: layered_architecture, cloud_native, universal_standards, data_platform, component_driven, tracking_and_analytics, security_first, aws_services, language_specific, data_storage, role_specific, salesforce_backend",
+        "required_sections": [
+          "## Core Principles",
+          "## Your Required Section 1",
+          "## Your Required Section 2",
+          "## Standards & Guidelines"
+        ],
+        "compliance_requirements": [
+          "Security standards",
+          "Your compliance requirement 1",
+          "Your compliance requirement 2"
+        ]
+      }
+    }
+  },
+  
+  "mdc_file_structure": {
+    "comment": "Structure for the .mdc domain rule file",
+    
+    "yaml_frontmatter": {
+      "comment": "YAML header - required fields",
+      "rule_type": "Agent Requested",
+      "description": "Brief description of the domain's purpose and scope",
+      "globs": [],
+      "comment_globs": "Optional: File patterns this domain applies to (e.g., ['**/*.apex', '**/*.cls'])",
+      "alwaysApply": false,
+      "comment_alwaysApply": "Optional: Whether this domain should always be considered"
+    },
+    
+    "content_sections": {
+      "title": "# Your Domain Name",
+      
+      "identity_and_scope": {
+        "comment": "Optional but recommended - defines boundaries",
+        "section": "## Identity & Scope",
+        "content": [
+          "Clear statement of what this domain covers",
+          "Where the domain starts and stops",
+          "**Owner Team**: Team responsible for governance",
+          "**Primary Consumers**: Who uses these standards"
+        ]
+      },
+      
+      "core_principles": {
+        "comment": "Required - fundamental beliefs and approaches",
+        "section": "## Core Principles",
+        "content": [
+          "- **Principle 1**: Clear, actionable principle with explanation",
+          "- **Principle 2**: Another core belief",
+          "- **Decision Framework**: When to use what approach"
+        ]
+      },
+      
+      "quality_targets": {
+        "comment": "Optional but recommended - measurable objectives",
+        "section": "## Quality Targets & SLOs",
+        "content": [
+          "- **Performance**: Specific measurable targets (e.g., 'API response time < 200ms P95')",
+          "- **Reliability**: Error rates, uptime targets",
+          "- **Quality**: Test coverage, code quality metrics"
+        ]
+      },
+      
+      "standards_and_guidelines": {
+        "comment": "Required - specific implementation guidance",
+        "section": "## Standards & Guidelines",
+        "content": [
+          "### Subsection 1",
+          "- Specific, actionable guidelines",
+          "- Code examples where helpful",
+          "### Subsection 2", 
+          "- More detailed standards"
+        ]
+      },
+      
+      "common_patterns": {
+        "comment": "Optional - recommended approaches",
+        "section": "## Common Patterns",
+        "content": [
+          "### Pattern 1: When to Use",
+          "- Implementation details",
+          "- Best practices",
+          "### Pattern 2: Alternative Approach",
+          "- Different scenario guidance"
+        ]
+      },
+      
+      "anti_patterns": {
+        "comment": "Optional but recommended - what NOT to do",
+        "section": "## Anti-Patterns to Avoid",
+        "content": [
+          "### Category 1 Anti-Patterns",
+          "- ❌ Specific thing not to do",
+          "- ❌ Another problematic approach",
+          "### Category 2 Anti-Patterns",
+          "- ❌ More things to avoid"
+        ]
+      },
+      
+      "tools_and_resources": {
+        "comment": "Optional - supporting tools and learning materials",
+        "section": "## Tools & Resources",
+        "content": [
+          "### Development Tools",
+          "- **Tool 1** for specific purpose",
+          "- **Tool 2** for another purpose",
+          "### Documentation & Learning",
+          "- **Resource 1** for guidance",
+          "- **Resource 2** for best practices"
+        ]
+      },
+      
+      "testing_and_deployment": {
+        "comment": "Optional - CI/CD and quality assurance",
+        "section": "## Testing & Deployment",
+        "content": [
+          "### Testing Standards",
+          "- Coverage requirements",
+          "- Testing strategies",
+          "### Deployment Guidelines",
+          "- Release management",
+          "- Rollback procedures"
+        ]
+      }
+    }
+  },
+  
+  "creation_workflow": {
+    "comment": "Step-by-step process for creating a new domain",
+    "steps": [
+      "1. Define domain scope and boundaries clearly",
+      "2. Identify owner team and primary consumers",
+      "3. Add tool categories to tool_registry.json if needed",
+      "4. Add domain mapping to tool_registry.json",
+      "5. Add domain metadata to tool_registry.json",
+      "6. Create .mdc file using: uv run python scripts/create_domain_rule.py --name YOUR_DOMAIN --category CATEGORY --description 'Description'",
+      "7. Enhance the generated .mdc file with comprehensive content",
+      "8. Validate with: uv run python scripts/lint_mdc.py path/to/your_domain.mdc",
+      "9. Validate tool registry with: uv run python scripts/lint_tool_registry.py .cursor/rules/tools/tool_registry.json",
+      "10. Test domain invocation: @your_domain_name"
+    ]
+  },
+  
+  "best_practices": {
+    "comment": "Guidelines for creating effective domains",
+    "principles": [
+      "Keep domains focused and cohesive - avoid kitchen sink domains",
+      "Make principles actionable and measurable where possible",
+      "Include decision frameworks for common choices",
+      "Provide specific examples and code samples",
+      "Define clear boundaries - what's in scope vs out of scope",
+      "Include anti-patterns to help developers avoid common mistakes",
+      "Keep under 150 lines to meet validation requirements",
+      "Use clear, scannable formatting with headers and bullet points",
+      "Reference tools and resources that teams actually use",
+      "Update last_reviewed dates regularly in metadata"
+    ]
+  },
+  
+  "example_domains_for_reference": {
+    "comment": "Existing domains you can study for patterns",
+    "domains": [
+      "backend - General server-side development",
+      "cloud - AWS infrastructure and services",
+      "data - Data engineering and analytics",
+      "sf_dev - Salesforce backend development",
+      "martech - Marketing technology and analytics"
+    ]
+  }
+}

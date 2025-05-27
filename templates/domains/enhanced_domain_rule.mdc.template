@@ -1,0 +1,77 @@
+---
+rule_type: Agent Requested
+description: {description}
+globs: []
+alwaysApply: false
+---
+
+# {title}
+
+## Identity & Scope
+
+{scope_description}
+
+**Owner Team**: {owner_team}  
+**Primary Consumers**: {primary_consumers}
+
+## Core Principles
+
+- **{principle_1}**: {principle_1_explanation}
+- **{principle_2}**: {principle_2_explanation}
+- **{principle_3}**: {principle_3_explanation}
+
+## Quality Targets & SLOs
+
+- **{quality_metric_1}**: {quality_target_1}
+- **{quality_metric_2}**: {quality_target_2}
+- **{quality_metric_3}**: {quality_target_3}
+
+## Standards & Guidelines
+
+### {guideline_category_1}
+- **{standard_1}**: {standard_1_details}
+- **{standard_2}**: {standard_2_details}
+
+### {guideline_category_2}
+- **{standard_3}**: {standard_3_details}
+- **{standard_4}**: {standard_4_details}
+
+## Common Patterns
+
+### {pattern_1_name}
+- **When to Use**: {pattern_1_when}
+- **Implementation**: {pattern_1_how}
+
+### {pattern_2_name}
+- **When to Use**: {pattern_2_when}
+- **Implementation**: {pattern_2_how}
+
+## Anti-Patterns to Avoid
+
+### {antipattern_category_1}
+- ❌ {antipattern_1}
+- ❌ {antipattern_2}
+
+### {antipattern_category_2}
+- ❌ {antipattern_3}
+- ❌ {antipattern_4}
+
+## Testing & Deployment
+
+### Testing Standards
+- **{testing_standard_1}**: {testing_details_1}
+- **{testing_standard_2}**: {testing_details_2}
+
+### Deployment Guidelines
+- **{deployment_standard_1}**: {deployment_details_1}
+- **{deployment_standard_2}**: {deployment_details_2}
+
+## Tools & Resources
+
+### Development Tools
+- **{tool_1}** for {tool_1_purpose}
+- **{tool_2}** for {tool_2_purpose}
+
+### Documentation & Learning
+- **{resource_1}** for {resource_1_purpose}
+- **{resource_2}** for {resource_2_purpose}

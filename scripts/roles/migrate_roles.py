@@ -130,7 +130,7 @@ def main():
         console.print(f"[dim]Backup saved to: {backup_path}[/dim]")
         console.print("\n[yellow]Next steps:[/yellow]")
         console.print("1. Review the migrated file and fill in placeholder values")
-        console.print("2. Test role generation with: uv run python scripts/create_role.py --list-templates")
+        console.print("2. Test role generation with: uv run python scripts/roles/create_role.py --list-templates")
         console.print("3. Generate a sample role to verify the new format")
         
     except Exception as e:

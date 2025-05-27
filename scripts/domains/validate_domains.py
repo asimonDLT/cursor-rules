@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Domain Validation Script - Ensures consistency between file system and tool_registry.json.
+"""Domain Validation Script - Ensures consistency between file system and tool_registry.json.
 Validates that domain directories and registry entries are synchronized.
 """
 
@@ -28,8 +27,7 @@ console = Console()
 
 
 def load_tool_registry(registry_path: Path, correlation_id: str) -> Dict:
-    """
-    Load and parse the tool registry JSON file.
+    """Load and parse the tool registry JSON file.
     
     Args:
         registry_path: Path to tool_registry.json
@@ -37,6 +35,7 @@ def load_tool_registry(registry_path: Path, correlation_id: str) -> Dict:
         
     Returns:
         Parsed registry data or empty dict on error
+
     """
     logger.info(f"[{correlation_id}] Loading tool registry from {registry_path}")
     
@@ -60,8 +59,7 @@ def load_tool_registry(registry_path: Path, correlation_id: str) -> Dict:
 
 
 def get_filesystem_domains(rules_dir: Path, correlation_id: str) -> Set[str]:
-    """
-    Get domain directories from the file system.
+    """Get domain directories from the file system.
     
     Args:
         rules_dir: Path to .cursor/rules directory
@@ -69,6 +67,7 @@ def get_filesystem_domains(rules_dir: Path, correlation_id: str) -> Set[str]:
         
     Returns:
         Set of domain directory names
+
     """
     logger.info(f"[{correlation_id}] Scanning filesystem domains in {rules_dir}")
     
@@ -86,8 +85,7 @@ def get_filesystem_domains(rules_dir: Path, correlation_id: str) -> Set[str]:
 
 
 def get_registry_domains(registry: Dict, correlation_id: str) -> Tuple[Set[str], Set[str]]:
-    """
-    Get domain names from tool registry.
+    """Get domain names from tool registry.
     
     Args:
         registry: Parsed tool registry data
@@ -95,6 +93,7 @@ def get_registry_domains(registry: Dict, correlation_id: str) -> Tuple[Set[str],
         
     Returns:
         Tuple of (domain_mappings domains, domain_metadata domains)
+
     """
     logger.info(f"[{correlation_id}] Extracting domains from tool registry")
     
@@ -113,8 +112,7 @@ def validate_domain_consistency(
     registry_metadata: Set[str],
     correlation_id: str
 ) -> Tuple[bool, List[str]]:
-    """
-    Validate consistency between filesystem and registry domains.
+    """Validate consistency between filesystem and registry domains.
     
     Args:
         filesystem_domains: Domain directories from filesystem
@@ -124,11 +122,11 @@ def validate_domain_consistency(
         
     Returns:
         Tuple of (is_valid, list_of_errors)
+
     """
     logger.info(f"[{correlation_id}] Validating domain consistency")
     
     errors = []
-    warnings = []
     
     # Define technical domains that don't need filesystem directories
     technical_domains = {"aws", "python", "database", "data_engineer", "data_analyst"}
@@ -186,8 +184,7 @@ def validate_domain_consistency(
 def validate_domain_metadata_schema(
     registry: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
-    """
-    Validate the enhanced domain metadata schema fields.
+    """Validate the enhanced domain metadata schema fields.
     
     Args:
         registry: Parsed tool registry data
@@ -195,6 +192,7 @@ def validate_domain_metadata_schema(
         
     Returns:
         Tuple of (is_valid, list_of_errors)
+
     """
     logger.info(f"[{correlation_id}] Validating domain metadata schema")
     
@@ -239,8 +237,7 @@ def validate_domain_metadata_schema(
 def validate_required_sections(
     filesystem_domains: Set[str], registry: Dict, correlation_id: str
 ) -> Tuple[bool, List[str]]:
-    """
-    Validate that domain .mdc files contain all required sections.
+    """Validate that domain .mdc files contain all required sections.
     
     Args:
         filesystem_domains: Domain directories from filesystem
@@ -249,6 +246,7 @@ def validate_required_sections(
         
     Returns:
         Tuple of (is_valid, list_of_errors)
+
     """
     logger.info(f"[{correlation_id}] Validating required sections in domain files")
     
@@ -339,7 +337,7 @@ def display_validation_summary(
             console.print(f"  [red]•[/red] {error}")
 
 
-def main():
+def main() -> None:
     """Main entry point for domain validation."""
     correlation_id = str(uuid.uuid4())[:8]
     logger.info(f"[{correlation_id}] Starting domain validation")

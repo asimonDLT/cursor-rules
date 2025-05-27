@@ -4,6 +4,7 @@ Role Library Linter - Validates role_library.json structure and integrity.
 Ensures role library maintains proper structure and cross-references.
 """
 
+import argparse
 import json
 import logging
 import sys
@@ -386,7 +387,7 @@ def validate_tool_registry_references(
 
 
 def validate_role_consistency(
-    library_data: Dict, correlation_id: str
+    library_data: Dict, correlation_id: str, strict: bool = False
 ) -> Tuple[bool, List[str]]:
     """
     Validate consistency across roles (duplicates, naming conventions, etc.).
@@ -394,6 +395,7 @@ def validate_role_consistency(
     Args:
         library_data: Parsed JSON data
         correlation_id: Unique identifier for this validation run
+        strict: If True, treat warnings as errors
 
     Returns:
         Tuple[bool, List[str]]: (is_valid, list_of_errors)
@@ -443,6 +445,10 @@ def validate_role_consistency(
         logger.warning(f"[{correlation_id}] {warning}")
         console.print(f"[yellow]⚠[/yellow] {warning}")
 
+    # In strict mode, treat warnings as errors
+    if strict and warnings:
+        errors.extend(warnings)
+
     is_valid = len(errors) == 0
 
     if is_valid:
@@ -455,13 +461,14 @@ def validate_role_consistency(
     return is_valid, errors
 
 
-def validate_role_library(file_path: Path, correlation_id: str) -> Tuple[bool, Dict]:
+def validate_role_library(file_path: Path, correlation_id: str, strict: bool = False) -> Tuple[bool, Dict]:
     """
     Validate the role library file.
 
     Args:
         file_path: Path to the role library file
         correlation_id: Unique identifier for this validation run
+        strict: If True, treat warnings as errors
 
     Returns:
         Tuple[bool, Dict]: (is_valid, library_data)
@@ -508,7 +515,7 @@ def validate_role_library(file_path: Path, correlation_id: str) -> Tuple[bool, D
 
         # Validate role consistency
         consistency_valid, consistency_errors = validate_role_consistency(
-            library_data, correlation_id
+            library_data, correlation_id, strict
         )
         all_errors.extend(consistency_errors)
     else:
@@ -579,18 +586,43 @@ def display_summary(
         console.print("\n[red]✗ Role library validation failed[/red]")
 
 
-def main():
+def main() -> None:
     """Main entry point for role library linting."""
     correlation_id = str(uuid.uuid4())[:8]
     logger.info(f"[{correlation_id}] Starting role library linter")
 
-    if len(sys.argv) != 2:
-        console.print(
-            "[red]Error:[/red] Usage: python lint_role_library.py <path_to_role_library.json>"
-        )
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Validate role library JSON files",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python lint_role_library.py role_library.json
+  python lint_role_library.py /path/to/role_library.json
+        """,
+    )
+    parser.add_argument(
+        "file",
+        help="Path to the role library JSON file to validate"
+    )
+    parser.add_argument(
+        "--verbose", "-v",
+        action="store_true",
+        help="Enable verbose logging output"
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Fail on warnings as well as errors"
+    )
+    
+    args = parser.parse_args()
 
-    library_path_str = sys.argv[1]
+    # Set logging level based on verbose flag
+    if args.verbose:
+        logging.getLogger("lint_role_library").setLevel(logging.DEBUG)
+        logger.debug(f"[{correlation_id}] Verbose logging enabled")
+
+    library_path_str = args.file
 
     try:
         library_path = sanitize_file_path(library_path_str)
@@ -600,7 +632,7 @@ def main():
         sys.exit(1)
 
     # Validate the role library
-    is_valid, library_data = validate_role_library(library_path, correlation_id)
+    is_valid, library_data = validate_role_library(library_path, correlation_id, args.strict)
 
     # Display summary
     display_summary(library_path, is_valid, library_data, correlation_id)
@@ -616,3 +648,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# TODO: Add pytest test cases for:
+# - validate_json_structure()
+# - validate_field_structure() 
+# - validate_tool_registry_references()
+# - validate_role_consistency()
+# - sanitize_file_path() edge cases
