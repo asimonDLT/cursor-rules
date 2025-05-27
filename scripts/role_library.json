@@ -440,18 +440,19 @@
     "data_analyst": {
       "identity": {
         "scope": "Marketing & Product Analytics",
-        "seniority": "Senior Specialist",
+        "seniority": "Senior specialist",
         "span_of_control": 0
       },
       "objectives": {
-        "top_objectives": ["Provide actionable insights from user data", "Measure marketing campaign effectiveness"],
-        "kpis": ["Insight-to-action rate", "Report accuracy", "Data availability"]
+        "top_objectives": ["Provide actionable insights from user data", "Measure marketing campaign effectiveness", "Build self-service analytics capabilities"],
+        "kpis": ["Insight-to-action rate", "Report accuracy", "Data availability", "Dashboard adoption"]
       },
-      "standards": ["data-visualization-best-practices", "statistical-significance"],
       "behaviors": {
-        "tool_domains": ["martech", "python", "database"],
-        "risk_posture": "Data-driven with a focus on accuracy"
-      }
+        "trusted_tools": ["Tableau", "Python", "SQL", "Google Analytics 4", "Mixpanel", "dbt"],
+        "risk_posture": "Data-driven with a focus on accuracy and statistical significance"
+      },
+      "standards": ["data-visualization-best-practices", "statistical-significance", "privacy-by-design"],
+      "gates": ["Data Quality Validation", "Statistical Significance", "Privacy Compliance"]
     }
   }
 } 

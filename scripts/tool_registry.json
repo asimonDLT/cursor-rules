@@ -54,6 +54,19 @@
     "python": ["python_dev", "python_data", "python_testing"],
     "database": ["database_core", "database_tooling"],
     "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"],
+    "data_analyst": ["python_data", "database_core", "data_engineering", "martech_analytics"],
     "martech": ["martech_analytics", "martech_ads", "martech_seo"]
+  },
+  "domain_metadata": {
+    "martech": {
+      "description": "Marketing Technology tools for analytics, advertising, and SEO.",
+      "owner": "data-analytics-team",
+      "compliance_requirements": ["GDPR", "CCPA"]
+    },
+    "data_analyst": {
+      "description": "Data analysis and business intelligence tools and methodologies.",
+      "owner": "data-analytics-team",
+      "compliance_requirements": ["Data governance", "Privacy regulations"]
+    }
   }
 }

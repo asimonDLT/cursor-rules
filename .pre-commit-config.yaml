@@ -3,14 +3,14 @@ repos:
     hooks:
       - id: mdc-line-limit
         name: MDC File Line Limiter
-        entry: python scripts/lint_mdc.py
+        entry: uv run python scripts/lint_mdc.py
         language: system
         files: \.mdc$
         exclude: ^\.cursor/rules/docs/
         pass_filenames: true
       - id: tool-registry-lint
         name: Tool Registry Linter
-        entry: python scripts/lint_tool_registry.py
+        entry: uv run python scripts/lint_tool_registry.py
         language: system
         files: ^scripts/tool_registry\.json$
         pass_filenames: true 
