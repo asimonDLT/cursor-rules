@@ -1,0 +1,231 @@
+---
+description: "Salesforce Documentation Standards"
+globs: 
+alwaysApply: false
+---
+# Documentation Standards - Cursor Rule
+
+You are an expert technical writer specializing in Salesforce architecture and enterprise documentation. Follow these standards when creating or editing any markdown documentation.
+
+## General Formatting Rules
+
+- **Line Length:** Target 80-120 characters per line for readability, but prioritize natural breaks over strict limits.
+- **Headers:** Use ATX-style headers (`#`) with a single space after the hash. Always include a blank line before and after headers.
+- **Emphasis:** Use `**bold**` for strong emphasis and `*italic*` for regular emphasis. Avoid using `_` for emphasis.
+- **Lists:** Use `-` for unordered lists and `1.` for ordered lists. Maintain consistent indentation (2 spaces per level).
+- **Spacing:** Use single blank lines to separate sections. Use double blank lines only before major section breaks.
+
+## Advanced Markdown Features
+
+- **Code Fences:** Always specify the language for syntax highlighting (e.g., ```python, ```typescript, ```bash, ```apex, ```soql, ```xml, ```sfdx).
+- **Tables:** Use pipe tables with proper alignment. Include header separators with appropriate alignment indicators (`---`, `:---`, `---:`, `:---:`).
+- **Links:** Prefer reference-style links for better readability in long documents. Place references at the end of sections or documents.
+- **Images:** Always include alt text. Use relative paths for project assets, absolute URLs for external images.
+- **Blockquotes:** Use for important notes, warnings, or citations. Combine with emoji for visual distinction.
+
+## Diagram Standards
+
+### Proactive Diagram Generation
+- **Auto-Generate:** When asked to illustrate a process, architecture, or workflow, proactively generate a Mermaid diagram of the appropriate type (flowchart, sequence, class, etc.).
+- **Diagram Types:** Use appropriate diagram types - flowcharts for processes, sequence diagrams for interactions, class diagrams for architecture.
+- **Naming:** Use descriptive, consistent naming for nodes and relationships.
+- **Complexity Guardrails:** > 25 nodes or > 40 edges? Break into child diagrams using these patterns:
+  - **Layered View:** Context → Container → Component (separate diagrams per layer)
+  - **Interaction Filters:** One diagram per integration pattern (REST, Events, Bulk API)
+  - **Domain Boundaries:** Split by business capability or Salesforce org boundaries
+
+### Mermaid / UML Style Guide (Salesforce Projects)
+
+#### Core Theme
+Use SLDS design-token colours rather than raw hex codes whenever Mermaid supports inline CSS variables.  
+If tokens are unsupported (older Mermaid), fall back to these WCAG-AA compliant values:
+
+| Usage                        | SLDS Token              | Hex Code  | Example           |
+|------------------------------|-------------------------|-----------|-------------------|
+| Salesforce platform element | `--slds-brand`          | `#1589EE` | Org, Flow, Apex   |
+| Internal AWS service         | `--slds-blue-60`        | `#0176D3` | Lambda, S3        |
+| External system              | `--slds-gray-50`        | `#5C6B73` | ERP, 3rd-party    |
+| Data store / DB              | `--slds-green-60`       | `#0E8449` | Postgres, Redshift |
+| Async interface              | `--slds-orange-50`      | `#F47920` | Platform Event    |
+
+> **Note:** Color tokens reference SLDS v2.15 palette to avoid drift when SLDS versions update.
+
+#### Directives Template
+```mermaid
+%%{ init: {
+      'theme':'base',
+      'themeVariables': {
+        'primaryColor':'#1589EE',
+        'primaryTextColor':'#FFFFFF',
+        'secondaryColor':'#0176D3',
+        'tertiaryColor':'#5C6B73',
+        'lineColor':'#0176D3',
+        'fontFamily': 'Salesforce Sans, Arial, sans-serif'
+      }
+} }%%
+```
+
+#### Shapes & Semantics
+- **Rectangle** → Business Logic (Apex, Flow)
+- **Cylinder** → Salesforce Custom Objects / sObjects
+- **Database (barrel)** → External relational databases (Postgres, MySQL, Snowflake)
+- **Queue (double-box)** → Queueable, Kafka, Platform Events
+- **Cloud** → External SaaS / Integration
+- **Dashed connector** (`-.->`) = async / event-driven, **solid** (`-->`) = synchronous call
+- **Fire-and-forget** (`...>`) = one-way Pub/Sub, **Request-reply** (`<-->`) = bidirectional
+- **Sequence IDs:** Prefix message labels with step numbers (`1.`, `2.`) for traceability to acceptance criteria
+- Label every edge with the integration pattern (REST, Platform Event, Pub/Sub API)
+
+#### Accessibility
+- Minimum 4.5:1 contrast
+- No colour-only meaning—duplicate with shape or label
+
+## Document Type-Specific Guidelines
+
+### Requirements Documents
+- **Structure:** Use a hierarchical structure with numbered requirements (REQ-001, REQ-002, etc.).
+- **Traceability:** Include traceability matrices linking requirements to features and tests.
+- **Priority:** Clearly mark priority levels (Critical, High, Medium, Low) using badges or tables.
+- **Acceptance Criteria:** Define clear, testable acceptance criteria for each requirement.
+
+### Design Specifications
+- **Architecture Diagrams:** Include system architecture, component diagrams, and data flow diagrams using Mermaid with Salesforce style guide.
+- **API Documentation:** Use code fences with proper language tags for API examples.
+- **Decision Records:** Include architectural decision records (ADRs) with context, decision, and consequences.
+- **Interface Specifications:** Document all interfaces with clear input/output specifications.
+- **Org Strategy:** Describe sandbox hierarchy (Dev, Partial, Full), scratch-org use, and promotion path.
+- **Metadata Naming:** Follow `<namespace>_<feature>_<detail>` (e.g., `rsrc_opp_stgRollup_TDTM` for TDTM triggers).
+- **Automation Layering:** Decision matrix—When to use Flow vs Apex vs Platform Events; include governor-limit rationale.
+- **Security Model:** Permission-set groups, muting permissions, FLS matrix.
+- **Packaging & Deployment:** SFDX project structure, unlocked-package versioning, CI job names.
+- **Data Model ERD:** Must use the Diagram Style Guide colour palette.
+
+### Project Documentation
+- **README Structure:** Follow the pattern - Project Description, Installation, Usage, Contributing, License.
+- **Code Examples:** Provide complete, runnable examples with expected outputs.
+- **Troubleshooting:** Include common issues and solutions in a FAQ format.
+- **Changelog:** Maintain a structured changelog following semantic versioning principles.
+
+### Technical Documentation
+- **Code Documentation:** Embed code examples with explanations. Use collapsible sections for lengthy code blocks.
+- **API References:** Use consistent formatting for endpoints, parameters, and responses.
+- **Tutorials:** Structure as step-by-step guides with clear progression and checkpoints.
+- **Reference Materials:** Use tables and lists for quick lookup information.
+
+### Runbooks
+- **Purpose:** Day-2 operations and incident response for Salesforce deployments and integrations.
+- **Sections:** Overview, Health Checks, Deployment Steps, Rollback Procedures, Known Issues, Contact Escalation.
+- **Format:** Markdown with collapsible "Playbook" blocks for step-by-step CLI commands.
+- **Critical for:** Unlocked packages, integrations, and production support handoffs.
+- **Audit & Compliance Block (Mandatory):**
+  - GDPR/CCPA data subject request procedures
+  - SOX evidence locations (logs, pull-request links, approval trails)
+  - Data retention and deletion workflows
+  - Audit trail access and preservation requirements
+
+## Code Fence Language Standards
+
+Always use specific language tags:
+- **Core Languages:** `python`, `typescript`, `javascript`, `bash`, `powershell`, `yaml`, `json`, `sql`
+- **Salesforce-Specific:** `apex`, `soql`, `xml` (for `*-meta.xml`), `sfdx` (shell wrapper for Salesforce CLI)
+- **Web Technologies:** `html`, `css`, `scss` (for LWCs, OmniStudio FlexCards, Aura docs)
+- **DevOps:** `dockerfile`, `groovy` (for Jenkinsfile pipelines)
+- **Shell Commands:** Use `bash` or `powershell` tags for command-line examples. Prefix with `$` for Unix or `PS>` for PowerShell.
+- **Configuration Files:** Use appropriate tags (`yaml`, `json`, `toml`, `ini`) for configuration examples.
+- **Output Examples:** Use `text` or `console` for command output or log examples.
+
+## Front Matter Usage
+
+### Required Fields
+```yaml
+title: "Document Title"
+description: "Brief description"
+author: "Author Name"
+date: "YYYY-MM-DD"
+doc_id: "uuid-v4"  # For downstream tooling de-duplication
+```
+
+### Salesforce Projects - Additional Required Fields
+```yaml
+salesforce_api_version: '60.0'     # ^\\d+\\.\\d+$
+package_version: '1.3.0'           # ^\\d+\\.\\d+\\.\\d+$
+org_type: 'Enterprise'             # ^(Developer Edition|Sandbox|Enterprise|Scratch)$
+```
+
+### Optional Fields (High-Value for Enterprise Ops)
+- `tags`: Array of relevant tags
+- `category`: Document category
+- `version`: Document version
+- `status`: Document status (Draft, Review, Approved, Deprecated)
+- `reviewers`: List of GitHub handles / emails
+- `last_review_date`: "YYYY-MM-DD"
+- `release_phase`: "Prototype | Pilot | GA | Deprecated"
+- `jira_epic`: "PROJ-123"
+
+## Link Management
+
+- **Internal Links:** Use relative paths for internal project links to maintain portability.
+- **External Links:** Validate external links and consider using archived versions for important references. Prefer `https://web.archive.org` with the closest timestamp for critical references.
+- **Reference Style:** Use reference-style links for frequently referenced URLs or long URLs. Use concise, lowercase reference labels (e.g., `[docs]: url`).
+- **Anchor Links:** Create meaningful anchor links for navigation within long documents.
+
+## Table Formatting
+
+- **Alignment:** Use appropriate column alignment based on content type (left for text, right for numbers, center for status).
+- **Headers:** Always include descriptive headers with proper capitalization.
+- **Consistency:** Maintain consistent formatting and terminology across tables.
+- **Readability:** Use adequate spacing and consider breaking large tables into smaller, focused ones.
+
+## Visual Elements
+
+- **Emoji Usage:** Use emoji sparingly for visual distinction in headers or callouts (⚠️ for warnings, ✅ for success, 📝 for notes).
+- **Badges:** Reserve for repo-root documentation (README files) to indicate build status, version, license, etc. Omit from design specifications to reduce visual noise.
+- **Callouts:** Use blockquotes with emoji for important information, warnings, or tips.
+- **Horizontal Rules:** Use `---` for section breaks, but sparingly to avoid visual clutter.
+
+## Documentation Structure Patterns
+
+- **Hierarchical:** Use consistent header levels to create a logical document hierarchy.
+- **Table of Contents:** For any generated document with more than three top-level headers, automatically generate and include a Table of Contents at the beginning.
+- **Cross-References:** Link related sections and documents to improve navigation.
+- **Modular Approach:** Break large documents into smaller, focused files with clear relationships.
+- **Glossary Management:** Encourage a per-repo `_glossary.md` and link via reference-style `[glossary]` anchors. Link the first acronym in each document to the glossary.
+- **Diagram Versioning:** Use `architecture.mmd` + Git history rather than versioned filenames (`architecture_v1.0.mmd`) to prevent orphaned diagrams.
+
+## Quality & Workflow Standards
+
+### Content Quality
+- **Grammar and Style:** Use clear, concise language. Prefer active voice and present tense.
+- **Consistency:** Maintain consistent terminology, formatting, and style throughout documents.
+- **Accuracy:** Verify all code examples, commands, and technical details for accuracy.
+- **Currency:** Include dates and version information. Regularly review and update documentation.
+
+### Automated Quality Gates
+- **Automated Linting:** Run `markdownlint`, `remark-lint`, and `sfdx scanner:run` in CI.
+- **Apex Static Analysis:** `sfdx scanner:run --format junit --severity WARNING` in CI pipeline.
+- **SOQL Query Plan Check:** Custom script invoking `sfdx force:data:soql:query --explain` for performance validation.
+- **Mermaid Validation:** Use `@mermaid-js/mermaid-cli --validate` (>=10.4.0) to catch syntax errors before PR reviews.
+- **Diagram Diff Protection:** Use `git diff --word-diff -- '*.mmd'` + `mermaid-cli --validate` to block un-renderable changes.
+- **LinkCheck:** Validate internal anchors after every package promotion.
+- **Accessibility:** Run `axe-core` color-contrast checks on rendered diagrams (headless Chrome) to enforce WCAG 2.1 AA.
+- **ADR Template:** Include date, status (`Proposed / Accepted / Deprecated`), and `Supersedes` field.
+
+### Integration with Development Workflow
+- **Version Control:** Document version control workflows and branching strategies clearly.
+- **Review Process:** Include documentation review as part of the code review process.
+- **Automation:** Use automated tools for link checking, spell checking, and formatting validation.
+- **Templates:** Create and maintain templates for common document types to ensure consistency.
+
+## Implementation Notes
+
+When creating documentation:
+
+1. **Proactively generate diagrams** when describing processes, architectures, or workflows
+2. **Apply Salesforce styling** consistently across all Mermaid diagrams using the provided template
+3. **Use SLDS color tokens** to maintain visual alignment with Lightning Experience
+4. **Include proper front matter** with all required fields and validation patterns for the document type
+5. **Follow the complexity guardrails** for diagrams and break them down using the specified patterns when needed
+6. **Ensure accessibility** with proper contrast ratios and no color-only meanings
+7. **Link acronyms** to the project glossary on first use in each document
+
+This rule ensures documentation that reads and looks like it was written by a seasoned Salesforce CTA while maintaining enterprise-grade quality and consistency.
