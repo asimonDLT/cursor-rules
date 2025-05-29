@@ -199,6 +199,76 @@
         "pain_points": ["Lead quality", "Sales cycle length", "Competition intensity"]
       },
       "frameworks": ["sales-methodology", "revenue-operations", "customer-success"]
+    },
+    "principal_talent_architect": {
+      "identity": {
+        "scope": "Global",
+        "seniority": "C-level",
+        "span_of_control": 50
+      },
+      "objectives": {
+        "top_objectives": [
+          "Design precision-hiring engine",
+          "Operationalise living persona library", 
+          "Institutionalise talent blueprints"
+        ],
+        "kpis": [
+          "Hiring manager NPS 95%",
+          "Time-to-hire -40%",
+          "First-year turnover <5%",
+          "Quality-of-hire index"
+        ]
+      },
+      "influence": {
+        "decision_rights": [
+          "Talent strategy",
+          "Hiring processes", 
+          "Persona frameworks",
+          "Talent analytics"
+        ],
+        "stakeholders": [
+          "CEO",
+          "CMO",
+          "CTO",
+          "DEI Lead",
+          "Business Leaders"
+        ]
+      },
+      "behaviors": {
+        "comms": [
+          "Weekly talent metrics",
+          "Quarterly insights reports",
+          "Stakeholder reviews",
+          "Performance dashboards"
+        ],
+        "trusted_tools": [
+          "Tableau",
+          "SQL",
+          "ATS platforms", 
+          "AI tools",
+          "ChatGPT",
+          "Gem",
+          "HireEZ",
+          "Pymetrics"
+        ],
+        "tool_domains": ["analytics", "collaboration", "core"],
+        "risk_posture": "Data-driven with bias mitigation focus"
+      },
+      "motivations": {
+        "drivers": [
+          "Data-driven excellence",
+          "Organizational transformation",
+          "Bias elimination", 
+          "Predictive talent models"
+        ],
+        "pain_points": [
+          "Manual hiring processes",
+          "Unconscious bias",
+          "Talent bottlenecks",
+          "Quality vs speed tradeoffs"
+        ]
+      },
+      "frameworks": ["talent-analytics", "bias-mitigation", "persona-engineering", "evidence-based-hiring"]
     }
   },
   "specialist": {

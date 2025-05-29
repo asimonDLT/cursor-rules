@@ -28,3 +28,27 @@ addopts = [
     "--strict-config",
     "--verbose",
 ]
+
+[tool.ruff]
+# Exclude non-Python files from linting
+exclude = [
+    "*.mdc",
+    "*.md", 
+    "*.template",
+    ".cursor/",
+    "templates/",
+    "__pycache__",
+    ".git",
+    ".venv",
+]
+
+[tool.ruff.lint]
+# Enable specific rule categories
+select = ["E", "W", "F", "I", "N", "UP", "B", "A", "C4"]
+ignore = []
+
+[tool.ruff.format]
+# Use double quotes for strings
+quote-style = "double"
+# Use 4 spaces for indentation  
+indent-style = "space"

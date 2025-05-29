@@ -1,0 +1,26 @@
+{
+  "paths": {
+    "cursor_rules": ".cursor/rules",
+    "tool_registry": ".cursor/rules/tools/tool_registry.json",
+    "role_library": ".cursor/rules/tools/role_library.json",
+    "templates": "templates",
+    "scripts": "scripts"
+  },
+  "validation": {
+    "exclude_patterns": ["*.mdc", "*.md", "*.template"],
+    "required_tools": ["uv", "ruff"],
+    "mdc_linter": "scripts/validation/lint_mdc.py",
+    "role_linter": "scripts/roles/lint_role_library.py"
+  },
+  "defaults": {
+    "output_dir": ".cursor/rules/roles",
+    "role_types": ["executive", "specialist"],
+    "template_dir": "templates/roles"
+  },
+  "behavior": {
+    "interactive_mode": true,
+    "strict_validation": false,
+    "auto_backup": true,
+    "progress_indicators": true
+  }
+}

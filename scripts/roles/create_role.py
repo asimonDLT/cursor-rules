@@ -46,7 +46,7 @@ REQUIRED_SPECIALIST_BUCKETS = ["identity", "objectives"]
 def load_tool_registry() -> Dict[str, Any]:
     """Load the tool registry with error handling."""
     registry_path = (
-        Path(__file__).parent.parent / ".cursor/rules/tools/tool_registry.json"
+        Path(__file__).parent.parent.parent / ".cursor/rules/tools/tool_registry.json"
     )
 
     if not registry_path.exists():
@@ -271,7 +271,7 @@ def validate_role_library(library: Dict[str, Any]) -> None:
 def load_role_library() -> Dict[str, Any]:
     """Load the role library JSON with error handling."""
     library_path = (
-        Path(__file__).parent.parent / ".cursor/rules/tools/role_library.json"
+        Path(__file__).parent.parent.parent / ".cursor/rules/tools/role_library.json"
     )
 
     logger.info(f"Loading role library from {library_path}")
