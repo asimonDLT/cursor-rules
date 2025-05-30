@@ -1,4 +1,12 @@
 {
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "PYTHONPATH": ".",
+    "UV_SYSTEM_PYTHON": "1",
+    "AWS_DEFAULT_OUTPUT": "json",
+    "AWS_PAGER": "",
+    "SAM_CLI_TELEMETRY": "0"
+  },
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",
@@ -96,12 +104,5 @@
       "PowerShell(Remove-Item -Recurse:*)"
     ]
   },
-  "env": {
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "PYTHONPATH": ".",
-    "UV_SYSTEM_PYTHON": "1",
-    "AWS_DEFAULT_OUTPUT": "json",
-    "AWS_PAGER": "",
-    "SAM_CLI_TELEMETRY": "0"
-  }
+  "enableAllProjectMcpServers": false
 }

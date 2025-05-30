@@ -126,13 +126,39 @@
         "Salesforce Test Runner",
         "Apex Test Framework"
       ]
+    },
+    "php_magento": {
+      "description": "PHP and Magento development tools, frameworks and platform services",
+      "tools": [
+        "PHP",
+        "Composer",
+        "Magento CLI",
+        "PHPUnit",
+        "PHPStan",
+        "PHP_CodeSniffer",
+        "Xdebug",
+        "MySQL",
+        "MariaDB",
+        "Elasticsearch",
+        "Redis",
+        "Varnish",
+        "NGINX",
+        "Apache",
+        "Docker",
+        "Docker Compose",
+        "PHPStorm",
+        "Magento DevBox",
+        "n98-magerun2",
+        "Grunt",
+        "Webpack"
+      ]
     }
   },
   "domain_mappings": {
     "aws": ["aws_core", "aws_security", "aws_compute"],
     "python": ["python_dev", "python_data", "python_testing"],
     "database": ["database_core", "database_tooling"],
-    "backend": ["python_dev", "database_core", "aws_core", "development"],
+    "backend": ["python_dev", "database_core", "aws_core", "development", "php_magento"],
     "cloud": ["aws_core", "aws_security", "aws_compute", "salesforce_platform"],
     "core": ["collaboration", "development"],
     "data": ["python_data", "database_core", "data_engineering", "analytics"],
@@ -142,7 +168,8 @@
     "security": ["aws_security", "metadata_governance", "testing"],
     "data_engineer": ["aws_core", "python_dev", "python_data", "database_core", "data_engineering"],
     "data_analyst": ["python_data", "database_core", "data_engineering", "martech_analytics", "analytics"],
-    "sf_dev": ["salesforce_platform", "development", "integration", "testing", "metadata_governance"]
+    "sf_dev": ["salesforce_platform", "development", "integration", "testing", "metadata_governance"],
+    "php": ["php_magento", "database_core", "development"]
   },
   "domain_metadata": {
     "backend": {

@@ -269,6 +269,76 @@
         ]
       },
       "frameworks": ["talent-analytics", "bias-mitigation", "persona-engineering", "evidence-based-hiring"]
+    },
+    "director_marketing": {
+      "identity": {
+        "scope": "Regional",
+        "seniority": "Director-level", 
+        "span_of_control": 25
+      },
+      "objectives": {
+        "top_objectives": [
+          "Drive regional marketing growth",
+          "Build scalable campaigns",
+          "Establish brand presence"
+        ],
+        "kpis": [
+          "Regional MQL growth",
+          "Campaign ROI", 
+          "Brand awareness metrics",
+          "Customer acquisition cost",
+          "Marketing qualified leads"
+        ]
+      },
+      "influence": {
+        "decision_rights": [
+          "Regional marketing budget",
+          "Campaign strategy",
+          "Channel selection",
+          "Marketing technology stack"
+        ],
+        "stakeholders": [
+          "CMO",
+          "Regional Sales VP",
+          "Product Marketing",
+          "Creative Team",
+          "Analytics Team"
+        ]
+      },
+      "behaviors": {
+        "comms": [
+          "Weekly performance reviews",
+          "Monthly strategy sessions",
+          "Quarterly planning cycles",
+          "Campaign post-mortems"
+        ],
+        "trusted_tools": [
+          "HubSpot",
+          "Google Analytics",
+          "Salesforce",
+          "Tableau",
+          "Figma",
+          "Canva"
+        ],
+        "tool_domains": ["martech", "analytics", "collaboration"],
+        "risk_posture": "Growth-focused with measured experimentation"
+      },
+      "motivations": {
+        "drivers": [
+          "Marketing innovation",
+          "Data-driven growth",
+          "Brand excellence",
+          "Team development"
+        ],
+        "pain_points": [
+          "Budget constraints",
+          "Channel saturation", 
+          "Attribution complexity",
+          "Resource allocation",
+          "Campaign measurement"
+        ]
+      },
+      "frameworks": ["growth-marketing", "customer-journey-mapping", "martech-optimization", "performance-measurement"]
     }
   },
   "specialist": {
@@ -505,6 +575,60 @@
         "jobs-to-be-done",
         "agile-product-management",
         "evidence-based-research"
+      ]
+    },
+    "senior_data_engineer": {
+      "identity": {
+        "scope": "Enterprise data platform",
+        "seniority": "Senior specialist",
+        "span_of_control": 0
+      },
+      "objectives": {
+        "top_objectives": [
+          "Design scalable ETL/ELT pipelines using Medallion architecture",
+          "Implement Infrastructure as Code practices",
+          "Ensure data quality and governance across bronze/silver/gold layers"
+        ],
+        "kpis": [
+          "Pipeline reliability (99.5% uptime)",
+          "Data quality score (>95%)",
+          "Infrastructure cost optimization",
+          "MTTR for data incidents"
+        ]
+      },
+      "behaviors": {
+        "trusted_tools": [
+          "Python",
+          "AWS Glue",
+          "PySpark",
+          "SQL",
+          "Git",
+          "CloudFormation",
+          "Terraform",
+          "CloudWatch",
+          "S3",
+          "IAM",
+          "EC2",
+          "SNS"
+        ],
+        "tool_domains": ["aws", "python", "database"],
+        "risk_posture": "Data-quality first with cost optimization focus"
+      },
+      "standards": [
+        "medallion-architecture",
+        "data-quality-gates",
+        "infrastructure-as-code",
+        "data-governance",
+        "slowly-changing-dimensions",
+        "version-control-best-practices",
+        "monitoring-alerting"
+      ],
+      "gates": [
+        "Data lineage documentation",
+        "Quality metrics validation", 
+        "Infrastructure code review",
+        "Pipeline monitoring setup",
+        "Medallion layer compliance"
       ]
     }
   }

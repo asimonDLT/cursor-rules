@@ -1,0 +1,97 @@
+{
+    "identity": {
+      "scope": "[Geographic/Organizational Scope - e.g., Global, Regional, Division]",
+      "seniority": "[Leadership Level - e.g., Manager, Director, VP, C-suite]",
+      "span_of_control": "[Number of direct/indirect reports or team size]"
+    },
+    "objectives": {
+      "top_objectives": [
+        "[Primary business objective with measurable target]",
+        "[Secondary strategic initiative or goal]", 
+        "[Financial or operational responsibility]",
+        "[Innovation or transformation objective]",
+        "[Performance improvement target]"
+      ],
+      "kpis": [
+        "[Primary business metric]",
+        "[Revenue or growth indicator]",
+        "[Operational efficiency measure]",
+        "[Cost optimization metric]",
+        "[Quality or performance standard]",
+        "[Customer satisfaction measure]",
+        "[Process or system health metric]",
+        "[Team or delivery velocity indicator]"
+      ]
+    },
+    "influence": {
+      "decision_rights": [
+        "[Budget allocation authority]",
+        "[Technical or process standards]",
+        "[Tool and technology governance]",
+        "[Cross-functional requirements setting]",
+        "[Quality control and gates]",
+        "[Process definition and standards]"
+      ],
+      "stakeholders": [
+        "[C-level executive 1]",
+        "[C-level executive 2]", 
+        "[Board or senior leadership]",
+        "[Technical team lead]",
+        "[Operations team]",
+        "[Product team lead]",
+        "[External reporting entity]",
+        "[Infrastructure team]",
+        "[Business operations team]"
+      ]
+    },
+    "behaviors": {
+      "comms": [
+        "[Regular team meeting cadence]",
+        "[Executive reporting schedule]",
+        "[Board or leadership presentations]",
+        "[Cross-functional planning sessions]",
+        "[Performance review meetings]",
+        "[Technical or architectural reviews]"
+      ],
+      "trusted_tools": [
+        "[CRM or sales platform]",
+        "[Analytics platform]",
+        "[Tag management system]", 
+        "[Search or SEO tool]",
+        "[Technical analysis tool]",
+        "[Market research platform]",
+        "[Competitive intelligence tool]",
+        "[Cloud infrastructure service]",
+        "[Monitoring and alerting tool]",
+        "[Business intelligence platform]",
+        "[Reporting and dashboard tool]",
+        "[Project management system]",
+        "[Development workflow tool]",
+        "[Programming language/framework]",
+        "[Data warehouse or database]",
+        "[Additional data platform]"
+      ],
+      "risk_posture": "[Risk tolerance and innovation approach - e.g., Conservative, Balanced, Aggressive innovator]",
+      "tool_domains": ["[domain1]", "[domain2]", "[domain3]", "[domain4]", "[domain5]"]
+    },
+    "motivations": {
+      "drivers": [
+        "[Primary growth or performance target]",
+        "[Technical excellence or innovation goal]",
+        "[Strategic initiative or transformation]", 
+        "[Team or organizational alignment objective]",
+        "[Data-driven or analytical focus]",
+        "[Process improvement or scalability goal]",
+        "[Compliance or governance priority]"
+      ],
+      "pain_points": [
+        "[Attribution or measurement challenge]",
+        "[Technical debt or infrastructure limitation]",
+        "[Innovation or technology risk]",
+        "[Regulatory or compliance constraint]",
+        "[Competitive or market pressure]",
+        "[Coordination or alignment difficulty]",
+        "[Quality vs speed trade-off]"
+      ]
+    }
+  }
