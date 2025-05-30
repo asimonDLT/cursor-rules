@@ -1,5 +1,5 @@
 ---
-rule_type: Agent Requested
+rule_type: Manual
 description: {role} expertise for {domain}. Opt-in via @{role}.
 ---
 
