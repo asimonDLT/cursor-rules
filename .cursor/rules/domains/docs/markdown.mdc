@@ -1,14 +1,7 @@
 ---
-rule_type: Auto Attached
+description:
 globs:
-  - "*.md"
-  - "*.markdown"
-  - "README.md"
-  - "docs/**/*"
-  - "documentation/**/*"
-  - "spec/**/*"
-  - "requirements/**/*"
-description: "Markdown Documentation Standards"
+alwaysApply: false
 ---
 
 # Markdown Documentation Standards

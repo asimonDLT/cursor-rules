@@ -1,6 +1,6 @@
 ---
-description: "Core Development Rules - Always Applied"
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 

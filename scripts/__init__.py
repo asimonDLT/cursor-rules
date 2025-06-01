@@ -1,1 +1,1 @@
-"""Scripts package for cursor rules management.""" 
+"""Scripts package for cursor rules management."""

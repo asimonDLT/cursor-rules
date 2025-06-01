@@ -222,7 +222,7 @@
     "accessibility": {
       "identity": {
         "scope": "Product-focused",
-        "seniority": "Senior specialist", 
+        "seniority": "Senior specialist",
         "span_of_control": 0
       },
       "objectives": {
@@ -324,7 +324,7 @@
     "backend_architect": {
       "identity": {
         "scope": "Backend platform",
-        "seniority": "Senior architect", 
+        "seniority": "Senior architect",
         "span_of_control": 0
       },
       "objectives": {
@@ -438,4 +438,4 @@
       ]
     }
   }
-} 
+}

@@ -17,12 +17,14 @@ class CursorRulesConfig:
 
     def __init__(self, config_path: Path | None = None):
         """Initialize configuration.
-        
+
         Args:
             config_path: Optional path to config file. If None, searches for it.
         """
         self._project_root = self._find_project_root()
-        self._config_path = config_path or self._project_root / "cursor_rules_config.json"
+        self._config_path = (
+            config_path or self._project_root / "cursor_rules_config.json"
+        )
         self._config = self._load_config()
 
     def _find_project_root(self) -> Path:
@@ -45,7 +47,9 @@ class CursorRulesConfig:
     def _load_config(self) -> dict[str, Any]:
         """Load configuration from JSON file."""
         if not self._config_path.exists():
-            logger.warning(f"Config file not found at {self._config_path}, using defaults")
+            logger.warning(
+                f"Config file not found at {self._config_path}, using defaults"
+            )
             return self._get_default_config()
 
         try:
@@ -65,25 +69,25 @@ class CursorRulesConfig:
                 "tool_registry": ".cursor/rules/tools/tool_registry.json",
                 "role_library": ".cursor/rules/tools/role_library.json",
                 "templates": "templates",
-                "scripts": "scripts"
+                "scripts": "scripts",
             },
             "validation": {
                 "exclude_patterns": ["*.mdc", "*.md", "*.template"],
                 "required_tools": ["uv", "ruff"],
                 "mdc_linter": "scripts/validation/lint_mdc.py",
-                "role_linter": "scripts/roles/lint_role_library.py"
+                "role_linter": "scripts/roles/lint_role_library.py",
             },
             "defaults": {
                 "output_dir": ".cursor/rules/roles",
                 "role_types": ["executive", "specialist"],
-                "template_dir": "templates/roles"
+                "template_dir": "templates/roles",
             },
             "behavior": {
                 "interactive_mode": True,
                 "strict_validation": False,
                 "auto_backup": True,
-                "progress_indicators": True
-            }
+                "progress_indicators": True,
+            },
         }
 
     @property
@@ -93,13 +97,13 @@ class CursorRulesConfig:
 
     def get_path(self, path_key: str) -> Path:
         """Get absolute path for a configured path key.
-        
+
         Args:
             path_key: Key from paths configuration
-            
+
         Returns:
             Absolute path
-            
+
         Raises:
             KeyError: If path_key is not found in configuration
         """
@@ -111,11 +115,11 @@ class CursorRulesConfig:
 
     def get_config(self, section: str, key: str | None = None) -> Any:
         """Get configuration value.
-        
+
         Args:
             section: Configuration section
             key: Optional key within section
-            
+
         Returns:
             Configuration value
         """
@@ -126,13 +130,15 @@ class CursorRulesConfig:
             return self._config[section]
 
         if key not in self._config[section]:
-            raise KeyError(f"Configuration key '{key}' not found in section '{section}'")
+            raise KeyError(
+                f"Configuration key '{key}' not found in section '{section}'"
+            )
 
         return self._config[section][key]
 
     def validate_paths(self) -> bool:
         """Validate that required paths exist.
-        
+
         Returns:
             True if all required paths exist, False otherwise
         """

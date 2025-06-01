@@ -52,7 +52,7 @@
       "description": "Core Salesforce platform tools, frameworks, and native capabilities for architecture and development",
       "tools": [
         "Salesforce Well-Architected Framework",
-        "Salesforce Diagram Framework", 
+        "Salesforce Diagram Framework",
         "Roadmap Explorer",
         "Trailhead",
         "Sales Cloud",

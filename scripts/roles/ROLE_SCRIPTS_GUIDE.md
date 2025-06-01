@@ -15,7 +15,7 @@ uv run python scripts/roles/create_role.py \
   --type specialist \
   --tool-domains martech,backend
 
-# Create executive role  
+# Create executive role
 uv run python scripts/roles/create_role.py \
   --name your_role_name \
   --type executive \

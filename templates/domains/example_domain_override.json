@@ -4,74 +4,74 @@
   "scope_description": "Native and cross-platform mobile application development for iOS and Android. Covers app architecture, platform-specific guidelines, and deployment processes.",
   "owner_team": "@my-org/mobile-team",
   "primary_consumers": "Product teams, Mobile developers, QA engineers",
-  
+
   "principle_1": "Platform-Native First",
   "principle_1_explanation": "Prioritize platform-specific patterns and UI guidelines over cross-platform solutions when user experience is critical",
-  
-  "principle_2": "Performance by Design", 
+
+  "principle_2": "Performance by Design",
   "principle_2_explanation": "Optimize for battery life, memory usage, and startup time from the beginning of development",
-  
+
   "principle_3": "Offline-First Architecture",
   "principle_3_explanation": "Design apps to work gracefully with intermittent connectivity and sync data when available",
-  
+
   "quality_metric_1": "App Store Performance",
   "quality_target_1": "4.5+ star rating, <2% crash rate",
-  
-  "quality_metric_2": "Performance Benchmarks", 
+
+  "quality_metric_2": "Performance Benchmarks",
   "quality_target_2": "App startup <3s, screen transitions <300ms",
-  
+
   "quality_metric_3": "Code Quality",
   "quality_target_3": "80%+ test coverage, automated CI/CD pipeline",
-  
+
   "guideline_category_1": "Architecture Standards",
   "standard_1": "MVVM Pattern",
   "standard_1_details": "Use Model-View-ViewModel for clear separation of concerns",
   "standard_2": "Dependency Injection",
   "standard_2_details": "Implement DI for testability and modularity",
-  
+
   "guideline_category_2": "Platform Guidelines",
   "standard_3": "iOS Human Interface Guidelines",
   "standard_3_details": "Follow Apple's HIG for navigation, typography, and interactions",
   "standard_4": "Material Design",
   "standard_4_details": "Implement Google's Material Design for Android apps",
-  
+
   "pattern_1_name": "Offline Data Sync",
   "pattern_1_when": "When app needs to work without internet connectivity",
   "pattern_1_how": "Use local SQLite with sync queues and conflict resolution",
-  
+
   "pattern_2_name": "Progressive Loading",
   "pattern_2_when": "For content-heavy screens or slow networks",
   "pattern_2_how": "Load critical content first, then progressive enhancement",
-  
+
   "antipattern_category_1": "Performance Anti-Patterns",
   "antipattern_1": "Blocking main thread with heavy operations",
   "antipattern_2": "Loading all data on app startup",
-  
-  "antipattern_category_2": "Architecture Anti-Patterns", 
+
+  "antipattern_category_2": "Architecture Anti-Patterns",
   "antipattern_3": "Tight coupling between UI and business logic",
   "antipattern_4": "Massive view controllers/activities",
-  
+
   "testing_standard_1": "Unit Testing",
   "testing_details_1": "80% coverage minimum with focus on business logic",
-  
+
   "testing_standard_2": "UI Testing",
   "testing_details_2": "Automated tests for critical user journeys",
-  
+
   "deployment_standard_1": "Staged Rollouts",
   "deployment_details_1": "Deploy to 5% of users first, monitor metrics before full rollout",
-  
+
   "deployment_standard_2": "Feature Flags",
   "deployment_details_2": "Use feature toggles for new functionality and A/B testing",
-  
+
   "tool_1": "Xcode/Android Studio",
   "tool_1_purpose": "Primary development environments",
-  
+
   "tool_2": "Fastlane",
   "tool_2_purpose": "Automated building and deployment",
-  
+
   "resource_1": "Platform Documentation",
   "resource_1_purpose": "Official iOS and Android development guides",
-  
+
   "resource_2": "Performance Monitoring",
   "resource_2_purpose": "Firebase Performance or similar APM tools"
 }

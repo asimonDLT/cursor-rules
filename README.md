@@ -125,7 +125,7 @@ The tool registry now manages **100+ tools across 20 categories** with comprehen
 
 **Core Technology Stacks:**
 - **AWS** (12 tools) - Core infrastructure, security, compute services
-- **Python** (18 tools) - Development, data manipulation, testing frameworks  
+- **Python** (18 tools) - Development, data manipulation, testing frameworks
 - **Database** (7 tools) - Engines, migration tools, optimization
 - **Salesforce** (32 tools) - Platform tools, governance, development environments
 
@@ -165,7 +165,7 @@ Comprehensive Salesforce backend development standards:
 ```
 scripts/
 ├── domains/     # Domain management (create, validate)
-├── roles/       # Role management (create, lint, migrate)  
+├── roles/       # Role management (create, lint, migrate)
 ├── tools/       # Tool registry management
 ├── validation/  # Cross-cutting validation
 └── backup/      # Backup and migration artifacts
@@ -235,7 +235,7 @@ uv run python scripts/tools/lint_tool_registry.py .cursor/rules/tools/tool_regis
 ### Invoke Domain Experts
 ```bash
 @aws              # AWS infrastructure guidance
-@python           # Python development standards  
+@python           # Python development standards
 @database         # Database design and optimization
 @sf_dev           # Salesforce backend development ✨ NEW
 @martech          # Marketing technology standards
@@ -271,3 +271,83 @@ uv run python scripts/tools/lint_tool_registry.py .cursor/rules/tools/tool_regis
 ## License
 
 MIT License - see LICENSE file for details.
+
+# Library Explorer
+
+A standalone CLI tool that makes Role Library and Tool Registry human-readable and easily explorable. Built as a modern Python package with Typer CLI framework, Pydantic data models, and Rich console output.
+
+This project is currently under development as part of the `feature/library-explorer` branch.
+
+## Current Status - Sprint 0 Complete
+
+- Core package structure (`library_explorer`) established.
+- CLI entry point `library-explorer` created.
+- Pydantic models for `Tool` (initial version).
+- Data loader for `tool_registry.json` (supports current format).
+- Basic CLI commands:
+  - `library-explorer load [--data-path <path>]`: Loads tools and prints their names.
+  - `library-explorer validate [--data-path <path>]`: Validates the structure of `tool_registry.json`.
+- Pre-commit hooks (Ruff for linting/formatting, Mypy for type checking) are in place and passing for `library_explorer` code.
+
+## Installation & Setup (Development)
+
+This project uses `uv` for package and environment management.
+
+1.  **Clone the repository** (if you haven't already).
+2.  **Navigate to the project root directory** (`cursor_rules`).
+3.  **Create and activate a virtual environment:**
+    ```bash
+    uv venv .venv
+    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+    ```
+4.  **Install dependencies (including development tools):**
+    ```bash
+    uv pip install -e '.[dev]'
+    ```
+5.  **Install pre-commit hooks:**
+    ```bash
+    uv run pre-commit install
+    ```
+
+## Basic Usage
+
+Ensure your virtual environment is activated. The library-explorer automatically uses the authoritative tool registry at `.cursor/rules/tools/tool_registry.json`.
+
+*   **Show help:**
+    ```bash
+    uv run library-explorer --help
+    ```
+*   **Browse tools in beautiful table format:**
+    ```bash
+    uv run library-explorer browse tools
+    ```
+*   **Browse tools in list format:**
+    ```bash
+    uv run library-explorer browse tools --format list
+    ```
+*   **Load and display tool names with validation:**
+    ```bash
+    uv run library-explorer load
+    ```
+*   **Validate tool registry data:**
+    ```bash
+    uv run library-explorer validate
+    ```
+*   **Use custom data path (if needed):**
+    ```bash
+    uv run library-explorer browse tools --data-path path/to/your/data
+    ```
+
+## Error Handling (Basic Strategy - To Be Expanded)
+
+- Pydantic models handle data schema validation during loading. Errors are printed to the console.
+- File I/O errors (e.g., missing files) will print warnings.
+- The validator provides specific messages for data inconsistencies found.
+- CLI commands use Typer's built-in error reporting for invalid command usage.
+
+## Next Steps (Sprint 1)
+
+- Implement `library-explorer browse` command with Rich table outputs for tools.
+- Enhance the validation engine with more business rules.
+- Begin development of Role and Domain loading from YAML files (if provided).
+- Add unit tests with Pytest, aiming for >85% coverage.

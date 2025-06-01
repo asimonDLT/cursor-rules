@@ -1,1 +1,1 @@
-"""Domain scripts package for cursor rules management.""" 
+"""Domain scripts package for cursor rules management."""

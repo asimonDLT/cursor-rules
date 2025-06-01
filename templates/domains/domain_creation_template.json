@@ -1,14 +1,14 @@
 {
   "comment": "Domain Creation Template - Use this as a starting point for creating new domains",
   "comment2": "Remove comments before using. All fields are optional unless marked as required.",
-  
+
   "domain_name": "your_domain_name",
   "category": "backend",
   "comment_category": "Required. Choose from: frontend, backend, cloud, data, security, docs, martech",
-  
+
   "tool_registry_additions": {
     "comment": "Add new tool categories and domain mappings to tool_registry.json",
-    
+
     "new_tool_categories": {
       "your_tool_category": {
         "description": "Description of what tools this category contains",
@@ -20,16 +20,16 @@
         ]
       }
     },
-    
+
     "domain_mapping": {
       "comment": "Map your domain to existing or new tool categories",
       "your_domain_name": [
         "existing_category_1",
-        "existing_category_2", 
+        "existing_category_2",
         "your_new_category"
       ]
     },
-    
+
     "domain_metadata": {
       "comment": "Define governance and structure for your domain",
       "your_domain_name": {
@@ -54,10 +54,10 @@
       }
     }
   },
-  
+
   "mdc_file_structure": {
     "comment": "Structure for the .mdc domain rule file",
-    
+
     "yaml_frontmatter": {
       "comment": "YAML header - required fields",
       "rule_type": "Agent Requested",
@@ -67,10 +67,10 @@
       "alwaysApply": false,
       "comment_alwaysApply": "Optional: Whether this domain should always be considered"
     },
-    
+
     "content_sections": {
       "title": "# Your Domain Name",
-      
+
       "identity_and_scope": {
         "comment": "Optional but recommended - defines boundaries",
         "section": "## Identity & Scope",
@@ -81,7 +81,7 @@
           "**Primary Consumers**: Who uses these standards"
         ]
       },
-      
+
       "core_principles": {
         "comment": "Required - fundamental beliefs and approaches",
         "section": "## Core Principles",
@@ -91,7 +91,7 @@
           "- **Decision Framework**: When to use what approach"
         ]
       },
-      
+
       "quality_targets": {
         "comment": "Optional but recommended - measurable objectives",
         "section": "## Quality Targets & SLOs",
@@ -101,7 +101,7 @@
           "- **Quality**: Test coverage, code quality metrics"
         ]
       },
-      
+
       "standards_and_guidelines": {
         "comment": "Required - specific implementation guidance",
         "section": "## Standards & Guidelines",
@@ -109,11 +109,11 @@
           "### Subsection 1",
           "- Specific, actionable guidelines",
           "- Code examples where helpful",
-          "### Subsection 2", 
+          "### Subsection 2",
           "- More detailed standards"
         ]
       },
-      
+
       "common_patterns": {
         "comment": "Optional - recommended approaches",
         "section": "## Common Patterns",
@@ -125,7 +125,7 @@
           "- Different scenario guidance"
         ]
       },
-      
+
       "anti_patterns": {
         "comment": "Optional but recommended - what NOT to do",
         "section": "## Anti-Patterns to Avoid",
@@ -137,7 +137,7 @@
           "- ❌ More things to avoid"
         ]
       },
-      
+
       "tools_and_resources": {
         "comment": "Optional - supporting tools and learning materials",
         "section": "## Tools & Resources",
@@ -150,7 +150,7 @@
           "- **Resource 2** for best practices"
         ]
       },
-      
+
       "testing_and_deployment": {
         "comment": "Optional - CI/CD and quality assurance",
         "section": "## Testing & Deployment",
@@ -165,7 +165,7 @@
       }
     }
   },
-  
+
   "creation_workflow": {
     "comment": "Step-by-step process for creating a new domain",
     "steps": [
@@ -181,7 +181,7 @@
       "10. Test domain invocation: @your_domain_name"
     ]
   },
-  
+
   "best_practices": {
     "comment": "Guidelines for creating effective domains",
     "principles": [
@@ -197,7 +197,7 @@
       "Update last_reviewed dates regularly in metadata"
     ]
   },
-  
+
   "example_domains_for_reference": {
     "comment": "Existing domains you can study for patterns",
     "domains": [

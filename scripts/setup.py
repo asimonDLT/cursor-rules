@@ -32,7 +32,7 @@ class SetupManager:
 
     def __init__(self, project_root: Path | None = None):
         """Initialize setup manager.
-        
+
         Args:
             project_root: Optional project root path. If None, auto-detects.
         """
@@ -55,7 +55,7 @@ class SetupManager:
 
     def validate_environment(self) -> list[str]:
         """Validate the cursor rules environment.
-        
+
         Returns:
             List of validation issues (empty if all good)
         """
@@ -95,7 +95,9 @@ class SetupManager:
         if not role_library_path.exists():
             backup_path = self.project_root / "scripts/backup/role_library.json.backup"
             if backup_path.exists():
-                issues.append(f"Role library missing but backup available at {backup_path}")
+                issues.append(
+                    f"Role library missing but backup available at {backup_path}"
+                )
             else:
                 issues.append("Role library missing and no backup found")
 
@@ -103,10 +105,10 @@ class SetupManager:
 
     def migrate_role_library(self, force: bool = False) -> bool:
         """Migrate role library from backup if needed.
-        
+
         Args:
             force: If True, overwrite existing library
-            
+
         Returns:
             True if migration was performed, False otherwise
         """
@@ -114,7 +116,9 @@ class SetupManager:
         backup_path = self.project_root / "scripts/backup/role_library.json.backup"
 
         if role_library_path.exists() and not force:
-            console.print(f"[yellow]Role library already exists at {role_library_path}[/yellow]")
+            console.print(
+                f"[yellow]Role library already exists at {role_library_path}[/yellow]"
+            )
             return False
 
         if not backup_path.exists():
@@ -129,7 +133,9 @@ class SetupManager:
             shutil.copy2(backup_path, role_library_path)
 
             console.print("[green]✓ Migrated role library from backup[/green]")
-            logger.info(f"Migrated role library from {backup_path} to {role_library_path}")
+            logger.info(
+                f"Migrated role library from {backup_path} to {role_library_path}"
+            )
             return True
 
         except Exception as e:
@@ -157,19 +163,23 @@ class SetupManager:
                 created_dirs.append(dir_path)
 
         if created_dirs:
-            console.print(f"[green]✓ Created directories: {', '.join(created_dirs)}[/green]")
+            console.print(
+                f"[green]✓ Created directories: {', '.join(created_dirs)}[/green]"
+            )
 
     def initialize_config(self, force: bool = False) -> bool:
         """Initialize configuration file if missing.
-        
+
         Args:
             force: If True, overwrite existing config
-            
+
         Returns:
             True if config was created, False otherwise
         """
         if self.config_path.exists() and not force:
-            console.print(f"[yellow]Configuration already exists at {self.config_path}[/yellow]")
+            console.print(
+                f"[yellow]Configuration already exists at {self.config_path}[/yellow]"
+            )
             return False
 
         default_config = {
@@ -178,32 +188,34 @@ class SetupManager:
                 "tool_registry": ".cursor/rules/tools/tool_registry.json",
                 "role_library": ".cursor/rules/tools/role_library.json",
                 "templates": "templates",
-                "scripts": "scripts"
+                "scripts": "scripts",
             },
             "validation": {
                 "exclude_patterns": ["*.mdc", "*.md", "*.template"],
                 "required_tools": ["uv", "ruff"],
                 "mdc_linter": "scripts/validation/lint_mdc.py",
-                "role_linter": "scripts/roles/lint_role_library.py"
+                "role_linter": "scripts/roles/lint_role_library.py",
             },
             "defaults": {
                 "output_dir": ".cursor/rules/roles",
                 "role_types": ["executive", "specialist"],
-                "template_dir": "templates/roles"
+                "template_dir": "templates/roles",
             },
             "behavior": {
                 "interactive_mode": True,
                 "strict_validation": False,
                 "auto_backup": True,
-                "progress_indicators": True
-            }
+                "progress_indicators": True,
+            },
         }
 
         try:
             with open(self.config_path, "w", encoding="utf-8") as f:
                 json.dump(default_config, f, indent=2)
 
-            console.print(f"[green]✓ Created configuration file at {self.config_path}[/green]")
+            console.print(
+                f"[green]✓ Created configuration file at {self.config_path}[/green]"
+            )
             return True
 
         except Exception as e:
@@ -212,10 +224,10 @@ class SetupManager:
 
     def run_full_setup(self, force: bool = False) -> bool:
         """Run complete setup process.
-        
+
         Args:
             force: If True, overwrite existing files
-            
+
         Returns:
             True if setup completed successfully
         """
@@ -262,23 +274,37 @@ def main() -> None:
 Examples:
   # Run full setup
   uv run python setup.py --setup
-  
-  # Just validate current environment  
+
+  # Just validate current environment
   uv run python setup.py --validate
-  
+
   # Migrate role library from backup
   uv run python setup.py --migrate-roles --force
-        """
+        """,
     )
 
-    parser.add_argument("--setup", action="store_true", help="Run full environment setup")
-    parser.add_argument("--validate", action="store_true", help="Validate environment only")
-    parser.add_argument("--migrate-roles", action="store_true", help="Migrate role library from backup")
-    parser.add_argument("--create-dirs", action="store_true", help="Create missing directories only")
-    parser.add_argument("--init-config", action="store_true", help="Initialize configuration only")
-    parser.add_argument("--force", action="store_true", help="Force overwrite existing files")
+    parser.add_argument(
+        "--setup", action="store_true", help="Run full environment setup"
+    )
+    parser.add_argument(
+        "--validate", action="store_true", help="Validate environment only"
+    )
+    parser.add_argument(
+        "--migrate-roles", action="store_true", help="Migrate role library from backup"
+    )
+    parser.add_argument(
+        "--create-dirs", action="store_true", help="Create missing directories only"
+    )
+    parser.add_argument(
+        "--init-config", action="store_true", help="Initialize configuration only"
+    )
+    parser.add_argument(
+        "--force", action="store_true", help="Force overwrite existing files"
+    )
     parser.add_argument("--project-root", help="Specify project root directory")
-    parser.add_argument("--verbose", "-v", action="store_true", help="Enable verbose logging")
+    parser.add_argument(
+        "--verbose", "-v", action="store_true", help="Enable verbose logging"
+    )
 
     args = parser.parse_args()
 

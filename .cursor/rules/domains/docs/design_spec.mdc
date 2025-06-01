@@ -1,12 +1,7 @@
 ---
-rule_type: Auto Attached
+description:
 globs:
-  - "*_spec.md"
-  - "*spec.md"
-  - "design/**/*.md"
-  - "specifications/**/*.md"
-  - "specs/**/*.md"
-description: "Generic Design Specification Documentation Standards"
+alwaysApply: false
 ---
 
 # Generic Design Specification Documentation Standards
@@ -24,18 +19,18 @@ description: "Generic Design Specification Documentation Standards"
 ```markdown
 # [Project Name] Design Specification
 **Version**: 1.0
-**Date**: [Date]  
+**Date**: [Date]
 **Author**: [Author Name] / [Organization]
 **Status**: [Draft/In Review/Approved]
 
 ---
 
 ## Contents
-1. [Overview & Purpose](#1-overview--purpose)
-2. [System Architecture](#2-system-architecture)
-3. [Technical Requirements](#3-technical-requirements)
-4. [Implementation Approach](#4-implementation-approach)
-5. [Quality Assurance](#5-quality-assurance)
+1. [Overview & Purpose](mdc:#1-overview--purpose)
+2. [System Architecture](mdc:#2-system-architecture)
+3. [Technical Requirements](mdc:#3-technical-requirements)
+4. [Implementation Approach](mdc:#4-implementation-approach)
+5. [Quality Assurance](mdc:#5-quality-assurance)
 ...
 ```
 
@@ -71,7 +66,7 @@ flowchart TD
     USER[User Interface] --> API[API Gateway]
     API --> SERVICE[Core Service]
     SERVICE --> DB[Database]
-    
+
     class USER userFacing
     class API,SERVICE service
     class DB external
@@ -94,7 +89,7 @@ erDiagram
         name string "Display Name"
         created_at datetime "Creation Timestamp"
     }
-    
+
     class ENTITY_NAME core
 ```
 
@@ -194,10 +189,10 @@ Structure requirements with clear priority and acceptance criteria:
 ## Cross-Referencing & Navigation
 
 ### Internal Links
-- **Section References:** Use descriptive anchor text: `[Section Name](#section-anchor)`
+- **Section References:** Use descriptive anchor text: `[Section Name](mdc:#section-anchor)`
 - **Appendix References:** Always reference appendices for detailed information
 - **Field References:** Link between related fields and objects
-- **Example Pattern:** "See [Campaign Member Status Matrix](#campaign-member-status-matrix) for complete status definitions"
+- **Example Pattern:** "See [Campaign Member Status Matrix](mdc:#campaign-member-status-matrix) for complete status definitions"
 
 ### External References
 - **API Documentation:** Reference Salesforce standard objects and fields
@@ -236,12 +231,12 @@ interface UserPreferences {
 // Validates user preferences against business rules
 function validatePreferences(prefs: UserPreferences): ValidationResult {
   const errors: string[] = [];
-  
+
   // Business rule: Default theme for accessibility
   if (!prefs.theme) {
     prefs.theme = 'light';
   }
-  
+
   return { isValid: errors.length === 0, errors };
 }
 ```
@@ -257,9 +252,9 @@ api:
   version: v1
   base_url: https://api.example.com
   timeout: 30s
-  
+
 security:
-  cors_origins: 
+  cors_origins:
     - https://app.example.com
   rate_limit: 1000  # requests per hour
 ```

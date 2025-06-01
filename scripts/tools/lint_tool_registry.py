@@ -9,7 +9,6 @@ import logging
 import sys
 import uuid
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -55,8 +54,8 @@ def sanitize_file_path(file_path_str: str) -> Path:
 
 
 def validate_json_structure(
-    registry_data: Dict, correlation_id: str
-) -> Tuple[bool, List[str]]:
+    registry_data: dict, correlation_id: str
+) -> tuple[bool, list[str]]:
     """
     Validate the basic JSON structure of the tool registry.
 
@@ -127,8 +126,8 @@ def validate_json_structure(
 
 
 def validate_referential_integrity(
-    registry_data: Dict, correlation_id: str
-) -> Tuple[bool, List[str]]:
+    registry_data: dict, correlation_id: str
+) -> tuple[bool, list[str]]:
     """
     Validate referential integrity between domain_mappings and tool_categories.
 
@@ -187,7 +186,7 @@ def validate_referential_integrity(
     return is_valid, errors
 
 
-def validate_tool_registry(file_path: Path, correlation_id: str) -> Tuple[bool, Dict]:
+def validate_tool_registry(file_path: Path, correlation_id: str) -> tuple[bool, dict]:
     """
     Validate the tool registry file.
 
@@ -202,7 +201,7 @@ def validate_tool_registry(file_path: Path, correlation_id: str) -> Tuple[bool, 
 
     # Load and parse JSON
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             registry_data = json.load(f)
         logger.info(f"[{correlation_id}] Successfully loaded JSON from {file_path}")
     except json.JSONDecodeError as e:
@@ -247,7 +246,7 @@ def validate_tool_registry(file_path: Path, correlation_id: str) -> Tuple[bool, 
 
 
 def display_summary(
-    file_path: Path, is_valid: bool, registry_data: Dict, correlation_id: str
+    file_path: Path, is_valid: bool, registry_data: dict, correlation_id: str
 ) -> None:
     """Display a summary of the tool registry validation."""
     logger.info(f"[{correlation_id}] Generating validation summary")

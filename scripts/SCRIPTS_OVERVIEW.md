@@ -7,7 +7,7 @@ This directory contains organized scripts for managing cursor rules, domains, ro
 ```
 scripts/
 ├── domains/          # Domain-related operations
-├── roles/           # Role-related operations  
+├── roles/           # Role-related operations
 ├── tools/           # Tool registry operations
 ├── validation/      # Cross-cutting validation
 ├── backup/          # Backup and migration data
@@ -54,7 +54,7 @@ uv run python scripts/validation/lint_mdc.py path/to/file.mdc
 This structure mirrors the production cursor rules architecture:
 
 - **scripts/domains/** → manages `.cursor/rules/domains/`
-- **scripts/roles/** → manages `.cursor/rules/roles/`  
+- **scripts/roles/** → manages `.cursor/rules/roles/`
 - **scripts/tools/** → manages `.cursor/rules/tools/`
 - **scripts/validation/** → validates all `.mdc` files
 
@@ -75,7 +75,7 @@ Scripts that generate new files or structures:
 - `domains/create_domain_rule.py` - Create domain rule files
 - `roles/create_role.py` - Create role agent files
 
-### Validation Scripts  
+### Validation Scripts
 Scripts that check correctness and consistency:
 - `validation/lint_mdc.py` - Validate .mdc file format and line limits
 - `roles/lint_role_library.py` - Validate role library structure

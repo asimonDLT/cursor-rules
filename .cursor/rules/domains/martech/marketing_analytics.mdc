@@ -1,6 +1,6 @@
 ---
-description: Standards and best practices for Marketing Technology tools like GA4, GTM, and SEO platforms.
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # MarTech & Web Analytics Standards
@@ -34,5 +34,3 @@ description: Marketing Technology tools for analytics, advertising, and SEO.
 - Event-driven analytics with proper parameter standardization
 - Cross-platform attribution with unified customer journey tracking
 - Privacy-first data collection with consent-based tracking
-
-

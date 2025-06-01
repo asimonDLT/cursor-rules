@@ -1,4 +1,4 @@
-# Initialize three parallel git worktree directories for concurrent development. 
+# Initialize three parallel git worktree directories for concurrent development.
 
 ## Variables
 
@@ -34,4 +34,3 @@ CREATE third worktree:
 - UPDATE `./trees/FEATURE_NAME-3/client/vite.config.ts` port to `5176`
 
 VERIFY setup by running `git worktree list`
-

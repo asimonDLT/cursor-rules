@@ -40,7 +40,7 @@ Logical groupings of related tools:
 }
 ```
 
-### Domain Mappings  
+### Domain Mappings
 Maps domains to tool categories:
 ```json
 "domain_name": ["category1", "category2", "category3"]
@@ -69,8 +69,26 @@ uv run python scripts/tools/lint_tool_registry.py .cursor/rules/tools/tool_regis
 uv run python scripts/tools/lint_tool_registry.py .cursor/rules/tools/tool_registry.json --verbose
 ```
 
+## Library Explorer Integration
+
+The tool registry is also accessible through the library-explorer CLI tool:
+
+```bash
+# Browse all tools in beautiful table format
+uv run library-explorer browse tools
+
+# Browse tools in list format
+uv run library-explorer browse tools --format list
+
+# Validate tool registry
+uv run library-explorer validate
+```
+
+The library-explorer automatically uses the authoritative tool registry at `.cursor/rules/tools/tool_registry.json`.
+
 ## Related Files
 
-- **Registry**: `.cursor/rules/tools/tool_registry.json` - Main tool registry
+- **Registry**: `.cursor/rules/tools/tool_registry.json` - Main tool registry (authoritative source)
+- **Library Explorer**: `library_explorer/` - CLI tool for browsing and validating tool registry
 - **Templates**: `templates/tools/` - Tool configuration templates (future)
 - **Domains**: Used by domain creation and role creation scripts

@@ -74,7 +74,7 @@ uv run python scripts/lint_tool_registry.py .cursor/rules/tools/tool_registry.js
 ## Available Categories
 - `frontend` - Frontend development and UI standards
 - `backend` - Server-side development and APIs
-- `cloud` - Cloud infrastructure and platform services  
+- `cloud` - Cloud infrastructure and platform services
 - `data` - Data engineering and analytics
 - `security` - Security standards and practices
 - `docs` - Documentation and technical writing
@@ -99,7 +99,7 @@ uv run python scripts/lint_tool_registry.py .cursor/rules/tools/tool_registry.js
 ```json
 "your_domain": {
   "description": "Clear description",
-  "owner": "@my-org/team-name", 
+  "owner": "@my-org/team-name",
   "status": "active",
   "last_reviewed": "2025-05-27",
   "template_type": "your_template_type",
@@ -133,7 +133,7 @@ uv run python scripts/create_domain_rule.py \
 # 4. Validate and test
 ```
 
-### Creating a DevOps Domain  
+### Creating a DevOps Domain
 ```bash
 # 1. Add DevOps tools to tool_registry.json
 # 2. Create the domain

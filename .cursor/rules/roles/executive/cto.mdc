@@ -1,6 +1,6 @@
 ---
 description: cto perspective for strategy & execution. Opt-in via @cto.
-globs: 
+globs:
 alwaysApply: false
 ---
 
@@ -40,4 +40,3 @@ alwaysApply: false
 **Next steps:**
 - {{action_1}}
 - {{action_2}}
-

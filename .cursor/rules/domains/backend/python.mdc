@@ -1,8 +1,8 @@
 ---
-rule_type: Agent Requested
 description: "Python development expert. Opt-in via @python."
+globs:
+alwaysApply: false
 ---
-
 # Python-First Development Standards
 
 - **Package Management:** Always use **uv** for managing packages and virtual environments.

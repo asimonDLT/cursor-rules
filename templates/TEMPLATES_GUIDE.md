@@ -7,7 +7,7 @@ This directory contains organized templates for creating different types of curs
 ```
 templates/
 ├── domains/          # Domain rule templates and guides
-├── roles/           # Role-based agent templates  
+├── roles/           # Role-based agent templates
 ├── tools/           # Tool registry and configuration templates
 └── templates_guide.md        # This file
 ```
@@ -51,7 +51,7 @@ uv run python scripts/create_domain_rule.py --name your_domain --category backen
 # Create specialist role
 uv run python scripts/create_role.py --name your_role --type specialist
 
-# Create executive role  
+# Create executive role
 uv run python scripts/create_role.py --name your_role --type executive
 ```
 
@@ -70,7 +70,7 @@ When adding new templates:
 This structure aligns with the overall cursor rules architecture:
 
 - **domains/** → `.cursor/rules/domains/`
-- **roles/** → `.cursor/rules/roles/`  
+- **roles/** → `.cursor/rules/roles/`
 - **tools/** → `.cursor/rules/tools/`
 
 Each subdirectory contains templates for creating the corresponding production artifacts.

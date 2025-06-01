@@ -1,6 +1,7 @@
 ---
-rule_type: Agent Requested
-description: "AWS infrastructure expert. Opt-in via @aws."
+description:
+globs:
+alwaysApply: false
 ---
 
 # AWS-Focused Infrastructure Standards

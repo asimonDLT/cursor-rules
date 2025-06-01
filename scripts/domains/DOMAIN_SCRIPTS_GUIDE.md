@@ -46,7 +46,7 @@ uv run python scripts/domains/validate_domains.py
 
 Supported domain categories:
 - **frontend** - Frontend development and UI standards
-- **backend** - Server-side development and APIs  
+- **backend** - Server-side development and APIs
 - **cloud** - Cloud infrastructure and platform services
 - **data** - Data engineering and analytics
 - **security** - Security standards and practices

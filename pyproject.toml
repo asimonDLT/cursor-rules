@@ -1,54 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "cursor-rules"
+name = "library-explorer"
 version = "0.1.0"
-description = "Cursor Rules and Role Factory for AI-powered development"
+description = "A CLI tool to explore Role Library and Tool Registry."
 readme = "README.md"
 requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License", # Assuming MIT, adjust if needed
+    "Operating System :: OS Independent",
+]
 dependencies = [
-    "rich>=13.0.0",
+    "typer>=0.9.0",
+    "rich>=13.0",
+    "pydantic>=2.0",
+    "rapidfuzz>=3.0", # For Sprint 2
+    "pyyaml>=6.0",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pre-commit>=4.2.0",
-    "ruff>=0.8.0",
     "pytest>=8.0.0",
     "pytest-asyncio>=0.24.0",
     "pytest-cov>=6.0.0",
+    "mypy>=1.0.0", # Added mypy here as it's a dev dependency for pre-commit
+    "types-PyYAML>=6.0.0" # Added types for PyYAML
 ]
 
-[tool.pytest.ini_options]
-asyncio_default_fixture_loop_scope = "function"
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "--strict-markers",
-    "--strict-config",
-    "--verbose",
-]
+[project.scripts]
+library-explorer = "library_explorer.cli:app"
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/library-explorer"  # Replace with actual URL
+"Bug Tracker" = "https://github.com/yourusername/library-explorer/issues" # Replace
+
+[tool.setuptools.packages.find]
+where = ["."]  # Specifies that the `library_explorer` package is in the root
+include = ["library_explorer*"]
+exclude = ["tests*"]
 
 [tool.ruff]
-# Exclude non-Python files from linting
-exclude = [
-    "*.mdc",
-    "*.md", 
-    "*.template",
-    ".cursor/",
-    "templates/",
-    "__pycache__",
-    ".git",
-    ".venv",
-]
+line-length = 88
+target-version = "py312"
 
 [tool.ruff.lint]
-# Enable specific rule categories
-select = ["E", "W", "F", "I", "N", "UP", "B", "A", "C4"]
-ignore = []
+select = ["E", "F", "W", "I", "UP", "ANN", "RUF"]
+ignore = ["ANN101", "ANN102"] # Ignore missing type hints for self and cls
 
 [tool.ruff.format]
-# Use double quotes for strings
 quote-style = "double"
-# Use 4 spaces for indentation  
-indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+strict = true
+exclude = ['venv', '.venv']
+
+[[tool.mypy.overrides]]
+module = [
+    "rapidfuzz.*" # If types are not available or causing issues
+]
+ignore_missing_imports = true

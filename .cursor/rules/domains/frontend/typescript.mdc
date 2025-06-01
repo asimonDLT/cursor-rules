@@ -17,7 +17,7 @@ description: "TypeScript/Web Development Standards"
 - **E2E Testing:** Use **Playwright** for end-to-end browser testing.
 - **Test Organization:** Co-locate tests with source code using `*.test.ts` or `*.spec.ts` extensions.
 - **Runtime:** Target **Node.js 20.***
-- **Naming Conventions:** 
+- **Naming Conventions:**
   - Variables/Functions: `camelCase`
   - Components/Classes: `PascalCase`
   - Files/CSS: `kebab-case`

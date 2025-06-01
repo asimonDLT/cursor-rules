@@ -10,7 +10,7 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, Optional, List
+from typing import Any
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -43,7 +43,7 @@ REQUIRED_SPECIALIST_BUCKETS = ["identity", "objectives"]
 
 
 # Tool registry functions
-def load_tool_registry() -> Dict[str, Any]:
+def load_tool_registry() -> dict[str, Any]:
     """Load the tool registry with error handling."""
     registry_path = (
         Path(__file__).parent.parent.parent / ".cursor/rules/tools/tool_registry.json"
@@ -54,7 +54,7 @@ def load_tool_registry() -> Dict[str, Any]:
         return {}
 
     try:
-        with open(registry_path, "r", encoding="utf-8") as f:
+        with open(registry_path, encoding="utf-8") as f:
             registry = json.load(f)
             logger.debug(
                 f"Loaded tool registry with {len(registry.get('tool_categories', {}))} categories"
@@ -66,8 +66,8 @@ def load_tool_registry() -> Dict[str, Any]:
 
 
 def resolve_tools_from_registry(
-    domain_or_categories: List[str], registry: Dict[str, Any]
-) -> List[str]:
+    domain_or_categories: list[str], registry: dict[str, Any]
+) -> list[str]:
     """Resolve tools from registry based on domain mappings or direct categories."""
     if not registry:
         return []
@@ -94,16 +94,16 @@ def resolve_tools_from_registry(
 
 
 # Utility functions for overrides
-def coerce_csv(text: Optional[str]) -> Optional[List[str]]:
+def coerce_csv(text: str | None) -> list[str] | None:
     """Convert comma-separated string to list, handling None gracefully."""
     return [s.strip() for s in text.split(",")] if text else None
 
 
 def apply_overrides(
-    base_data: Dict[str, Any],
+    base_data: dict[str, Any],
     cli_args: argparse.Namespace,
-    json_override_path: Optional[str] = None,
-) -> Dict[str, Any]:
+    json_override_path: str | None = None,
+) -> dict[str, Any]:
     """Apply overrides in precedence order: CLI flags > JSON override > base data.
 
     Args:
@@ -125,7 +125,7 @@ def apply_overrides(
         override_path = Path(json_override_path)
         if override_path.exists():
             try:
-                with open(override_path, "r", encoding="utf-8") as f:
+                with open(override_path, encoding="utf-8") as f:
                     json_override = json.load(f)
                 # Deep merge the override data
                 result = deep_merge(result, json_override)
@@ -181,7 +181,7 @@ def apply_overrides(
     return result
 
 
-def deep_merge(base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
+def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
     """Deep merge two dictionaries, with override taking precedence."""
     result = base.copy()
     for key, value in override.items():
@@ -195,20 +195,25 @@ def deep_merge(base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]
 # Template loading functions
 def load_template(template_name: str) -> str:
     """Load a template file from the templates directory.
-    
+
     Args:
         template_name: Name of the template file (without .template extension)
-        
+
     Returns:
         Template content as string
-        
+
     Raises:
         SystemExit: If template file is not found or cannot be read
     """
-    template_path = Path(__file__).parent.parent.parent / "templates" / "roles" / f"{template_name}.mdc.template"
-    
+    template_path = (
+        Path(__file__).parent.parent.parent
+        / "templates"
+        / "roles"
+        / f"{template_name}.mdc.template"
+    )
+
     try:
-        with open(template_path, "r", encoding="utf-8") as f:
+        with open(template_path, encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
         logger.error(f"Template file not found: {template_path}")
@@ -230,7 +235,7 @@ def get_specialist_template() -> str:
     return load_template("specialist_role")
 
 
-def validate_role_library(library: Dict[str, Any]) -> None:
+def validate_role_library(library: dict[str, Any]) -> None:
     """Validate role library structure and required fields."""
     for role_type, roles_by_type in library.items():
         if role_type not in VALID_ROLE_TYPES:
@@ -268,7 +273,7 @@ def validate_role_library(library: Dict[str, Any]) -> None:
                     )
 
 
-def load_role_library() -> Dict[str, Any]:
+def load_role_library() -> dict[str, Any]:
     """Load the role library JSON with error handling."""
     library_path = (
         Path(__file__).parent.parent.parent / ".cursor/rules/tools/role_library.json"
@@ -285,7 +290,7 @@ def load_role_library() -> Dict[str, Any]:
         sys.exit(1)
 
     try:
-        with open(library_path, "r", encoding="utf-8") as f:
+        with open(library_path, encoding="utf-8") as f:
             library = json.load(f)
             logger.info(f"Loaded {len(library)} role types from library")
 
@@ -365,8 +370,8 @@ def validate_role_name(name: str) -> str:
 
 
 def get_role_data(
-    role_type: str, role_name: str, library: Dict[str, Any]
-) -> Optional[Dict[str, Any]]:
+    role_type: str, role_name: str, library: dict[str, Any]
+) -> dict[str, Any] | None:
     """Get role data from library with validation."""
     if role_type not in library:
         console.print(f"[red]Error:[/red] Unknown role type: {role_type}")
@@ -385,7 +390,7 @@ def get_role_data(
     return {}
 
 
-def generate_synthesis_instructions(tool_domains: List[str]) -> str:
+def generate_synthesis_instructions(tool_domains: list[str]) -> str:
     """Generate dynamic synthesis instructions based on tool domains."""
     domain_instructions = {
         "aws": "* For AWS/cloud guidance: Invoke @aws for infrastructure standards and best practices",
@@ -417,8 +422,8 @@ def generate_synthesis_instructions(tool_domains: List[str]) -> str:
 
 def generate_executive_role(
     role_name: str,
-    role_data: Dict[str, Any],
-    custom_frameworks: Optional[str] = None,
+    role_data: dict[str, Any],
+    custom_frameworks: str | None = None,
     strict: bool = False,
 ) -> str:
     """Generate executive role content using five-bucket standard."""
@@ -490,7 +495,7 @@ def generate_executive_role(
 
 def generate_specialist_role(
     role_name: str,
-    role_data: Dict[str, Any],
+    role_data: dict[str, Any],
     no_framework_check: bool = False,
     strict: bool = False,
 ) -> str:
@@ -583,7 +588,7 @@ def write_role_file(role_name: str, content: str, output_dir: Path) -> Path:
     return file_path
 
 
-def list_templates(library: Dict[str, Any]) -> None:
+def list_templates(library: dict[str, Any]) -> None:
     """List available role templates."""
     console.print(Panel("Available Role Templates", border_style="blue"))
 
@@ -759,7 +764,7 @@ def main() -> None:
             ["uv", "run", "ruff", "check", "--select", "E,W,F", str(output_path)],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=30,
         )
 
         if result.returncode == 0:
@@ -767,14 +772,16 @@ def main() -> None:
             console.print("[green]✓ Ruff validation passed[/green]")
         else:
             logger.warning(f"Ruff validation issues: {result.stdout}")
-            console.print(f"[yellow]⚠ Ruff validation issues:[/yellow]\n{result.stdout}")
+            console.print(
+                f"[yellow]⚠ Ruff validation issues:[/yellow]\n{result.stdout}"
+            )
 
         # Also run the custom MDC linter if available
         mdc_result = subprocess.run(
             ["uv", "run", "python", "scripts/validation/lint_mdc.py", str(output_path)],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=30,
         )
 
         if mdc_result.returncode == 0:
@@ -782,7 +789,9 @@ def main() -> None:
             console.print("[green]✓ MDC validation passed[/green]")
         else:
             logger.warning(f"MDC validation warnings: {mdc_result.stdout}")
-            console.print(f"[yellow]⚠ MDC validation warnings:[/yellow]\n{mdc_result.stdout}")
+            console.print(
+                f"[yellow]⚠ MDC validation warnings:[/yellow]\n{mdc_result.stdout}"
+            )
 
     except subprocess.TimeoutExpired:
         logger.error("Validation timed out")

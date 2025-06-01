@@ -1,6 +1,6 @@
 ---
-description: Salesforce backend development standards for Sales Cloud, Service Cloud, and Marketing Cloud
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 

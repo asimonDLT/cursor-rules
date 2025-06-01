@@ -1,6 +1,6 @@
 ---
-description: "Salesforce Documentation Standards"
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
 # Documentation Standards - Cursor Rule
@@ -37,7 +37,7 @@ You are an expert technical writer specializing in Salesforce architecture and e
 ### Mermaid / UML Style Guide (Salesforce Projects)
 
 #### Core Theme
-Use SLDS design-token colours rather than raw hex codes whenever Mermaid supports inline CSS variables.  
+Use SLDS design-token colours rather than raw hex codes whenever Mermaid supports inline CSS variables.
 If tokens are unsupported (older Mermaid), fall back to these WCAG-AA compliant values:
 
 | Usage                        | SLDS Token              | Hex Code  | Example           |

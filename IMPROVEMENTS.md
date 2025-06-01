@@ -17,7 +17,7 @@ This document outlines the comprehensive improvements made to the cursor rules c
 - **Added**: Helper functions to find project root using multiple markers
 
 #### 3. Improved Non-Interactive Support
-- **Added**: `--batch` mode for CI/CD usage  
+- **Added**: `--batch` mode for CI/CD usage
 - **Added**: `--force` flag to bypass confirmations
 - **Added**: Better error handling for automated environments
 - **Added**: `scripts/roles/create_role_v2.py` with improved architecture
@@ -27,7 +27,14 @@ This document outlines the comprehensive improvements made to the cursor rules c
 - **Added**: Proper file type detection in validation scripts
 - **Added**: Separate validation workflows for Python vs MDC files
 
-#### 5. Migration and Setup Tools
+#### 5. Library Explorer Tool Configuration
+- **Added**: Complete library-explorer CLI tool with Sprint 0 implementation
+- **Fixed**: Default data path configuration to use authoritative source (`.cursor/rules/tools/`)
+- **Removed**: Duplicate root-level `tool_registry.json` that caused confusion
+- **Improved**: No `--data-path` specification required for normal usage
+- **Benefits**: Seamless user experience, single source of truth, no configuration required
+
+#### 6. Migration and Setup Tools
 - **Added**: `scripts/setup.py` for environment setup and migration
 - **Added**: Automatic role library migration from backup
 - **Added**: Environment validation and directory creation
@@ -105,7 +112,7 @@ uv run python scripts/roles/create_role_v2.py --validate-config
 
 ### 🎯 Developer Experience
 - **Clear error messages** with specific fix suggestions
-- **Non-interactive support** for CI/CD pipelines  
+- **Non-interactive support** for CI/CD pipelines
 - **Progress indicators** and rich console output
 - **Comprehensive validation** before operations
 
@@ -115,7 +122,7 @@ uv run python scripts/roles/create_role_v2.py --validate-config
 - **Proper error handling** with custom exceptions
 - **Clean separation** of concerns
 
-### 🚀 Reliability  
+### 🚀 Reliability
 - **Graceful degradation** when components are missing
 - **Automatic migration** from backup files
 - **Environment validation** before operations
@@ -136,7 +143,7 @@ uv run python scripts/roles/create_role_v2.py --validate-config
 
 ### For New Users
 1. **Run setup**: `uv run python scripts/setup.py --setup`
-2. **Validate**: `uv run python scripts/setup.py --validate`  
+2. **Validate**: `uv run python scripts/setup.py --validate`
 3. **Use v2 scripts**: `scripts/roles/create_role_v2.py`
 
 ### For CI/CD
@@ -158,7 +165,7 @@ uv run python scripts/roles/create_role_v2.py \
 - [ ] Update documentation to reference new scripts
 - [ ] Add integration tests for batch mode
 
-### Future Enhancements  
+### Future Enhancements
 - [ ] Migrate remaining scripts to use centralized config
 - [ ] Add role template validation
 - [ ] Implement role versioning and updates

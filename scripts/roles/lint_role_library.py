@@ -10,7 +10,7 @@ import logging
 import sys
 import uuid
 from pathlib import Path
-from typing import Dict, List, Tuple, Any
+from typing import Any
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -72,7 +72,7 @@ def sanitize_file_path(file_path_str: str) -> Path:
         raise ValueError(f"Invalid file path: {file_path_str}") from e
 
 
-def load_tool_registry(correlation_id: str) -> Dict[str, Any]:
+def load_tool_registry(correlation_id: str) -> dict[str, Any]:
     """
     Load tool registry for cross-reference validation.
 
@@ -93,7 +93,7 @@ def load_tool_registry(correlation_id: str) -> Dict[str, Any]:
         return {}
 
     try:
-        with open(tool_registry_path, "r", encoding="utf-8") as f:
+        with open(tool_registry_path, encoding="utf-8") as f:
             return json.load(f)
     except (json.JSONDecodeError, Exception) as e:
         logger.warning(f"[{correlation_id}] Could not load tool registry: {e}")
@@ -101,8 +101,8 @@ def load_tool_registry(correlation_id: str) -> Dict[str, Any]:
 
 
 def validate_json_structure(
-    library_data: Dict, correlation_id: str
-) -> Tuple[bool, List[str]]:
+    library_data: dict, correlation_id: str
+) -> tuple[bool, list[str]]:
     """
     Validate the basic JSON structure of the role library.
 
@@ -186,8 +186,8 @@ def validate_json_structure(
 
 
 def validate_field_structure(
-    library_data: Dict, correlation_id: str
-) -> Tuple[bool, List[str]]:
+    library_data: dict, correlation_id: str
+) -> tuple[bool, list[str]]:
     """
     Validate the structure of individual fields within roles.
 
@@ -306,8 +306,8 @@ def validate_field_structure(
 
 
 def validate_tool_registry_references(
-    library_data: Dict, tool_registry: Dict, correlation_id: str
-) -> Tuple[bool, List[str]]:
+    library_data: dict, tool_registry: dict, correlation_id: str
+) -> tuple[bool, list[str]]:
     """
     Validate references to tool registry domains and categories.
 
@@ -387,8 +387,8 @@ def validate_tool_registry_references(
 
 
 def validate_role_consistency(
-    library_data: Dict, correlation_id: str, strict: bool = False
-) -> Tuple[bool, List[str]]:
+    library_data: dict, correlation_id: str, strict: bool = False
+) -> tuple[bool, list[str]]:
     """
     Validate consistency across roles (duplicates, naming conventions, etc.).
 
@@ -461,7 +461,9 @@ def validate_role_consistency(
     return is_valid, errors
 
 
-def validate_role_library(file_path: Path, correlation_id: str, strict: bool = False) -> Tuple[bool, Dict]:
+def validate_role_library(
+    file_path: Path, correlation_id: str, strict: bool = False
+) -> tuple[bool, dict]:
     """
     Validate the role library file.
 
@@ -477,7 +479,7 @@ def validate_role_library(file_path: Path, correlation_id: str, strict: bool = F
 
     # Load and parse JSON
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             library_data = json.load(f)
         logger.info(f"[{correlation_id}] Successfully loaded JSON from {file_path}")
     except json.JSONDecodeError as e:
@@ -537,7 +539,7 @@ def validate_role_library(file_path: Path, correlation_id: str, strict: bool = F
 
 
 def display_summary(
-    file_path: Path, is_valid: bool, library_data: Dict, correlation_id: str
+    file_path: Path, is_valid: bool, library_data: dict, correlation_id: str
 ) -> None:
     """Display a summary of the role library validation."""
     logger.info(f"[{correlation_id}] Generating validation summary")
@@ -600,21 +602,14 @@ Examples:
   python lint_role_library.py /path/to/role_library.json
         """,
     )
+    parser.add_argument("file", help="Path to the role library JSON file to validate")
     parser.add_argument(
-        "file",
-        help="Path to the role library JSON file to validate"
+        "--verbose", "-v", action="store_true", help="Enable verbose logging output"
     )
     parser.add_argument(
-        "--verbose", "-v",
-        action="store_true",
-        help="Enable verbose logging output"
+        "--strict", action="store_true", help="Fail on warnings as well as errors"
     )
-    parser.add_argument(
-        "--strict",
-        action="store_true",
-        help="Fail on warnings as well as errors"
-    )
-    
+
     args = parser.parse_args()
 
     # Set logging level based on verbose flag
@@ -632,7 +627,9 @@ Examples:
         sys.exit(1)
 
     # Validate the role library
-    is_valid, library_data = validate_role_library(library_path, correlation_id, args.strict)
+    is_valid, library_data = validate_role_library(
+        library_path, correlation_id, args.strict
+    )
 
     # Display summary
     display_summary(library_path, is_valid, library_data, correlation_id)
@@ -651,7 +648,7 @@ if __name__ == "__main__":
 
 # TODO: Add pytest test cases for:
 # - validate_json_structure()
-# - validate_field_structure() 
+# - validate_field_structure()
 # - validate_tool_registry_references()
 # - validate_role_consistency()
 # - sanitize_file_path() edge cases

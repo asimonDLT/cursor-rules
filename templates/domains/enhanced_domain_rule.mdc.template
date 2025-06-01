@@ -11,7 +11,7 @@ alwaysApply: false
 
 {scope_description}
 
-**Owner Team**: {owner_team}  
+**Owner Team**: {owner_team}
 **Primary Consumers**: {primary_consumers}
 
 ## Core Principles

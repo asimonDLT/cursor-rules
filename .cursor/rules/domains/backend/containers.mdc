@@ -1,6 +1,6 @@
 ---
 description: "Container & Deployment Standards"
-globs: 
+globs:
 alwaysApply: false
 ---
 # Container & Deployment Standards

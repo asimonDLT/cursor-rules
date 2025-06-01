@@ -35,11 +35,26 @@ ruff check
 # Create new domain
 uv run python scripts/domains/create_domain_rule.py --name domain_name --category backend --description "Description"
 
-# Create new role  
+# Create new role
 uv run python scripts/roles/create_role.py --name role_name --type specialist --tool-domains martech,backend
 
 # Migrate role library
 uv run python scripts/roles/migrate_roles.py
+```
+
+### Library Explorer
+```bash
+# Browse tools (from authoritative .cursor/rules/tools/tool_registry.json)
+uv run library-explorer browse tools
+
+# Browse tools in list format
+uv run library-explorer browse tools --format list
+
+# Validate tool registry data
+uv run library-explorer validate
+
+# Get help
+uv run library-explorer --help
 ```
 
 ## Architecture Overview
@@ -87,7 +102,7 @@ This is a **cursor rules organization framework** that provides a scalable struc
 **Scripts Directory (`scripts/`):**
 Each subdirectory manages specific aspects of the cursor rules architecture:
 - `domains/`: Domain creation and validation
-- `roles/`: Role factory and library management  
+- `roles/`: Role factory and library management
 - `tools/`: Tool registry validation
 - `validation/`: Cross-cutting MDC file validation
 - `backup/`: Migration artifacts and backups

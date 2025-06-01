@@ -13,4 +13,29 @@ repos:
         entry: uv run python scripts/tools/lint_tool_registry.py
         language: system
         files: ^\.cursor/rules/tools/tool_registry\.json$
-        pass_filenames: true 
+        pass_filenames: true
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.5 # Replace with the specific version you want to use
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.0 # Replace with the specific version you want to use
+    hooks:
+      - id: mypy
+        additional_dependencies: [
+          "pydantic>=2.0",
+          "typer>=0.9.0",
+          "rich>=13.0",
+          "PyYAML>=6.0",
+          # Add other dependencies that mypy needs to understand your code
+        ]
+        args: [--config-file=pyproject.toml]
+        files: ^library_explorer/
